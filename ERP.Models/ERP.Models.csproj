@@ -1,0 +1,293 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{81067904-2176-4648-87AB-014B0D76B85E}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>ERP.Models</RootNamespace>
+    <AssemblyName>ERP.Models</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.Identity.Core, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Identity.Core.2.2.1\lib\net45\Microsoft.AspNet.Identity.Core.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.Identity.EntityFramework, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Identity.EntityFramework.2.2.1\lib\net45\Microsoft.AspNet.Identity.EntityFramework.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Owin, Version=3.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Owin.3.1.0\lib\net45\Microsoft.Owin.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security, Version=3.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Owin.Security.3.1.0\lib\net45\Microsoft.Owin.Security.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
+    </Reference>
+    <Reference Include="Owin">
+      <HintPath>..\packages\Owin.1.0\lib\net40\Owin.dll</HintPath>
+    </Reference>
+    <Reference Include="PagedList">
+      <HintPath>..\packages\PagedList.1.17.0.0\lib\net40\PagedList.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Helpers, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.Helpers.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.Mvc, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Mvc.5.2.3\lib\net45\System.Web.Mvc.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Razor.3.2.3\lib\net45\System.Web.Razor.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.WebPages, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.WebPages.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Deployment, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.WebPages.Deployment.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.WebPages.Razor.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="ApiModels\Response\ProductVariationStockApiResponse.cs" />
+    <Compile Include="Common\ReturnItemByColumn.cs" />
+    <Compile Include="Common\SupplierPaymentHistoryByColumn.cs" />
+    <Compile Include="Common\PurchaseBillByColumn.cs" />
+    <Compile Include="Common\OrdersByColumn.cs" />
+    <Compile Include="Common\WebsiteProductByColumn.cs" />
+    <Compile Include="Common\ProductCategoryByColumn.cs" />
+    <Compile Include="Common\InventoryItemByColumn.cs" />
+    <Compile Include="Common\ProductByColumn.cs" />
+    <Compile Include="DomainModels\AspNetRole%27.cs" />
+    <Compile Include="DomainModels\AspNetRole.cs" />
+    <Compile Include="DomainModels\AspNetUser%27.cs" />
+    <Compile Include="DomainModels\AspNetUser.cs" />
+    <Compile Include="DomainModels\AspNetUserClaim.cs" />
+    <Compile Include="DomainModels\AspNetUserLogin.cs" />
+    <Compile Include="DomainModels\AspNetUserRole.cs" />
+    <Compile Include="DomainModels\Brand.cs" />
+    <Compile Include="DomainModels\Configuration.cs" />
+    <Compile Include="DomainModels\CustomerOrder.cs" />
+    <Compile Include="DomainModels\Expense.cs" />
+    <Compile Include="DomainModels\ExpenseCategory.cs" />
+    <Compile Include="DomainModels\PaymentMethod.cs" />
+    <Compile Include="DomainModels\PurchaseBillItem.cs" />
+    <Compile Include="DomainModels\Note.cs" />
+    <Compile Include="DomainModels\NotesCategory.cs" />
+    <Compile Include="DomainModels\Order.cs" />
+    <Compile Include="DomainModels\Customer.cs" />
+    <Compile Include="DomainModels\OrderItem.cs" />
+    <Compile Include="DomainModels\Product.cs" />
+    <Compile Include="DomainModels\ProductCategoriesView.cs" />
+    <Compile Include="DomainModels\ProductCategory.cs" />
+    <Compile Include="DomainModels\ProductConfiguration.cs" />
+    <Compile Include="DomainModels\ProductImage.cs" />
+    <Compile Include="DomainModels\ProductMainCategory.cs" />
+    <Compile Include="DomainModels\ProductsStock.cs" />
+    <Compile Include="DomainModels\ProductVariation.cs" />
+    <Compile Include="DomainModels\PurchaseBill.cs" />
+    <Compile Include="DomainModels\ReturnedOrderItem.cs" />
+    <Compile Include="DomainModels\Shelf.cs" />
+    <Compile Include="DomainModels\SupplierBankAccount.cs" />
+    <Compile Include="DomainModels\SupplierPaymentHistory.cs" />
+    <Compile Include="DomainModels\TopSellingProductsView.cs" />
+    <Compile Include="DomainModels\Unit.cs" />
+    <Compile Include="DomainModels\UserPrefrence.cs" />
+    <Compile Include="DomainModels\Supplier.cs" />
+    <Compile Include="DomainModels\WebSiteSlider.cs" />
+    <Compile Include="DropdownListModels\VendorsDDL.cs" />
+    <Compile Include="IdentityModels\ApplicationRights.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="IdentityModels\ApplicationUser.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="IdentityModels\ViewModels\AccountViewModels.cs" />
+    <Compile Include="IdentityModels\ViewModels\AdminViewModel.cs" />
+    <Compile Include="IdentityModels\ViewModels\ManageViewModels.cs" />
+    <Compile Include="LoggerModels\LogCategory.cs" />
+    <Compile Include="LoggerModels\CategoryLog.cs" />
+    <Compile Include="LoggerModels\Log.cs" />
+    <Compile Include="MenuModels\Menu.cs" />
+    <Compile Include="MenuModels\MenuRight.cs" />
+    <Compile Include="MenuModels\Rights.cs" />
+    <Compile Include="MenuModels\UserMenuResponse.cs" />
+    <Compile Include="ModelMapers\AspNetUserMapper.cs" />
+    <Compile Include="ModelMapers\ReturnedOrderItemsMapper.cs" />
+    <Compile Include="ModelMapers\SuppleirBankAccountMapper.cs" />
+    <Compile Include="ModelMapers\SupplierPaymentHistoryMapper.cs" />
+    <Compile Include="ModelMapers\PurchaseBillMapper.cs" />
+    <Compile Include="ModelMapers\ProductVariationMapper.cs" />
+    <Compile Include="ModelMapers\ShelfMapper.cs" />
+    <Compile Include="ModelMapers\PaymentMethodMapper.cs" />
+    <Compile Include="ModelMapers\UnitMapper.cs" />
+    <Compile Include="ModelMapers\CustomerMapper.cs" />
+    <Compile Include="ModelMapers\ExpenseCategoryMapper.cs" />
+    <Compile Include="ModelMapers\ExpenseMapper.cs" />
+    <Compile Include="ModelMapers\InventoryItemMapper.cs" />
+    <Compile Include="ModelMapers\NoteMapper.cs" />
+    <Compile Include="ModelMapers\NotesCategoryMapper.cs" />
+    <Compile Include="ModelMapers\OrderItemMapper.cs" />
+    <Compile Include="ModelMapers\OrderMapper.cs" />
+    <Compile Include="ModelMapers\BrandMapper.cs" />
+    <Compile Include="ModelMapers\ProductCategoryMapper.cs" />
+    <Compile Include="ModelMapers\ProductMapper.cs" />
+    <Compile Include="ModelMapers\ReportsMappers\ProductsStockMapper.cs" />
+    <Compile Include="ModelMapers\ReportsMappers\PurchaseReportMapper.cs" />
+    <Compile Include="ModelMapers\ReportsMappers\ExpenseReportMapper.cs" />
+    <Compile Include="ModelMapers\ReportsMappers\SalesReportMapper.cs" />
+    <Compile Include="ModelMapers\UserMapper.cs" />
+    <Compile Include="ModelMapers\VendorMapper.cs" />
+    <Compile Include="ModelMapers\WebSiteSliderMapper.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ReportsModels\ExpenseReport.cs" />
+    <Compile Include="ReportsModels\StockReport.cs" />
+    <Compile Include="ReportsModels\PurchaseReport.cs" />
+    <Compile Include="ReportsModels\SalesReport.cs" />
+    <Compile Include="RequestModels\GetPagedListRequest.cs" />
+    <Compile Include="RequestModels\SaleReturnSearchRequest.cs" />
+    <Compile Include="RequestModels\SupplierPaymentHistorySearchRequest.cs" />
+    <Compile Include="RequestModels\PuchaseBillsSearchRequest.cs" />
+    <Compile Include="RequestModels\OrderSearchRequest.cs" />
+    <Compile Include="RequestModels\ProductCategorySearchRequest.cs" />
+    <Compile Include="RequestModels\InventoryItemSearchRequest.cs" />
+    <Compile Include="RequestModels\WebsiteProductSearchRequest.cs" />
+    <Compile Include="RequestModels\ProductSearchRequest.cs" />
+    <Compile Include="ResponseModels\CreateCategoryResponseModel.cs" />
+    <Compile Include="ResponseModels\InventoryItemResponse.cs" />
+    <Compile Include="ResponseModels\ReturnItemsSearchResponse.cs" />
+    <Compile Include="ResponseModels\PurchaseBillsSearchResponse.cs" />
+    <Compile Include="ResponseModels\InventoryItemSearchResponse.cs" />
+    <Compile Include="ResponseModels\OrderSearchResponse.cs" />
+    <Compile Include="ResponseModels\ProductResponse.cs" />
+    <Compile Include="ResponseModels\DashboardResponseModel.cs" />
+    <Compile Include="ResponseModels\ProductVariationSearchResponse .cs" />
+    <Compile Include="ResponseModels\SupplierPaymentHistorySearchResponse.cs" />
+    <Compile Include="ResponseModels\WebsiteProductSearchResponse.cs" />
+    <Compile Include="ResponseModels\ProductSearchResponse.cs" />
+    <Compile Include="ResponseModels\ProductSearchResponseByAnyCode.cs" />
+    <Compile Include="WebModels\BrandWebModel.cs" />
+    <Compile Include="WebModels\ReturnedItemsModel.cs" />
+    <Compile Include="WebModels\ProductVariationModel.cs" />
+    <Compile Include="WebModels\CustomerOrderModel.cs" />
+    <Compile Include="WebModels\PurchaseBill.cs" />
+    <Compile Include="WebModels\ShelfModel.cs" />
+    <Compile Include="WebModels\SupplierBankAccountModel.cs" />
+    <Compile Include="WebModels\SupplierPaymentHistoryModel.cs" />
+    <Compile Include="WebModels\UnitModel.cs" />
+    <Compile Include="WebModels\PaymentMethodWebModel.cs" />
+    <Compile Include="WebModels\WebSiteSliderWebModel.cs" />
+    <Compile Include="WebViewModels\CartViewModel.cs" />
+    <Compile Include="WebViewModels\ExpenseViewModel.cs" />
+    <Compile Include="WebViewModels\ProductApiModel.cs" />
+    <Compile Include="WebViewModels\AspNetUsersViewModel.cs" />
+    <Compile Include="WebViewModels\MenuViewModel.cs" />
+    <Compile Include="WebViewModels\MessageViewModel.cs" />
+    <Compile Include="WebViewModels\InventoryItemsListViewModel.cs" />
+    <Compile Include="WebViewModels\InventoryItemViewModel.cs" />
+    <Compile Include="WebViewModels\NoteViewModel.cs" />
+    <Compile Include="WebViewModels\OrderViewModel.cs" />
+    <Compile Include="WebViewModels\ProductCategoryListViewModel.cs" />
+    <Compile Include="WebViewModels\ProductCategoryViewModel.cs" />
+    <Compile Include="WebViewModels\SaleReturnViewModel.cs" />
+    <Compile Include="WebViewModels\SupplierBankAccountViewModel.cs" />
+    <Compile Include="WebViewModels\ProductconfigurationViewModel.cs" />
+    <Compile Include="WebViewModels\PurchaseBillViewModel.cs" />
+    <Compile Include="WebViewModels\SupplierPaymentHistoryViewModel.cs" />
+    <Compile Include="WebViewModels\WebsiteProductsListViewModel.cs" />
+    <Compile Include="WebViewModels\ProductsListViewModel.cs" />
+    <Compile Include="WebViewModels\ProductViewModel.cs" />
+    <Compile Include="WebViewModels\AccountViewModels.cs" />
+    <Compile Include="WebModels\CategoryApiModel.cs" />
+    <Compile Include="WebModels\ProductWebApiModel.cs" />
+    <Compile Include="WebModels\SubCategoryApiModel.cs" />
+    <Compile Include="WebModels\ApplicantModel.cs" />
+    <Compile Include="WebModels\AspNetUserModel.cs" />
+    <Compile Include="WebModels\BoolDropDownModel.cs" />
+    <Compile Include="WebModels\CustomerModel.cs" />
+    <Compile Include="WebModels\ExpenseCategoryModel.cs" />
+    <Compile Include="WebModels\ExpenseModel.cs" />
+    <Compile Include="WebModels\IdentityModels.cs" />
+    <Compile Include="WebModels\InventoryItemListModel.cs" />
+    <Compile Include="WebModels\InventoryItemModel.cs" />
+    <Compile Include="WebModels\NoteModel.cs" />
+    <Compile Include="WebModels\NotesCategoryModel.cs" />
+    <Compile Include="WebModels\OrderItemModel.cs" />
+    <Compile Include="WebModels\OrderListViewModel.cs" />
+    <Compile Include="WebModels\OrderModel.cs" />
+    <Compile Include="WebModels\ProductCategoryModel.cs" />
+    <Compile Include="WebModels\ProductImage.cs" />
+    <Compile Include="WebModels\ProductMainCategoryModel.cs" />
+    <Compile Include="WebModels\ProductModel.cs" />
+    <Compile Include="WebModels\VendorModel.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+    <None Include="packages.config">
+      <SubType>Designer</SubType>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="ApiModels\Request\" />
+    <Folder Include="Resources\" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

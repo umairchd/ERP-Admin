@@ -1,0 +1,209 @@
+﻿@model ERP.Models.WebViewModels.SupplierPaymentHistoryViewModel
+@{
+    ViewBag.Title = "History";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    Session["MenuKey"] = 8;
+    Session["SubMenuKey"] = 4;
+}
+
+<div class="portlet light bg-inverse formBodyRemoveSideSpace formBodyMinHeight">
+    <div class="portlet-title">
+        <div class="caption">
+            <i class="icon-bulb font-red-sunglo"></i>
+            <span class="caption-subject font-red-sunglo bold uppercase">Supplier Payment</span>
+            <span class="caption-helper">@ViewBag.Title</span>
+        </div>
+        <div class="actions">
+            <a href="javascript:;" class="btn default red-stripe" id="btnResetFltr">
+                <i class="fa fa-recycle"></i>
+                <span class="hidden-480">
+                    Reset
+                </span>
+            </a>
+            <a href="javascript:;" class="btn default blue-stripe" id="btnFltr">
+                <i class="fa fa-filter"></i>
+                <span class="hidden-480">
+                    Filter
+                </span>
+            </a>
+            <a href="@Url.Action("New","SupplierPaymentHistory")" class="btn default yellow-stripe">
+                <i class="fa fa-plus"></i>
+                <span class="hidden-480">
+                    New Payment
+                </span>
+            </a>
+        </div>
+    </div>
+    <div class="portlet-body form">
+        <form class="form-horizontal">
+            <div class="form-body">
+                <div class="portlet-body">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label class="col-md-6 control-label">Payment Date From</label>
+                                <div class="col-md-6">
+                                    @Html.TextBox("Payment Date From", "", new { @class = "searchInputs form-control listFilter datepickerFormated cursorHand", @id = "PaymentDateFrom", @placeholder = "Payment Date From", @readonly = true })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label class="col-md-5 control-label">Payment Date To</label>
+                                <div class="col-md-6">
+                                    @Html.TextBox("Payment Date To", "", new { @class = "searchInputs form-control listFilter datepickerFormated cursorHand", @id = "PaymentDateTo", @placeholder = "Payment Date To", @readonly = true })
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                @*<label class="col-md-3 control-label"> Category </label>*@
+                                <div class="col-md-12">
+                                    @Html.DropDownListFor(x => x.SearchRequest.Vendor, new SelectList(Model.VendorsDdl, "VendorId", "Name"), new { @class = "searchInputs form-control listFilter select2me", @id = "Vendor" })
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="container">
+                            <div class="col-md-3">
+                                <h4 class="">Paid Amount: <strong class="font-red-pink" id="paidAmount">0</strong></h4>  
+                            </div>
+                            <div class="col-md-3">
+                                <h4 class="">Payable Amount: <strong class="font-red-pink" id="balanceAmount">0</strong></h4>  
+                            </div>
+                            <div class="col-md-3">
+                                <h4 class="">Advance Amount: <strong class="font-red-pink" id="creditAmount">0</strong></h4>  
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="portlet box">
+                    <div class="portlet-body flip-scroll">
+                        <table id="dataTable" class="table table-bordered table-striped table-condensed flip-content">
+                            <thead class="flip-content">
+                                <tr>
+                                    <th >Sr. No</th>
+                                    <th >Supplier</th>
+                                    <th >Supplier A/C #</th>
+                                    <th >Supplier A/C Title</th>
+                                    <th >Payment Method</th>
+                                    <th >Amount</th>
+                                    <th >Payment Date</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script type="text/javascript">
+    jQuery(document).on('keyup', '.listFilter', function (ev) {
+        if (ev.which === 13) {
+            $('#btnFltr').click();
+            // Avoid form submit
+            return false;
+        }
+    });
+
+    jQuery(document).ready(function($) {
+
+        var start = ('@Model.SearchRequest.PageNo' - 1) * '@Model.SearchRequest.PageSize';
+        var isAsc = '@Model.SearchRequest.IsAsc' == "True" || '@Model.SearchRequest.IsAsc' == "true";
+        var sortBy = ['@Model.SearchRequest.SortBy', isAsc ? 'asc' : 'desc'];
+
+        var oTable = $('#dataTable').dataTable({
+            "iDisplayLength": 20,
+            "displayStart": start || 0,
+            "bFilter": false,
+            "bLengthChange": false,
+            "aaSorting": [sortBy],
+            "aoColumnDefs": [
+                { 'bSortable': false, 'aTargets': [2,3,4,7] }
+                //{
+                //    "targets": [0],
+                //    "visible": false,
+                //    "searchable": false
+                //}
+            ],
+            "columns": [
+                { "data": "SupplierPaymentHistoryId" },
+                { "data": "Supplier" },
+                { "data": "SupplierBankAccountNumber" },
+                { "data": "SupplierBankAccountTitle" },
+                { "data": "PaymentMethod" },
+                { "data": "Amount" },
+                { "data": "PaymentDate" },
+                {
+                    "orderable": false,
+                    "data": null,
+                    "defaultContent": "<a class='details btn btn-sm'  href='javascript:;'><i class='fa fa-info-circle'></i> Details</a>",
+                    "class": "textAlignRight"
+                }
+            ],
+            "processing": true,
+            "serverSide": true,
+            "ajax": {
+                url: "/SupplierPaymentHistory/History",
+                type: "POST",
+                dataType: "json",
+                data: function(params) {
+                    params.PageNo = Math.ceil(params.start / params.length) + 1;
+                    if (params.PageNo === 0) {
+                        params.PageNo = 1;
+                    }
+                    params.PageSize = params.length;
+                    params.SortBy = params.order[0].column;
+                    params.IsAsc = params.order[0].dir === "asc";
+
+                    params.Vendor = $("#Vendor").val();
+                    params.PaymentDateFrom = $("#PaymentDateFrom").val();
+                    params.PaymentDateTo = $("#PaymentDateTo").val();
+                },
+                complete: function(response) {
+                    var data = response.responseJSON;
+                    $("#balanceAmount").text(data.BalanceAmount);
+                    $("#creditAmount").text(data.CreditAmount);
+                    $("#paidAmount").text(data.PaidAmount);
+                }
+            }
+        });
+        $('#btnFltr').on('click', function(e) {
+            oTable.fnDraw();
+        });
+
+        $('#btnResetFltr').on('click', function(e) {
+            $('#Vendor').select2('val', '');
+            $("#PaymentDateFrom").val('');
+            $("#PaymentDateTo").val('');
+            $('#PaymentDateTo').css('border', 'none');
+            oTable.fnFilter('');
+        });
+
+        $('#dataTable').on('click', '.details', function (e) {
+            e.preventDefault();
+            var nRow = $(this).parents('tr')[0];
+            var aData = oTable.fnGetData(nRow);
+            var siteUrl = '/SupplierPaymentHistory/New/' + aData.SupplierPaymentHistoryId;
+            $(location).attr('href', siteUrl);
+
+        });
+
+        $('#PaymentDateTo').on('change', function () {
+            var toDate = new Date($('#PaymentDateTo').val());
+            var fromDate = new Date($('#PaymentDateFrom').val());
+            if (toDate < fromDate) {
+                $('#PaymentDateTo').val("");
+                $('#PaymentDateTo').css('border', '1px solid red');
+                toastr.error("Date-to cannot be less than Date-from", "Enter Valid Date Range");
+            } else {
+                $('#PaymentDateTo').css('border', 'none');
+            }
+        });
+    });
+</script>

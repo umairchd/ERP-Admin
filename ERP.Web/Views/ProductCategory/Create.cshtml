@@ -1,0 +1,86 @@
+﻿@model ERP.Models.WebViewModels.ProductCategoryViewModel 
+@{
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    Session["MenuKey"] = 4;
+    Session["SubMenuKey"] = 3;
+    string pageHeading = Model.ProductCategoryModel != null ? "Update" : "Create";
+}
+
+
+@using (Html.BeginForm("Create", "ProductCategory", FormMethod.Post, new { @class = "form-horizontal",@id="ProductCategoryCreateForm" ,role = "form" }))
+{
+    <div class="portlet light bg-inverse formBodyRemoveSideSpace formBodyMinHeight">
+        <div class="portlet-title">
+            <div class="caption">
+                <i class="icon-bulb font-red-sunglo"></i>
+                <span class="caption-subject font-red-sunglo bold uppercase">Product Category</span>
+                <span class="caption-helper">@pageHeading</span>
+            </div>
+            <div class="actions">
+                <button class="btn default blue-stripe toBeHidden" id="btnFltr" type="submit" form="ProductCategoryCreateForm" name="saveCreate" onclick="return (ValidateFields(event));">
+                    <i class="fa fa-plus-square-o"></i>
+                    <span class="hidden-480">
+                        Save & New
+                    </span>
+                </button>
+                <button class="btn default green-stripe toBeHidden" id="btnFltr" type="submit" form="ProductCategoryCreateForm" name="save" onclick="return (ValidateFields(event));">
+                    <i class="fa fa-save"></i>
+                    <span class="hidden-480">
+                        Save & Close
+                    </span>
+                </button>
+                <button class="btn default red-stripe toBeHidden" id="btnReset" type="reset" form="ProductCategoryCreateForm">
+                    <i class="fa fa-undo"></i>
+                    <span class="hidden-480">
+                        Undo All
+                    </span>
+                </button>
+                <a href="~/ProductCategory/Index" class="btn default yellow-stripe">
+                    <i class="fa fa-list"></i>
+                    <span class="hidden-480">
+                        All Product Categories
+                    </span>
+                </a>
+            </div>
+        </div>
+
+        <div class="portlet-body form">
+            <div class="container-fluid">
+                @Html.AntiForgeryToken()
+                @Html.HiddenFor(m => m.ProductCategoryModel.CategoryId)
+                @Html.HiddenFor(m => m.ProductCategoryModel.RecCreatedBy)
+                @Html.HiddenFor(m => m.ProductCategoryModel.RecCreatedDate)
+
+               
+                <div class="form-group margin-top-20">
+                    @Html.LabelFor(m => m.ProductCategoryModel.MainCategoryId, new { @class = "col-md-3 control-label" })
+                    <div class="col-md-4">
+                        @Html.DropDownListFor(m => m.ProductCategoryModel.MainCategoryId, new SelectList(Model.ProductMainCategoriesDDL, "CategoryId", "Name"), "Select Main Category", new { @class = "form-control  select2me", placeholder = "Name" })
+                    </div>
+                </div>
+                <div class="form-group margin-top-20">
+                    @Html.LabelFor(m => m.ProductCategoryModel.Name, new { @class = "col-md-3 control-label requiredLabel" })
+                    <div class="col-md-4">
+                        @Html.TextBoxFor(m => m.ProductCategoryModel.Name, new { @class = "form-control mandatory", placeholder = "Category Name" })
+                    </div>
+                </div>
+                <div class="form-group margin-top-20">
+                    @Html.LabelFor(m => m.ProductCategoryModel.Description, new { @class = "col-md-3 control-label" })
+                    <div class="col-md-4">
+                        @Html.TextAreaFor(m => m.ProductCategoryModel.Description, new { @class = "form-control", placeholder = "Description" })
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <script>
+            function ValidateDropDown() {
+                var value = $('#ProductCategoryModel_MainCategoryId option:selected').val();
+                if (value == "" || value < 0)
+                    return false;
+                return true;
+            }
+        </script>
+    </div>
+}
+

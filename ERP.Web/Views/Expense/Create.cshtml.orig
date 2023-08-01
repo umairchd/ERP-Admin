@@ -1,0 +1,90 @@
+﻿@model TMD.Models.WebViewModels.ExpenseViewModel
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+@using (Html.BeginForm("Create", "Expense", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+{
+    <div class="portlet box blue-hoki">
+        <div class="portlet-title">
+
+            <div class="tools">
+                @*<a href="javascript:;" class="collapse">
+                    </a>*@
+
+                <button type="submit" class="btn blue" onclick="return(ValidateFields(event));">Save</button>
+                <a href="~/Expense/Index">
+                    <button type="button" class="btn default">Cancel</button>
+                </a>
+            </div>
+            <div class="caption">
+                <i class="fa fa-male"></i>Create/Update Expense
+            </div>
+        </div>
+
+        <div class="portlet-body form">
+            <div class="container-fluid">
+                @Html.AntiForgeryToken()
+                @Html.HiddenFor(m => m.ExpenseModel.Id)
+                @Html.HiddenFor(m => m.ExpenseModel.RecCreatedBy)
+                @Html.HiddenFor(m => m.ExpenseModel.RecCreatedDate)
+
+                <div class="form-group margin-top-20">
+                    @Html.Label("Expense Date", new { @class = "col-md-3 control-label requiredLabel"})
+                    <div class="col-md-4">
+<<<<<<< HEAD
+                        @Html.TextBoxFor(m => m.ExpenseModel.ExpenseDate, new { @class = "form-control  mandatory", placeholder = "Expense Date", @id = "ExpenseDate" })
+=======
+                        @Html.TextBoxFor(m => m.ExpenseModel.ExpenseDate, new { @class = "form-control mandatory", placeholder = "Expense Date", @id = "ExpenseDate" })
+>>>>>>> 630479c3f9a44cce30a0d33265161cad61fb2f04
+                    </div>
+                </div>
+                <div class="form-group margin-top-20">
+                    @Html.Label("Expense Category", new { @class = "col-md-3 control-label requiredLabel"})
+                    <div class="col-md-4">
+                        @Html.DropDownListFor(m => m.ExpenseModel.ExpenseCategoryId, new SelectList(Model.ExpenseCategories, "Id", "Name"),"Select One", new { @class = "form-control  select2me mandatory", @id = "ExpenseCategoryId" })
+                    </div>
+                </div>
+                <div class="form-group margin-top-20">
+                    @Html.Label("Vendor", new { @class = "col-md-3 control-label" })
+                    <div class="col-md-4">
+                        @Html.DropDownListFor(m => m.ExpenseModel.VendorId, new SelectList(Model.Vendors, "VendorId", "Name"), "Select One", new { @class = "form-control  select2me", @id = "VendorId" })
+                    </div>
+                </div>
+                <div class="form-group margin-top-20">
+                    @Html.Label("Expense Amount", new { @class = "col-md-3 control-label requiredLabel" })
+                    <div class="col-md-4">
+<<<<<<< HEAD
+                        @Html.TextBoxFor(m => m.ExpenseModel.ExpenseAmount, new { @class = "form-control  mandatory", placeholder = "Expense Amount", @id = "ExpenseAmount" })
+=======
+                        @Html.TextBoxFor(m => m.ExpenseModel.ExpenseAmount, new { @class = "form-control mandatory", placeholder = "Expense Amount", @id = "ExpenseAmount" })
+>>>>>>> 630479c3f9a44cce30a0d33265161cad61fb2f04
+                    </div>
+                </div>
+                <div class="form-group margin-top-20">
+                    @Html.LabelFor(m => m.ExpenseModel.Description, new { @class = "col-md-3 control-label" })
+                    <div class="col-md-4">
+<<<<<<< HEAD
+                        @Html.TextAreaFor(m => m.ExpenseModel.Description, new { @class = "form-control ", placeholder = "Description" })
+=======
+                        @Html.TextAreaFor(m => m.ExpenseModel.Description, new { @class = "form-control", placeholder = "Description" })
+>>>>>>> 630479c3f9a44cce30a0d33265161cad61fb2f04
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+}
+
+<script type="text/javascript">
+    jQuery(document).ready(function($) {
+        $("#ExpenseDate").datepicker({
+            changeMonth: true,
+            changeYear: true,
+            maxDate: new Date()
+        });
+        $("#OrderDate").datepicker().datepicker("setDate", new Date());
+    });
+</script>

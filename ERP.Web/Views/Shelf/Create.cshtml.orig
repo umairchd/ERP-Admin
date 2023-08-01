@@ -1,0 +1,61 @@
+﻿@model TMD.Models.WebModels.ShelfModel
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    Session["MenuKey"] = 19;
+}
+
+@using (Html.BeginForm("Create", "Shelf", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+{
+    <div class="portlet box blue-hoki">
+        <div class="portlet-title">
+
+            <div class="tools">
+                @*<a href="javascript:;" class="collapse">
+                    </a>*@
+
+                <button type="submit" class="btn blue" onclick="return(ValidateFields(event));">Save</button>
+                <a href="~/Shelf/Index">
+                    <button type="button" class="btn default">Cancel</button>
+                </a>
+            </div>
+            <div class="caption">
+                <i class="fa fa-male"></i>Create/Update Shelf
+            </div>
+        </div>
+
+        <div class="portlet-body form">
+            <div class="container-fluid">
+                @Html.AntiForgeryToken()
+                @Html.HiddenFor(m => m.ShelfId)
+                @Html.HiddenFor(m => m.RecCreatedBy)
+                @Html.HiddenFor(m => m.RecCreatedDate)
+
+                <div class="form-group margin-top-20">
+                    @Html.LabelFor(m => m.Title, new { @class = "col-md-3 control-label requiredLabel" })
+                    <div class="col-md-4">
+<<<<<<< HEAD
+                        @Html.TextBoxFor(m => m.Title, new { @class = "form-control  mandatory", placeholder = "Title" })
+=======
+                        @Html.TextBoxFor(m => m.Title, new { @class = "form-control mandatory", placeholder = "Title" })
+>>>>>>> 630479c3f9a44cce30a0d33265161cad61fb2f04
+                    </div>
+                </div>
+
+                <div class="form-group margin-top-20">
+                    @Html.LabelFor(m => m.Description, new { @class = "col-md-3 control-label requiredLabel" })
+                    <div class="col-md-4">
+<<<<<<< HEAD
+                        @Html.TextAreaFor(m => m.Description, new { @class = "form-control  mandatory", placeholder = "Description" })
+=======
+                        @Html.TextAreaFor(m => m.Description, new { @class = "form-control mandatory", placeholder = "Description" })
+>>>>>>> 630479c3f9a44cce30a0d33265161cad61fb2f04
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+}
+
+

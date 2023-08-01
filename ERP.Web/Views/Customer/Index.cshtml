@@ -1,0 +1,124 @@
+﻿@model IEnumerable<ERP.Models.WebModels.CustomerModel>
+    @{
+        ViewBag.Title = "All";
+        Layout = "~/Views/Shared/_AdminLayout.cshtml";
+        Session["MenuKey"] = 6;
+        Session["SubMenuKey"] = 2;
+    }
+
+@*<div class="container-fluid">
+    <header>
+        <h3 class="page-title">
+            @ViewBag.Title
+        </h3>
+    </header>
+
+    <form class="form-horizontal">
+        <div class="row-fluid">
+            <div class="span12">
+                <div class="portlet-title">
+                    <div class="tools">
+                        <input type="button" class="btn blue titleButton" id="btnResetFltr" style="float:right" value="Reset">
+                        <input type="button" class="btn green" id="btnFltr" style="float:right" value="Filter" />
+                        <a href="~/Customer/Create" class="btn red titleButton">Add New Customer</a>
+                    </div>
+                </div>*@
+    <div class="portlet light bg-inverse formBodyRemoveSideSpace formBodyMinHeight">
+    <div class="portlet-title">
+        <div class="caption">
+            <i class="icon-bulb font-red-sunglo"></i>
+            <span class="caption-subject font-red-sunglo bold uppercase">Customers</span>
+            <span class="caption-helper">@ViewBag.Title</span>
+        </div>
+        <div class="actions">
+            <a href="~/Customer/Create" class="btn default yellow-stripe">
+                <i class="fa fa-plus"></i>
+                <span class="hidden-480">
+                    Add New Customer
+                </span>
+            </a>
+        </div>
+    </div>
+
+
+    @*<div class="portlet-body form">
+            <div class="form-actions">
+                <div>
+                    <table class="responsive">
+                        <tr>
+                            <td class="col-md-1">
+                                <label class="control-label"> Search </label>
+                            </td>
+                            <td class="col-md-2">
+                                <div class="input-icon">
+                                    <i class="fa fa-search"></i>
+                                    @Html.TextBox("Search", "", new { @class = "searchInputs form-control listFilter", @id = "txtSearchCustomer", @placeholder = "Name, Phone, Email or Address" })
+                                </div>
+                            </td>
+                            <td class="col-md-1"></td>
+                        </tr>
+                    </table>
+
+                </div>
+            </div>
+        </div>*@
+<div class="portlet-body form">
+<form class="form-horizontal">
+    <div class="form-body">
+        
+        <div class="portlet box">
+            <div class="portlet-body flip-scroll">
+                <table id="dataTable" class="table table-bordered table-striped table-condensed flip-content">
+                    <thead class="flip-content">
+                        <tr>
+                            <th width="10%">Name</th>
+                            <th width="8%">Phone</th>
+                            <th width="16%">Address</th>
+                            <th width="12%">Email</th>
+                            <th width="12%">Comments</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>@Html.ActionLink(@item.Name, "Create", new { id = item.Id }) </td>
+                                <td>@item.Phone</td>
+                                <td>@item.Address</td>
+                                <td>@item.Email</td>
+                                <td>@item.Comments</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+      </div>
+</form>
+</div>
+</div>
+
+
+
+                    <script type="text/javascript">
+                        $(document).ready(function () {
+                            var oTable = $('#dataTable').dataTable({
+                                "sPaginationType": "full_numbers",
+                                "iDisplayLength": 10,
+                                "bFilter": true,
+                                "bLengthChange": false,
+                            });
+                            $('#btnFltr').on('click', function (e) {
+                                var searchN = $('#txtSearchCustomer').val();
+                                oTable.fnFilter(searchN);
+                            });
+                            $('#btnResetFltr').on('click', function (e) {
+
+                                $('#txtSearchCustomer').val('');
+                                oTable.fnFilter('');
+                            });
+                        });
+                    </script>
+
+
+

@@ -1,0 +1,137 @@
+@{
+    ViewBag.Title = "Account Settings";
+}
+@if (ViewBag.Message != null)
+{
+    <div class="alert fade in alert-dismissable alert-@ViewBag.MessageType">
+        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+        @ViewBag.Message
+    </div>
+}
+
+<div class="container-md" ng-controller="AccountSettingsController as vm">
+    <div class="row">
+        <div class="col-md-3">
+            <div class="panel b">
+                <div class="panel-heading bg-gray-lighter text-bold">Personal Settings</div>
+                <div class="list-group">
+                    <a href="#Profile" data-toggle="tab" class="list-group-item"
+                       ng-click="vm.selectTab('Profile')"
+                       ng-class="{'active' : vm.selectedTab === 'Profile'}">Profile</a>
+                    <a href="#ChangePassword" data-toggle="tab" class="list-group-item"
+                       ng-click="vm.selectTab('ChangePassword')"
+                       ng-class="{'active' : vm.selectedTab === 'ChangePassword'}">Change Password</a>
+                    <a href="@Url.Action("Index","Manage")" class="list-group-item">Manage</a>
+                    <a href="#Emails" data-toggle="tab" class="list-group-item"
+                       ng-click="vm.selectTab('Emails')"
+                       ng-class="{'active' : vm.selectedTab === 'Emails'}">Emails</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-9">
+            <div class="tab-content p0 b0">
+                <div id="Profile" class="tab-pane active">
+                    <div class="panel b">
+                        <div class="panel-heading bg-gray-lighter text-bold">Profile</div>
+                        <div class="panel-body" ng-class="{'whirl double-up' : vm.loading.profile}">
+                            <form novalidate="" name="basicForm" id="basicForm" ng-submit="vm.updateBasicInfo()">
+                                <div class="form-group">
+                                    <label>Picture</label>
+                                    <div ng-show="!vm.file">
+                                        <div ngf-drop="vm.selectFile($file)"
+                                             ngf-select="vm.selectFile($file)"
+                                             ngf-max-size="2MB"
+                                             name="profileImage"
+                                             id="profileImage"
+                                             ngf-model-invalid="errorFile"
+                                             ng-model="vm.file"
+                                             class="drop-box"
+                                             ng-class="{'error' : basicForm.profileImage.$error.maxSize }"
+                                             ngf-drag-over-class="'dragover'" ngf-multiple="false"
+                                             accept="image/*"
+                                             ngf-pattern="'image/*'">{{vm.file ? 'Click here or drop image to change' : 'Drop image here or click to upload'}}</div>
+                                    </div>
+                                    <div ngf-no-file-drop>File Drag/Drop is not supported for this browser</div>
+                                    <i class="text-danger" ng-show="basicForm.profileImage.$error.maxSize">
+                                        File too large
+                                        {{errorFile.size / 1000000|number:1}}MB: max 2MB
+                                    </i>
+                                    <div ng-if="vm.file">
+                                        <div style="height: 165px; width: 165px;">
+                                            <img ngf-src="vm.file" ng-if="basicForm.profileImage.$valid" style="height: 165px; max-height: 165px;">
+                                        </div>
+                                        <a href="javascript:;" ng-click="vm.changeImage()"><i class="fa fa-camera-retro"></i> Change</a>&nbsp;&nbsp;&nbsp;&nbsp;
+                                        <a href="javascript:;" ng-click="vm.removeImage()"><i class="fa fa-times"></i> Remove</a>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label>First Name</label>
+                                    <input type="text" name="FirstName" ng-required="true" ng-model="vm.user.FirstName" class="form-control" />
+                                </div>
+                                <div class="form-group">
+                                    <label>Last Name</label>
+                                    <input type="text" name="LastName" ng-required="true" ng-model="vm.user.LastName" class="form-control" />
+                                </div>
+                                <button type="submit" ng-disabled="!basicForm.$valid" class="btn btn-info">Update settings</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <div id="ChangePassword" class="tab-pane">
+                    <div class="panel b">
+                        <div class="panel-heading bg-gray-lighter text-bold">Account</div>
+                        <div class="panel-body">
+                            
+                            <form novalidate="" name="vm.changePasswordForm" method="POST" action="@Url.Action("ChangePassword", "Manage")">
+                                @Html.AntiForgeryToken()
+                                <div class="form-group">
+                                    <label>Current password</label>
+                                    <input type="password" name="OldPassword" ng-model="vm.userPassword.OldPassword" ng-required="true" class="form-control"/>
+                                    <span class="text-danger"
+                                          ng-show="vm.changePasswordForm.OldPassword.$dirty && vm.changePasswordForm.OldPassword.$error.required">
+                                        Old Password is required
+                                    </span>
+                                </div>
+                                <div class="form-group">
+                                    <label>New password</label>
+                                    <input type="password" name="NewPassword" ng-model="vm.userPassword.NewPassword" ng-required="true" class="form-control"/>
+                                    <span class="text-danger"
+                                          ng-show="vm.changePasswordForm.NewPassword.$dirty && vm.changePasswordForm.NewPassword.$error.required">
+                                        Old Password is required
+                                    </span>
+                                </div>
+                                <div class="form-group">
+                                    <label>Confirm new password</label>
+                                    <input type="password" name="ConfirmPassword" ng-model="vm.userPassword.ConfirmPassword"
+                                           ng-required="true" class="form-control"/>
+                                    <span ng-show="vm.changePasswordForm.ConfirmPassword.$dirty && vm.userPassword.ConfirmPassword !== vm.userPassword.NewPassword"
+                                          class="text-danger">Password does Not match</span>
+                                </div>
+                                <button type="submit" ng-disabled="!vm.changePasswordForm.$valid" class="btn btn-info">Update password</button>
+
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <div id="Emails" class="tab-pane">
+                    <div class="panel b">
+                        <div class="panel-heading bg-gray-lighter text-bold">Emails</div>
+                        <div class="panel-body">
+                            <p>
+                                <strong>Your email addresses</strong>
+                            </p>
+                            <p>
+                                <span class="mr">{{vm.user.EmailAddress}}</span>
+                                <span class="label label-success">primary</span>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section pageLevelScripts{
+    <script type="text/javascript" src="~/Scripts/LoveBirds-Angular/AngularControllers/AccountSettingsController.js"></script>
+}

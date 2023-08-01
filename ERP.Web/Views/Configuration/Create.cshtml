@@ -1,0 +1,177 @@
+﻿@model ERP.Models.WebViewModels.ProductConfigurationViewModel
+@{
+    ViewBag.Title = "Update";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    Session["MenuKey"] = 10 ;
+    Session["SubMenuKey"] = 1;
+}
+
+
+    <div class="portlet light bg-inverse formBodyRemoveSideSpace formBodyMinHeight">
+            <div class="portlet-title">
+                <div class="caption">
+                    <i class="icon-bulb font-red-sunglo"></i>
+                    <span class="caption-subject font-red-sunglo bold uppercase">Configuration</span>
+                    <span class="caption-helper">@ViewBag.Title</span>
+                </div>
+                <div class="actions">
+                    <button class="btn default green-stripe toBeHidden" id="ResetFltr" type="submit" form="ConfigurationCreateForm" name="save" onclick="return (ValidateFields(event));">
+                        <i class="fa fa-save"></i>
+                        <span class="hidden-480">
+                            Save & Close
+                        </span>
+                    </button>
+                </div>
+            </div>
+    <div class="form-body">
+        <h3 class="form-section">
+            Product's Basic Info
+            @*<span style="font-size: 12px">@Html.CheckBoxFor(m => m.ProductModel.IsWeb, new { @class = "form-control", @id = "isWeb" }) @Html.LabelFor(m => m.ProductModel.IsWeb, new { @class = "control-label" })</span>*@
+        </h3>
+    </div>
+        <div class="portlet-body form">
+    @using (Html.BeginForm("Create", "Configuration", FormMethod.Post, new { @class = "form-horizontal", @id = "ConfigurationCreateForm", role = "form", enctype = "multipart/form-data" }))
+    {
+        <div class="form-body">
+            <div class="portlet-body">
+                <div class="portlet-body form">
+                    @Html.AntiForgeryToken()
+                    @Html.HiddenFor(m => m.Configuration.Id)
+                    @Html.HiddenFor(m => m.Configuration.RecCreatedBy)
+                    @Html.HiddenFor(m => m.Configuration.RecCreatedDate)
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                @Html.LabelFor(m => m.Configuration.ProductCodePrefix, new { @class = "col-md-3 control-label requiredLabel" })
+                                <div class="col-md-6">
+                                    @Html.TextBoxFor(m => m.Configuration.ProductCodePrefix, new { @class = "form-control", @id = "ProductCodePrefix", @placeholder = "Product Code Prefix" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                @Html.LabelFor(m => m.Configuration.MaxAllowedDiscount, new { @class = "col-md-4 control-label requiredLabel" })
+
+                                <div class="col-md-6">
+                                    @Html.TextBoxFor(m => m.Configuration.MaxAllowedDiscount, new { @class = "form-control", @id = "MaxAllowedDiscount", @placeholder = "Max Allowed Discount" })
+                                    @Html.ValidationMessageFor(m => m.Configuration.MaxAllowedDiscount)
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                @Html.LabelFor(m => m.Configuration.Emails, new { @class = "col-md-3 control-label requiredLabel" })
+                                <div class="col-md-6">
+                                    @Html.TextBoxFor(m => m.Configuration.Emails, new { @class = "form-control", @id = "Emails", @placeholder = "Emails ',' separated" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                @Html.LabelFor(m => m.Configuration.DefaultVendorId, new { @class = "col-md-4 control-label requiredLabel" })
+                                <div class="col-md-6">
+                                    @Html.DropDownListFor(model => model.Configuration.DefaultVendorId, new SelectList(Model.vendorModel, "VendorId", "Name"), "Select Vendor", new { @class = "form-control  select2me mandatory", @id = "Vendors", @placeholder = "Select Vendors" })
+                                    @Html.ValidationMessageFor(model => model.Configuration.DefaultVendorId)
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    
+                    <h3 class="form-section">
+                        Product Item(s)
+                    </h3>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                @Html.LabelFor(m => m.Configuration.SecurityPassword, new { @class = "col-md-3 control-label requiredLabel" })
+                                <div class="col-md-6">
+                                    @Html.TextBoxFor(m => m.Configuration.SecurityPassword, new { @class = "form-control", @id = "SecurityPassword", @placeholder = "Security Password" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                @Html.LabelFor(m => m.Configuration.Comments, new { @class = "col-md-4 control-label requiredLabel" })
+                                <div class="col-md-6">
+                                    @Html.TextBoxFor(m => m.Configuration.Comments, new { @class = "form-control", @id = "Comments", @placeholder = "Comments" })
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                @Html.LabelFor(m => m.LicenseKey, new { @class = "col-md-3 control-label requiredLabel" })
+                                <div class="col-md-8">
+                                    <div class="col-md-9">
+                                        @Html.TextAreaFor(m => m.LicenseKey, new {@class = "form-control ", @id = "License Key", rows = 5, @placeholder = "lincense Key"})
+                                    </div>
+                                </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+       </div>
+    }
+        </div>
+        </div>
+               
+
+
+                @*<div class="form-group margin-top-20">
+                            <label class="col-md-3 control-label">Product Code Prefix</label>
+                            <div class="col-md-4">
+                                @Html.TextBoxFor(m => m.Configuration.ProductCodePrefix, new { @class = "form-control", @id = "ProductCodePrefix" })
+                            </div>
+                        </div>
+
+                        <div class="form-group margin-top-20">
+                            <label class="col-md-3 control-label">Max Allowed Discount</label>
+                            <div class="col-md-4">
+                                @Html.TextBoxFor(m => m.Configuration.MaxAllowedDiscount, new { @class = "form-control", @id = "MaxAllowedDiscount" })
+                                @Html.ValidationMessageFor(m => m.Configuration.MaxAllowedDiscount)
+                            </div>
+                        </div>
+
+                        <div class="form-group margin-top-20">
+                            <label class="col-md-3 control-label">Emails <small>"," separated</small></label>
+                            <div class="col-md-4">
+                                @Html.TextBoxFor(m => m.Configuration.Emails, new { @class = "form-control", @id = "Emails" })
+                            </div>
+                        </div>
+                    <div class="form-group margin-top-20">
+                        @Html.LabelFor(m => m.Configuration.DefaultVendorId, new { @class = "col-md-3 control-label requiredLabel" })
+                        <div class="col-md-4">
+                            @Html.DropDownListFor(model => model.Configuration.DefaultVendorId, new SelectList(Model.vendorModel, "VendorId", "Name"), "Select Vendor", new { @class = "form-control  select2me mandatory", @id = "Vendors" })
+                            @Html.ValidationMessageFor(model => model.Configuration.DefaultVendorId)
+                        </div>
+
+                    </div>
+                    <div class="form-group margin-top-20">
+                        <label class="col-md-3 control-label">Security Password</label>
+                        <div class="col-md-4">
+                            @Html.TextBoxFor(m => m.Configuration.SecurityPassword, new { @class = "form-control", @id = "SecurityPassword" })
+                        </div>
+                    </div>
+
+
+                    <div class="form-group margin-top-20">
+                        <label class="col-md-3 control-label">Comments</label>
+                        <div class="col-md-4">
+                            @Html.TextBoxFor(m => m.Configuration.Comments, new { @class = "form-control", @id = "Comments" })
+                        </div>
+                    </div>*@
+
+
+
+
+
+                <script>
+                    $(document).ready(function () {
+
+                    });
+                </script>

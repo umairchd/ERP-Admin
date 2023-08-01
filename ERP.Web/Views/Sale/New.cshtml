@@ -1,0 +1,306 @@
+﻿@*@using Castle.Core.Internal*@
+@using ERP.Models.WebModels
+@using iTextSharp.text
+@using iTextSharp.text.pdf
+@model ERP.Models.WebModels.OrderModel
+@*@model IEnumerable<TMD.Models.WebModels.ProductCategoryModel>*@
+@{
+    var products = (List<ProductWebApiModel>)ViewBag.Products;
+    var customers = (List<CustomerModel>)ViewBag.Customers;
+    if (Model.OrderId > 0)
+    {
+        ViewBag.Title = "Invoice Details";
+    }
+    else
+    {
+        ViewBag.Title = "New Invoice";
+    }
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    Session["MenuKey"] = 2;
+    Session["SubMenuKey"] = 1;
+}
+
+
+
+<div class="portlet light bg-inverse formBodyRemoveSideSpace formBodyMinHeight">
+    <div class="portlet-title">
+        <div class="caption">
+            <i class="icon-basket-loaded font-red-sunglo"></i>
+            <span class="caption-subject font-red-sunglo bold uppercase">Sale</span>
+            <span class="caption-helper">@ViewBag.Title</span>
+        </div>
+        <div class="actions">
+            <button class="btn default blue-stripe toBeHidden" id="btnResetFltr" type="submit" form="OrderCreateForm" name="save" onclick="return ValidateAmounts();">
+                <i class=" fa fa-plus-square-o">
+                </i>
+                <span class="hidden-480">
+                    Save & New
+                </span>
+            </button>
+            <button class="btn default green-stripe toBeHidden" id="btnFltr" form="OrderCreateForm" onclick="return ValidateAmounts();">
+                <i class="fa fa-save"></i>
+                <span class="hidden-480">
+                    Save & Print
+                </span>
+            </button>
+            <a href="~/Sale/History" class="btn default yellow-stripe">
+                <i class="fa fa-list"></i>
+                <span class="hidden-480">
+                    All Orders
+                </span>
+            </a>
+        </div>
+    </div>
+
+<div class="portlet-body form">
+    @using (Html.BeginForm("New", "Sale", FormMethod.Post, new { @class = "form-horizontal", @id="OrderCreateForm" ,role = "form" }))
+    {
+        <div class="form-body">
+            @Html.AntiForgeryToken()
+            @Html.HiddenFor(m => m.OrderId)
+            @Html.HiddenFor(m => m.RecCreatedBy)
+            @Html.HiddenFor(m => m.RecCreatedDate)
+            @Html.HiddenFor(m => m.AllowedMaxDiscount)
+            <div class="row  toBeHidden">
+                <div class="col-md-12" id="OrderItemAddInfo">
+                    <div class="form-group">
+                        <label class="control-label col-md-1">Barcode</label>
+                        <div class="col-md-2">
+                            <input type="text" value="" class="form-control mandatoryItem searchBarcode NumberValue" @*onchange="LoadProductByCodeForSaleInvoice(this)"*@ autofocus="autofocus" autocomplete="off" id="ItemBarcode" name="Barcode" />
+                            <input type="hidden" value="" id="ItemProductId" />
+                        </div>
+                        <div class="col-md-2">
+                            @Html.DropDownList("Product", new SelectList(products.OrderBy(x => x.ProductName), "Barcode", "ProductName"), "Select Product", new { @class = "form-control select2me", @id = "ProductsDDList" })
+                            @Html.ValidationMessage("Please Select a Product")
+                        </div>
+                        @*<div class="col-md-2">
+                        <input type="text" value="" class="form-control" id="ItemName" disabled="disabled" />
+                    </div>*@
+                        <label class="control-label col-md-1">Sale Price</label>
+                        <div class="col-md-1">
+                            <input tabindex="-1" type="text" value="" readonly="readonly" class="form-control" id="SalePrice" />
+                        </div>
+                        <label class="control-label col-md-1">Qty</label>
+                        <div class="col-md-1">
+                            <input type="text" value="1" class="form-control calcPrice searchBarcode NumberValue" id="ItemQty" />
+                        </div>
+                        <label class="control-label col-md-1">Stock</label>
+                        <div class="col-md-1">
+                            <input type="text" tabindex="-1" class="form-control" id="itemInStock" readonly="readonly" />
+                        </div>
+                        @*<div class="col-md-1">
+                        <label tabindex="-1" title="Items in Stock" style="font-style: italic" class="form-control" id="itemInStock"></label>
+                    </div>*@
+                        <div>
+                            <button type="button" class="btn green-meadow prominent" title="Add item to invoice" id="addItem">
+                                <i class="fa fa-plus-square-o"></i>
+                            </button>
+                        </div>
+
+                        <input type="hidden" value="" id="TotalPrice" />
+                        <input type="hidden" value="0" class="calcDisc" id="ItemDiscPerc" />
+                        <input type="hidden" value="0" class="calcDisc" id="ItemDiscPrice" />
+                        <input type="hidden" value="" id="GrandTotal" />
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-8">
+                    <div class="portlet box">
+                        <input type="hidden" id="TotalCount" value="@Model.OrderItems.Count" />
+                        <div class="portlet-body flip-scroll">
+                            <table id="tblItemDetails" class="table table-bordered table-striped table-condensed flip-content">
+                                <thead class="flip-content">
+                                    <tr>
+                                        <th style='display:none'></th>
+                                        <th width="10%">Code</th>
+                                        <th width="30%">Name</th>
+                                        <th width="10%">Price</th>
+                                        <th width="5%">Qty</th>
+                                        <th width="10%">Sub Total</th>
+                                        <th width="5%">Discount</th>
+                                        <th width="20%">Total</th>
+                                        <th width="10%"></th>
+                                    </tr>
+                                </thead>
+                                <tbody id="tableBody">
+                                    @for (int i = 0; i < Model.OrderItems.Count; i++)
+                                    {
+                                        <tr data-id="@i">
+                                            <td style='display:none'>
+                                                <input name='OrderItems.Index' type='hidden' value='@i' />
+                                                @Html.HiddenFor(model => model.OrderItems[i].OrderItemId)
+                                            </td>
+                                            <td>
+                                                @Html.TextBoxFor(model => model.OrderItems[i].ProductId, new { @readOnly = "readOnly", @class = "TableTextBox valid", tabindex = "-1" })
+                                            </td>
+                                            <td>
+                                                @Html.TextBoxFor(model => model.OrderItems[i].Product.Name, new { @readOnly = "readOnly", @class = "TableTextBox", tabindex = "-1" })
+                                            </td>
+
+                                            <td>
+                                                @Html.TextBoxFor(model => model.OrderItems[i].SalePrice, new { @readOnly = "readOnly", @class = "TableTextBox", tabindex = "-1" })
+                                            </td>
+                                            <td>
+                                                @Html.TextBoxFor(model => model.OrderItems[i].Quantity, new { @readOnly = "readOnly", @class = "TableTextBox GridValueChange NumberValue", tabindex = "-1" })
+                                            </td>
+                                            <td>
+                                                @Html.TextBoxFor(model => model.OrderItems[i].Subtotal, new { @readOnly = "readOnly", @class = "TableTextBox", tabindex = "-1" })
+                                            </td>
+                                            <td>
+                                                @Html.TextBoxFor(model => model.OrderItems[i].Discount, new { @readOnly = "readOnly", @class = "TableTextBox GridValueChange DecimalValue", tabindex = "-1" })
+                                            </td>
+                                            <td>
+                                                @Html.TextBoxFor(model => model.OrderItems[i].TotalItemAmount, new { @readOnly = "readOnly", @class = "TableTextBox", tabindex = "-1" })
+                                            </td>
+                                            <td>
+                                                @Html.HiddenFor(model => model.OrderItems[i].IsModified)
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-1"></div>
+                <div class=" col-md-3 portlet box">
+                    <div class="portlet-body">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label class="control-label col-md-6 name">Sub Total</label>
+                                    <div class="col-md-6 value">
+                                        <input readonly="readonly" class="form-control" disabled="disabled" type="text" id="OrderSubTotal" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label class="control-label col-md-6 name">Discount</label>
+                                    <div class="col-md-6 value">
+                                        <input readonly="readonly" class="form-control" disabled="disabled" type="text" id="OrderTotalDisc" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label class="control-label col-md-6 name">Total Items</label>
+                                    <div class="col-md-6 value">
+                                        <input readonly="readonly" disabled="disabled" type="text" class="form-control" id="OrderItemsQty" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label class="control-label col-md-6 name"><b>Total Amount</b></label>
+                                    <div class="col-md-6 value">
+                                        <input readonly="readonly" style="color:#d84a38; font-size: x-large;" disabled="disabled" type="text" class="form-control" id="OrderNetTotal" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row toBeHidden">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label class="control-label col-md-6 name"> Received Amount</label>
+                                    <div class="col-md-6 value">
+                                        <input type="text" class="form-control DecimalValue OrderAmountGiven" id="OrderAmountGiven" autocomplete="off" onchange="CalculateReturnAmount(this)" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row toBeHidden">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label class="control-label col-md-6 name"> Balance Amount</label>
+                                    <div class="col-md-6 value">
+                                        <input readonly="readonly" disabled="disabled" type="text" class="form-control" id="OrderAmountReturn" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    @*<label class="control-label col-md-6 name"> Customer</label>*@
+                                    <div class="col-md-12">
+                                        @Html.DropDownListFor(m => m.CustomerIds, new SelectList(customers.OrderBy(x => x.Name), "Id", "Name"), new { placeholder = "Select Customer(s) (optional)", multiple = "multiple", @class = "form-control select2me", @id = "CustomersDDList" })
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    @*<div class="form-actions">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="row">
+                                    <div class="col-md-offset-1 col-md-11">
+                                        <button type="submit" class="btn green-meadow" name="save" onclick="return ValidateAmounts();">Save</button>
+                                        <button type="submit" class="btn btn-primary" name="savePrint" onclick="return ValidateAmounts();">Save & Print</button>
+                                        <button type="button" class="btn btn-warning">Cancel</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                            </div>
+                        </div>
+                    </div>*@
+                </div>
+            </div>
+        </div>
+    }
+</div>
+</div>
+
+<script src="~/Scripts/SaleInvoicePage.js"></script>
+
+<script>
+    var emptyOrder = true;
+    var orderedProducts = [];
+    var productAvailableQuantity = [];
+    $(document).ajaxStop($.unblockUI);
+    //$(function () {
+    //    CalculateOrderTotals();
+    //});
+
+    $(document).ready(function () {
+        if ('@Model.OrderId' > 0) {
+            $(".toBeHidden").hide();
+            $(".toBeDisabled").prop('disabled', true);
+            $(".toBeShown").show();
+        } else {
+            $(".toBeShown").hide();
+        }
+
+
+        var oTable = $('#tblItemDetails').dataTable({
+            "bInfo": false,
+            "paging": false,
+            "bFilter": false,
+            "bLengthChange": false,
+            "aoColumnDefs": [{
+                bSortable: false, aTargets: [0, 1, 2, 3, 4, 5, 6, 7, 8]
+            }],
+        });
+
+        if ($("#tableBody").children("tr").children("td").html() == "No data available in table") {
+            //index = index - 1;
+            $("#tableBody").children("tr").remove();
+        }
+        //$("#CustomersDDList").select2('val', 1);
+        $("#ProductsDDList").on("change", function () {
+            LoadProductByCodeForSaleInvoice(this);
+        });
+        CalculateOrderTotals();
+    });
+
+</script>

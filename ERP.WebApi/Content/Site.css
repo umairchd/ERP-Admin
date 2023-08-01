@@ -1,0 +1,93 @@
+﻿
+.drop-box {
+    background: #F8F8F8;
+    border: 5px dashed #DDD;
+    /* width: 200px; */
+    height: 165px;
+    width: 165px;
+    text-align: center;
+    padding-top: 50px;
+    /* margin: 10px; */
+}
+
+.drop-box-extended {
+    background: #F8F8F8;
+    border: 5px dashed #DDD;
+    /* width: 200px; */
+    height: 130px;
+    width: 100%;
+    text-align: center;
+    padding-top: 50px;
+    margin-top: 10px
+}
+
+.drop-box.error {
+    border-color: #fc2f2f !important;
+}
+
+.drop-box-preview {
+    background: #F8F8F8;
+    border: 5px dashed #DDD;
+    text-align: center;
+    height: 160px;
+    padding-top: 60px;
+}
+
+.dragover {
+    border: 5px dashed cornflowerblue;
+}
+
+.img-24 {
+    height: 24px;
+}
+
+.img-32 {
+    height: 32px;
+}
+
+.cursor-pointer {
+    cursor: pointer;
+}
+
+.cursor-pointer:hover {
+    cursor: pointer;
+    /*color: #b3b3ff;*/
+}
+
+.active-arrow {
+    /*background-image: url(/Images/spriteicons.png);
+    background-repeat: no-repeat;
+    -ms-background-size: auto;
+    background-size: auto;
+    background-position: -25px -95px;*/
+    bottom: -16px;
+    height: 9px;
+    left: 50%;
+    margin-left: -8px;
+    position: absolute;
+    width: 17px;
+    display: block
+}
+
+.img-close-btn {
+    position: absolute;
+    right: 45px;
+    top: 5px;
+    cursor: pointer;
+    background: whitesmoke;
+    border-radius: 3px;
+    padding: 3px;
+    z-index: 3
+}
+
+.img-upload-progress {
+    position: absolute;
+    top: 55px;
+    font-size: 12px;
+    bottom: 0;
+    right: 0px;
+    left: 62px;
+    color: #000;
+    z-index: 3
+
+}

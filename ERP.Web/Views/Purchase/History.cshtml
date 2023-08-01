@@ -1,0 +1,197 @@
+﻿@model ERP.Models.WebViewModels.PurchaseBillHistoryViewModel
+@{
+    ViewBag.Title = "History";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    Session["MenuKey"] = 3;
+    Session["SubMenuKey"] = 4;
+ }
+
+<div class="portlet light bg-inverse formBodyRemoveSideSpace formBodyMinHeight">
+    <div class="portlet-title">
+        <div class="caption">
+            <i class="icon-bulb font-red-sunglo"></i>
+            <span class="caption-subject font-red-sunglo bold uppercase">Stock</span>
+            <span class="caption-helper">@ViewBag.Title</span>
+        </div>
+        <div class="actions">
+            <a href="javascript:;" class="btn default red-stripe" id="btnResetFltr">
+                <i class="fa fa-recycle"></i>
+                <span class="hidden-480">
+                    Reset
+                </span>
+            </a>
+            <a href="javascript:;" class="btn default blue-stripe" id="btnFltr">
+                <i class="fa fa-filter"></i>
+                <span class="hidden-480">
+                    Filter
+                </span>
+            </a>
+            <a href="~/Purchase/New" class="btn default yellow-stripe">
+                <i class="fa fa-plus"></i>
+                <span class="hidden-480">
+                    New Stock
+                </span>
+            </a>
+        </div>
+    </div>
+    <div class="portlet-body form">
+        <form class="form-horizontal">
+            <div class="form-body">
+                <div class="portlet-body">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label class="col-md-6 control-label">Purchase Date From</label>
+                                <div class="col-md-6">
+                                    @Html.TextBox("Purchase Date From", "", new { @class = "searchInputs form-control listFilter datepickerFormated cursorHand", @id = "PurchaseDateFrom", @placeholder = "Purchase Date From", @readonly=true })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label class="col-md-5 control-label">Purchase Date To</label>
+                                <div class="col-md-6">
+                                    @Html.TextBox("Purchase Date To", "", new { @class = "searchInputs form-control listFilter datepickerFormated cursorHand", @id = "PurchaseDateTo", @placeholder = "Purchase Date To", @readonly = true })
+                                </div>
+                            </div>
+                        </div>
+                        @*<div class="col-md-3">
+                            <div class="form-group">
+                                <label class="col-md-3 control-label"> Product Name </label>
+                                <div class="col-md-12">
+                                    @Html.TextBox("ProductName", "", new { @class = "searchInputs form-control listFilter", @id = "ProductName", @placeholder = "Product Name" })
+                                </div>
+                            </div>
+                        </div>*@
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                @*<label class="col-md-3 control-label"> Category </label>*@
+                                <div class="col-md-12">
+                                    @Html.DropDownListFor(x => x.SearchRequest.Vendor, new SelectList(Model.VendorsDdl, "VendorId", "Name"), "Select Supplier", new { @class = "searchInputs form-control listFilter select2me", @id = "Vendor" })
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="portlet box">
+                    <div class="portlet-body flip-scroll">
+                        <table id="dataTable" class="table table-bordered table-striped table-condensed flip-content">
+                            <thead class="flip-content">
+                                <tr>
+                                    <th width="10%">Bill Id</th>
+                                    <th width="20%">Purchase Date</th>
+                                    <th width="15%">Supplier</th>
+                                    <th width="7%">Supplier Inv#</th>
+                                    <th width="13%">Gross Total</th>
+                                    <th width="12%">Payment</th>
+                                    <th width="8%">Action</th>
+                                </tr>
+                            </thead>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script type="text/javascript">
+    jQuery(document).on('keyup', '.listFilter', function (ev) {
+        if (ev.which === 13) {
+            $('#btnFltr').click();
+            // Avoid form submit
+            return false;
+        }
+    });
+
+    jQuery(document).ready(function($) {
+
+        var start = ('@Model.SearchRequest.PageNo' - 1) * '@Model.SearchRequest.PageSize';
+        var isAsc = '@Model.SearchRequest.IsAsc' == "True" || '@Model.SearchRequest.IsAsc' == "true";
+        var sortBy = ['@Model.SearchRequest.SortBy', isAsc ? 'asc' : 'desc'];
+
+        var oTable = $('#dataTable').dataTable({
+            "iDisplayLength": 20,
+            "displayStart": start || 0,
+            "bFilter": false,
+            "bLengthChange": false,
+            "aaSorting": [sortBy],
+            "aoColumnDefs": [
+                { 'bSortable': false, 'aTargets': [6] }
+                //{
+                //    "targets": [0],
+                //    "visible": false,
+                //    "searchable": false
+                //}
+            ],
+            "columns": [
+                { "data": "BillId" },
+                { "data": "PurchaseDate" },
+                { "data": "SupplierName" },
+                { "data": "SupplierInvoiceNumber" },
+                { "data": "GrossTotal" },
+                { "data": "Payment" },
+                {
+                    "orderable": false,
+                    "data": null,
+                    "defaultContent": "<a class='details btn btn-sm'  href='javascript:;'><i class='fa fa-info-circle'></i> Details</a>",
+                    "class": "textAlignRight"
+                }
+            ],
+            "processing": true,
+            "serverSide": true,
+            "ajax": {
+                url: "/Purchase/History",
+                type: "POST",
+                dataType: "json",
+                data: function(params) {
+                    params.PageNo = Math.ceil(params.start / params.length) + 1;
+                    if (params.PageNo === 0) {
+                        params.PageNo = 1;
+                    }
+                    params.PageSize = params.length;
+                    params.SortBy = params.order[0].column;
+                    params.IsAsc = params.order[0].dir === "asc";
+
+                    params.Vendor = $("#Vendor").val();
+                    params.PurchaseDateTo = $('#PurchaseDateTo').val();
+                    params.PurchaseDateFrom = $('#PurchaseDateFrom').val();
+                }
+            }
+        });
+        $('#btnFltr').on('click', function(e) {
+            oTable.fnDraw();
+        });
+
+        $('#btnResetFltr').on('click', function(e) {
+            $('#Vendor').select2('val', '');
+            $('#PurchaseDateFrom').val("");
+            $('#PurchaseDateTo').val("");
+            $('#PurchaseDateTo').css('border', 'none');
+            oTable.fnFilter('');
+        });
+
+        $('#dataTable').on('click', '.details', function (e) {
+            e.preventDefault();
+            var nRow = $(this).parents('tr')[0];
+            var aData = oTable.fnGetData(nRow);
+            var siteUrl = '/Purchase/New/' + aData.BillId;
+            $(location).attr('href', siteUrl);
+
+        });
+
+        $('#PurchaseDateTo').on('change', function () {
+            var toDate = new Date($('#PurchaseDateTo').val());
+            var fromDate = new Date($('#PurchaseDateFrom').val());
+            if (toDate < fromDate) {
+                $('#PurchaseDateTo').val("");
+                $('#PurchaseDateTo').css('border', '1px solid red');
+                toastr.error("Date-to cannot be less than Date-from", "Enter Valid Date Range");
+            } else {
+                $('#PurchaseDateTo').css('border', 'none');
+            }
+        });
+    });
+    
+    function fnActivityComplete(data, e) {}
+</script>

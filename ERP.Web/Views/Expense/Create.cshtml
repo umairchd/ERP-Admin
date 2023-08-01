@@ -1,0 +1,97 @@
+﻿@model ERP.Models.WebViewModels.ExpenseViewModel
+@{
+    ViewBag.Title = "Create";
+    string btnText = "Save";
+    var setDiasble = "false";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    Session["MenuKey"] = 8;
+    Session["SubMenuKey"] = 1;
+    if (Model != null && Model.ExpenseModel !=null)
+    {
+        if (Model.ExpenseModel.VendorId > 0)
+        {
+            ViewBag.Title = "Update";
+            btnText = "Update";
+            setDiasble = "readonly";
+        }
+    }
+    
+}
+
+@using (Html.BeginForm("Create", "Expense", FormMethod.Post, new { @class = "form-horizontal",@id="ExpenseForm" ,role = "form" }))
+{
+    <div class="portlet light bg-inverse formBodyRemoveSideSpace formBodyMinHeight">
+        <div class="portlet-title">
+            <div class="caption">
+                <i class="icon-bulb font-red-sunglo"></i>
+                <span class="caption-subject font-red-sunglo bold uppercase">Expense</span>
+                <span class="caption-helper">@ViewBag.Title</span>
+            </div>
+            <div class="actions">
+                <button class="btn default green-stripe toBeHidden" id="btnResetFltr" type="submit" form="ExpenseForm" name="save" onclick="return (ValidateFields(event));">
+                    <i class="fa fa-save"></i>
+                    <span class="hidden-480">
+                        Save & Close
+                    </span>
+                </button>
+                <a href="~/Expense/Index" class="btn default yellow-stripe">
+                    <i class="fa fa-list"></i>
+                    <span class="hidden-480">
+                        All Expenses
+                    </span>
+                </a>
+            </div>
+        </div>
+        <div class="portlet-body form">
+            
+            <div class="container-fluid">
+                @Html.AntiForgeryToken()
+                @Html.HiddenFor(m => m.ExpenseModel.Id)
+                @Html.HiddenFor(m => m.ExpenseModel.RecCreatedBy)
+                @Html.HiddenFor(m => m.ExpenseModel.RecCreatedDate)
+
+                <div class="form-group margin-top-20">
+                    @Html.Label("Expense Date", new { @class = "col-md-3 control-label requiredLabel" })
+                    <div class="col-md-4">
+                        @Html.TextBoxFor(m => m.ExpenseModel.ExpenseDate, new { @class = "form-control mandatory",  placeholder = "Expense Date", @id = "ExpenseDate" })
+                    </div>
+                </div>
+                <div class="form-group margin-top-20">
+                    @Html.Label("Expense Category", new { @class = "col-md-3 control-label requiredLabel" })
+                    <div class="col-md-4">
+                        @Html.DropDownListFor(m => m.ExpenseModel.ExpenseCategoryId, new SelectList(Model.ExpenseCategories, "Id", "Name"), "Select One", new { @class = "form-control  select2me mandatory", @id = "ExpenseCategoryId" })
+                    </div>
+                </div>
+                <div class="form-group margin-top-20">
+                    @Html.Label("Vendor", new { @class = "col-md-3 control-label" })
+                    <div class="col-md-4">
+                        @Html.DropDownListFor(m => m.ExpenseModel.VendorId, new SelectList(Model.Vendors, "VendorId", "Name"), "Select One", new { @class = "form-control  select2me", @id = "VendorId" })
+                    </div>
+                </div>
+                <div class="form-group margin-top-20">
+                    @Html.Label("Expense Amount", new { @class = "col-md-3 control-label requiredLabel" })
+                    <div class="col-md-4">
+                        @Html.TextBoxFor(m => m.ExpenseModel.ExpenseAmount, new { @class = "form-control mandatory", placeholder = "Expense Amount", @id = "ExpenseAmount" })
+                    </div>
+                </div>
+                <div class="form-group margin-top-20">
+                    @Html.LabelFor(m => m.ExpenseModel.Description, new { @class = "col-md-3 control-label" })
+                    <div class="col-md-4">
+                        @Html.TextAreaFor(m => m.ExpenseModel.Description, new { @class = "form-control", placeholder = "Description" })
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+<script type="text/javascript">
+    jQuery(document).ready(function($) {
+        $("#ExpenseDate").datepicker({
+            changeMonth: true,
+            changeYear: true,
+            maxDate: new Date()
+        });
+        $("#OrderDate").datepicker().datepicker("setDate", new Date());
+    });
+</script>

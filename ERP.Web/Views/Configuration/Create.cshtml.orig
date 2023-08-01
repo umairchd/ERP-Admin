@@ -1,0 +1,115 @@
+﻿@model TMD.Models.WebViewModels.ProductConfigurationViewModel
+@{
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    Session["MenuKey"] = 21;
+    ViewBag.Title = "Add/update Customers";
+}
+
+
+@using (Html.BeginForm("Create", "Configuration", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+{
+    <div class="portlet box blue-hoki">
+        <div class="portlet-title">
+
+            <div class="tools">
+                @*<a href="javascript:;" class="collapse">
+                    </a>*@
+
+                <button type="submit" class="btn blue" onclick="return(ValidateConfigFields(event));">Save</button>
+                <a href="~/Configuration/Create">
+                    <button type="button" class="btn default">Cancel</button>
+                </a>
+            </div>
+            <div class="caption">
+                <i class="fa fa-male"></i>Update Configuration
+            </div>
+        </div>
+
+        <div class="portlet-body form">
+            <div class="container-fluid">
+                @Html.AntiForgeryToken()
+                @Html.HiddenFor(m => m.Configuration.Id)
+                @Html.HiddenFor(m => m.Configuration.RecCreatedBy)
+                @Html.HiddenFor(m => m.Configuration.RecCreatedDate)
+
+                <div class="form-group margin-top-20">
+                    <label class="col-md-3 control-label">Product Code Prefix</label>
+                    <div class="col-md-4">
+<<<<<<< HEAD
+                        @Html.TextBoxFor(m => m.Configuration.ProductCodePrefix, new { @class = "form-control ", @id = "ProductCodePrefix" })
+=======
+                        @Html.TextBoxFor(m => m.Configuration.ProductCodePrefix, new { @class = "form-control", @id = "ProductCodePrefix" })
+>>>>>>> 630479c3f9a44cce30a0d33265161cad61fb2f04
+                    </div>
+                </div>
+                
+                <div class="form-group margin-top-20">
+                    <label class="col-md-3 control-label">Max Allowed Discount</label>
+                    <div class="col-md-4">
+<<<<<<< HEAD
+                        @Html.TextBoxFor(m => m.Configuration.MaxAllowedDiscount, new { @class = "form-control ", @id = "MaxAllowedDiscount" })
+=======
+                        @Html.TextBoxFor(m => m.Configuration.MaxAllowedDiscount, new { @class = "form-control", @id = "MaxAllowedDiscount" })
+>>>>>>> 630479c3f9a44cce30a0d33265161cad61fb2f04
+                        @Html.ValidationMessageFor(m => m.Configuration.MaxAllowedDiscount)
+                    </div>
+                </div>
+                
+                <div class="form-group margin-top-20">
+                    <label class="col-md-3 control-label">Emails <small>"," separated</small></label>
+                    <div class="col-md-4">
+<<<<<<< HEAD
+                        @Html.TextBoxFor(m => m.Configuration.Emails, new { @class = "form-control ", @id = "Emails" })
+=======
+                        @Html.TextBoxFor(m => m.Configuration.Emails, new { @class = "form-control", @id = "Emails" })
+>>>>>>> 630479c3f9a44cce30a0d33265161cad61fb2f04
+                    </div>
+                </div>
+                <div class="form-group margin-top-20">
+                    @Html.LabelFor(m => m.Configuration.DefaultVendorId, new { @class = "col-md-3 control-label requiredLabel" })
+                    <div class="col-md-4">
+                        @Html.DropDownListFor(model => model.Configuration.DefaultVendorId, new SelectList(Model.vendorModel, "VendorId", "Name"), "Select Vendor", new { @class = "form-control  select2me mandatory", @id = "Vendors" })
+                        @Html.ValidationMessageFor(model => model.Configuration.DefaultVendorId)
+                    </div>
+
+                </div>
+                <div class="form-group margin-top-20">
+                    <label class="col-md-3 control-label">Security Password</label>
+                    <div class="col-md-4">
+<<<<<<< HEAD
+                        @Html.TextBoxFor(m => m.Configuration.SecurityPassword, new { @class = "form-control ", @id = "SecurityPassword" })
+=======
+                        @Html.TextBoxFor(m => m.Configuration.SecurityPassword, new { @class = "form-control", @id = "SecurityPassword" })
+>>>>>>> 630479c3f9a44cce30a0d33265161cad61fb2f04
+                    </div>
+                </div>
+
+                
+                <div class="form-group margin-top-20">
+                    <label class="col-md-3 control-label">Comments</label>
+                    <div class="col-md-4">
+<<<<<<< HEAD
+                        @Html.TextBoxFor(m => m.Configuration.Comments, new { @class = "form-control ", @id = "Comments" })
+                    </div>
+                </div>
+                
+                <div class="form-group margin-top-20">
+                    <label class="col-md-3 control-label">License Key</label>
+                    <div class="col-md-4">
+                        @Html.TextAreaFor(m => m.LicenseKey, new { @class = "form-control ", @id = "License Key",rows=5 })
+=======
+                        @Html.TextBoxFor(m => m.Configuration.Comments, new { @class = "form-control", @id = "Comments" })
+>>>>>>> 630479c3f9a44cce30a0d33265161cad61fb2f04
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+}
+
+<script>
+    $(document).ready(function () {
+     
+    });
+</script>

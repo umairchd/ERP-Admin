@@ -1,0 +1,359 @@
+﻿ <div class="page-sidebar-wrapper">
+            <!-- BEGIN HORIZONTAL RESPONSIVE MENU -->
+            <!-- DOC: Set data-auto-scroll="false" to disable the sidebar from auto scrolling/focusing -->
+            <!-- DOC: Change data-auto-speed="200" to adjust the sub menu slide up/down speed -->
+            <div class="page-sidebar navbar-collapse collapse">
+                <ul class="page-sidebar-menu page-sidebar-closed page-sidebar-menu-closed" data-slide-speed="200" data-auto-scroll="true">
+                    <!-- DOC: To remove the sidebar toggler from the sidebar you just need to completely remove the below "sidebar-toggler-wrapper" LI element -->
+                    <li class="sidebar-toggler-wrapper">
+                        <!-- BEGIN SIDEBAR TOGGLER BUTTON -->
+                        <div class="sidebar-toggler">
+                        </div>
+                        <!-- END SIDEBAR TOGGLER BUTTON -->
+                    </li>
+                    <!-- DOC: This is mobile version of the horizontal menu. The desktop version is defined(duplicated) in the header above -->
+
+                    <li class=@( (Session["MenuKey"] != null && Session["MenuKey"].ToString() == "1") ? "active start open" : "start")>
+                        <a href="~/Dashboard/Index" class="WhiteColor">
+                            <i class="icon-home"></i>
+                            <span class="title">Home</span>
+                            <span class="selected"></span>
+                        </a>
+                    </li>
+                    @if (User.IsInRole("Admin") || User.IsInRole("Employee"))
+                    {
+                       <li class=@( (Session["MenuKey"] != null && Session["MenuKey"].ToString() == "2") ? "active" : "")>
+                            <a href="javascript:;">
+                                <i class="icon-basket-loaded"></i>
+                                <span class="title">Sales</span>
+                                <span class="arrow "></span>
+                            </a>
+                            <ul class="sub-menu">
+                                <li class=@( (Session["SubMenuKey"] != null && Session["SubMenuKey"].ToString() == "1") ? "active" : "")>
+                                    <a class="WhiteColor" href="~/Sale/New">
+                                        <i class="icon-handbag"></i>
+                                        New Sale Invoice <span class="selected">
+                                                         </span>
+                                    </a>
+                                </li>
+                                <li class=@( (Session["SubMenuKey"] != null && Session["SubMenuKey"].ToString() == "2") ? "active" : "")>
+                                    <a class="WhiteColor" href="~/Sale/Return">
+                                        <i class="icon-handbag"></i>
+                                        Sale Return<span class="selected">
+                                                   </span>
+                                    </a>
+                                </li>
+                                <li class=@( (Session["SubMenuKey"] != null && Session["SubMenuKey"].ToString() == "4") ? "active" : "")>
+                                    <a class="WhiteColor" href="@Url.Action("ReturnHistory","Sale")">
+                                        <i class="icon-handbag"></i>
+                                        Sale Return History<span class="selected">
+                                                   </span>
+                                    </a>
+                                </li>
+                                <li class=@( (Session["SubMenuKey"] != null && Session["SubMenuKey"].ToString() == "3") ? "active" : "")>
+                                    <a class="WhiteColor" href="~/Sale/History">
+                                        <i class="icon-handbag"></i>
+                                        Sales History  <span class="selected">
+                                                       </span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                    }
+                    @if (User.IsInRole("Admin"))
+                    {
+                        <li class=@( (Session["MenuKey"] != null && Session["MenuKey"].ToString() == "3") ? "active" : "")>
+                            <a href="javascript:;">
+                                <i class="icon-wallet"></i>
+                                <span class="title">Purchases</span>
+                                <span class="arrow "></span>
+                            </a>
+                            <ul class="sub-menu">
+                                <li class=@( (Session["SubMenuKey"] != null && Session["SubMenuKey"].ToString() == "1") ? "active" : "")>
+                                    <a class="WhiteColor" href="~/Purchase/New">
+                                        <i class="icon-handbag"></i>
+                                        New Purchase <span class="selected">
+                                                     </span>
+                                    </a>
+                                </li>
+                                @*<li class=@( (Session["SubMenuKey"] != null && Session["SubMenuKey"].ToString() == "2") ? "active" : "")>
+                                    <a class="WhiteColor" href="~/Purchase/Order">
+                                        <i class="icon-handbag"></i>
+                                        Purchase Order  <span class="selected">
+                                                        </span>
+                                    </a>
+                                </li>
+                                <li class=@( (Session["SubMenuKey"] != null && Session["SubMenuKey"].ToString() == "3") ? "active" : "")>
+                                    <a class="WhiteColor" href="~/Purchase/Return">
+                                        <i class="icon-handbag"></i>
+                                        Purchase Return<span class="selected">
+                                                       </span>
+                                    </a>
+                                </li>*@
+                                <li class=@( (Session["SubMenuKey"] != null && Session["SubMenuKey"].ToString() == "4") ? "active" : "")>
+                                    <a class="WhiteColor" href="~/Purchase/History">
+                                        <i class="icon-handbag"></i>
+                                        Purchase History  <span class="selected">
+                                                          </span>
+                                    </a>
+                                </li>
+                               
+                            </ul>
+                        </li>
+                        <li class=@( (Session["MenuKey"] != null && Session["MenuKey"].ToString() == "4") ? "active open" : "")>
+                            <a href="javascript:;">
+                                <i class="icon-bag"></i>
+                                <span class="title">Inventory</span>
+                                <span class="arrow "></span>
+                            </a>
+                            <ul class="sub-menu">
+                            <li class=@( (Session["SubMenuKey"] != null && Session["SubMenuKey"].ToString() == "1") ? "active" : "")>
+                                <a class="WhiteColor" href="~/Inventory/All">
+                                    <i class="icon-handbag"></i>
+                                    All Products
+                                </a>
+                            </li>
+                                <li class=@( (Session["SubMenuKey"] != null && Session["SubMenuKey"].ToString() == "2") ? "active" : "")>
+                                    <a class="WhiteColor" href="~/ProductCategory/Index">
+                                        <i class="icon-tag"></i>
+                                        Products Categories
+                                    </a>
+                                </li>
+                                <li class=@( (Session["SubMenuKey"] != null && Session["SubMenuKey"].ToString() == "3") ? "active" : "")>
+                                    <a class="WhiteColor" href="~/Inventory/PrintBarcode">
+                                        <i class="icon-handbag"></i>
+                                        Print Barcode<span class="selected">
+                                        </span>
+                                    </a>
+                                </li>
+                                <li class=@( (Session["SubMenuKey"] != null && Session["SubMenuKey"].ToString() == "4") ? "active" : "")>
+                                    <a class="WhiteColor" href="~/Unit/Index">
+                                        <i class="icon-handbag"></i>
+                                        Products Units<span class="selected">
+                                        </span>
+                                    </a>
+                                </li>
+                                <li class=@( (Session["SubMenuKey"] != null && Session["SubMenuKey"].ToString() == "5") ? "active" : "")>
+                                    <a class="WhiteColor" href="~/Brand/Index">
+                                        <i class="icon-bubble"></i>
+                                        Products Brands
+                                    </a>
+                                </li>
+                                <li class=@( (Session["SubMenuKey"] != null && Session["SubMenuKey"].ToString() == "6") ? "active" : "")>
+                                    <a class="WhiteColor" href="~/Shelf/Index">
+                                        <i class="icon-handbag"></i>
+                                        Shelves<span class="selected">
+                                        </span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                            <li class=@( (Session["MenuKey"] != null && Session["MenuKey"].ToString() == "5") ? "active" : "")>
+                            <a href="javascript:;">
+                                <i class="icon-user"></i>
+                                <span class="title">Employees</span>
+                                <span class="arrow "></span>
+                            </a>
+                            <ul class="sub-menu">
+                                <li class=@( (Session["SubMenuKey"] != null && Session["SubMenuKey"].ToString() == "1") ? "active" : "")>
+                                    <a class="WhiteColor" href="~/Account/Create">
+                                        <i class="icon-handbag"></i>
+                                        New Employee<span class="selected">
+                                                     </span>
+                                    </a>
+                                </li>
+                                <li class=@( (Session["SubMenuKey"] != null && Session["SubMenuKey"].ToString() == "2") ? "active" : "")>
+                                    <a class="WhiteColor" href="~/Account/Users">
+                                        <i class="icon-handbag"></i>
+                                        All Employees<span class="selected">
+                                                 </span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+
+                             <li class=@( (Session["MenuKey"] != null && Session["MenuKey"].ToString() == "6") ? "active" : "")>
+                            <a href="javascript:;">
+                                <i class="icon-user-follow"></i>
+                                <span class="title">Customers</span>
+                                <span class="arrow "></span>
+                            </a>
+                            <ul class="sub-menu">
+                                <li class=@( (Session["SubMenuKey"] != null && Session["SubMenuKey"].ToString() == "1") ? "active" : "")>
+                                    <a class="WhiteColor" href="~/Customer/Create">
+                                        <i class="icon-handbag"></i>
+                                        New Customer <span class="selected">
+                                                     </span>
+                                    </a>
+                                </li>
+                                <li class=@( (Session["SubMenuKey"] != null && Session["SubMenuKey"].ToString() == "2") ? "active" : "")>
+                                    <a class="WhiteColor" href="~/Customer/Index">
+                                        <i class="icon-handbag"></i>
+                                        All Customers<span class="selected">
+                                                     </span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class=@( (Session["MenuKey"] != null && Session["MenuKey"].ToString() == "7") ? "active" : "")>
+                            <a href="javascript:;">
+                                <i class="icon-user-following"></i>
+                                <span class="title">Suppliers</span>
+                                <span class="arrow "></span>
+                            </a>
+                            <ul class="sub-menu">
+                                <li class=@( (Session["SubMenuKey"] != null && Session["SubMenuKey"].ToString() == "1") ? "active" : "")>
+                                    <a class="WhiteColor" href="~/Vendor/Create">
+                                        <i class="icon-handbag"></i>
+                                        New Supplier <span class="selected">
+                                                     </span>
+                                    </a>
+                                </li>
+                                <li class=@( (Session["SubMenuKey"] != null && Session["SubMenuKey"].ToString() == "2") ? "active" : "")>
+                                    <a class="WhiteColor" href="~/Vendor/Index">
+                                        <i class="icon-handbag"></i>
+                                        All Suppliers<span class="selected">
+                                                     </span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class=@( (Session["MenuKey"] != null && Session["MenuKey"].ToString() == "8") ? "active" : "")>
+                            <a href="javascript:;">
+                                <i class="icon-note"></i>
+                                <span class="title">Accounts</span>
+                                <span class="arrow "></span>
+                            </a>
+                            <ul class="sub-menu">
+                                <li class=@( (Session["SubMenuKey"] != null && Session["SubMenuKey"].ToString() == "1") ? "active" : "")>
+                                    <a class="WhiteColor" href="~/Expense/Create">
+                                        <i class="icon-handbag"></i>
+                                        New Expense <span class="selected">
+                                                    </span>
+                                    </a>
+                                </li>
+                                <li class=@( (Session["SubMenuKey"] != null && Session["SubMenuKey"].ToString() == "2") ? "active" : "")>
+                                    <a class="WhiteColor" href="~/Expense/Index">
+                                        <i class="icon-handbag"></i>
+                                        All Expenses<span class="selected">
+                                        </span>
+                                    </a>
+                                </li>
+                                <li class=@( (Session["SubMenuKey"] != null && Session["SubMenuKey"].ToString() == "3") ? "active" : "")>
+                                    <a class="WhiteColor" href="~/ExpenseCategory/Index">
+                                        <i class="icon-handbag"></i>
+                                        Expense Category <span class="selected">
+                                                         </span>
+                                    </a>
+                                </li>
+                                <li class=@( (Session["SubMenuKey"] != null && Session["SubMenuKey"].ToString() == "4") ? "active" : "")>
+                                    <a class="WhiteColor" href="@Url.Action("History","SupplierPaymentHistory")">
+                                        <i class="icon-handbag"></i>
+                                        Supplier Payment <span class="selected">
+                                                         </span>
+                                    </a>
+                                </li>
+                                <li class=@( (Session["SubMenuKey"] != null && Session["SubMenuKey"].ToString() == "5") ? "active" : "")>
+                                    <a class="WhiteColor" href="@Url.Action("Index", "SupplierBankAccount")">
+                                        <i class="icon-handbag"></i>
+                                        Supplier Bank Account <span class="selected">
+                                                         </span>
+                                    </a>
+                                </li>
+
+                            </ul>
+                        </li>
+                        <li class=@( (Session["MenuKey"] != null && Session["MenuKey"].ToString() == "9") ? "active" : "")>
+                            <a href="javascript:;">
+                                <i class="icon-docs"></i>
+                                <span class="title">Notes</span>
+                                <span class="arrow "></span>
+                            </a>
+                            <ul class="sub-menu">
+                                <li class=@( (Session["SubMenuKey"] != null && Session["SubMenuKey"].ToString() == "1") ? "active" : "")>
+                                    <a class="WhiteColor" href="~/Notes/Create">
+                                        <i class="icon-handbag"></i>
+                                       New Notes <span class="selected">
+                                              </span>
+                                    </a>
+                                </li>
+                                <li class=@( (Session["SubMenuKey"] != null && Session["SubMenuKey"].ToString() == "2") ? "active" : "")>
+                                    <a class="WhiteColor" href="~/Notes/Index">
+                                        <i class="icon-handbag"></i>
+                                       All Notes <span class="selected">
+                                              </span>
+                                    </a>
+                                </li>
+                                <li class=@( (Session["SubMenuKey"] != null && Session["SubMenuKey"].ToString() == "2") ? "active" : "")>
+                                    <a class="WhiteColor" href="~/NotesCategory/Index">
+                                        <i class="icon-handbag"></i>
+                                        Notes Category <span class="selected">
+                                                       </span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+
+                        <li class=@( (Session["MenuKey"] != null && Session["MenuKey"].ToString() == "10") ? "active" : "")>
+                            <a href="javascript:;" class="WhiteColor">
+                                <i class="icon-settings"></i>
+                                <span class="title">Configuration</span>
+                                <span class="arrow"></span>
+                            </a>
+                            <ul class="sub-menu">
+                                <li class=@( (Session["SubMenuKey"] != null && Session["SubMenuKey"].ToString() == "1") ? "active" : "")>
+                                    <a class="WhiteColor" href="~/Configuration/Create">
+                                        <i class="icon-handbag"></i>
+                                        Configuration <span class="selected">
+                                                      </span>
+                                    </a>
+                                </li>
+                                <li class=@( (Session["SubMenuKey"] != null && Session["SubMenuKey"].ToString() == "2") ? "active" : "")>
+                                    <a class="WhiteColor" href="~/WebsiteSlider/Index">
+                                        <i class="icon-handbag"></i>
+                                        Website Slider <span class="selected">
+                                                       </span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                    }
+                    @if (User.IsInRole("Report") || User.IsInRole("Admin"))
+                    {
+                        <li class=@( (Session["MenuKey"] != null && Session["MenuKey"].ToString() == "11") ? "active" : "")>
+                            <a href="javascript:;">
+                                <i class="icon-bar-chart"></i>
+                                <span class="title">Reports</span>
+                                <span class="arrow "></span>
+                            </a>
+                            <ul class="sub-menu">
+                                <li class=@( (Session["SubMenuKey"] != null && Session["SubMenuKey"].ToString() == "1") ? "active" : "")>
+                                    <a class="WhiteColor" href="~/Reports/Sales">
+                                        <i class="icon-handbag"></i>
+                                        Sales <span class="selected">
+                                              </span>
+                                    </a>
+                                </li>
+                                <li class=@( (Session["SubMenuKey"] != null && Session["SubMenuKey"].ToString() == "2") ? "active" : "")>
+                                    <a class="WhiteColor" href="~/Reports/Purchases">
+                                        <i class="icon-handbag"></i>
+                                        Purchases <span class="selected">
+                                                  </span>
+                                    </a>
+                                </li>
+                                <li class=@( (Session["SubMenuKey"] != null && Session["SubMenuKey"].ToString() == "3") ? "active" : "")>
+                                    <a class="WhiteColor" href="~/Reports/Stocks">
+                                        <i class="icon-handbag"></i>
+                                        Stocks <span class="selected">
+                                               </span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                    }
+
+
+                </ul>
+            </div>
+            <!-- END HORIZONTAL RESPONSIVE MENU -->
+        </div>

@@ -1,0 +1,197 @@
+﻿@model ERP.Models.WebViewModels.OrderViewModel
+@{
+    ViewBag.Title = "History";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    Session["MenuKey"] = 2;
+    Session["SubMenuKey"] = 3;
+
+}
+                
+<div class="portlet light bg-inverse formBodyRemoveSideSpace formBodyMinHeight">
+    <div class="portlet-title">
+        <div class="caption">
+            <i class="icon-bulb font-red-sunglo"></i>
+            <span class="caption-subject font-red-sunglo bold uppercase">Sales</span>
+            <span class="caption-helper">@ViewBag.Title</span>
+        </div>
+        <div class="actions">
+            <a href="javascript:;" class="btn default red-stripe" id="btnResetFltr">
+                <i class="fa fa-recycle"></i>
+                <span class="hidden-480">
+                    Reset
+                </span>
+            </a>
+            <a href="javascript:;" class="btn default blue-stripe" id="btnFltr">
+                <i class="fa fa-filter"></i>
+                <span class="hidden-480">
+                    Filter
+                </span>
+            </a>
+            <a href="@Url.Action("New","Sale")" class="btn default yellow-stripe">
+                <i class="fa fa-plus"></i>
+                <span class="hidden-480">
+                    New Sale Invoice
+                </span>
+            </a>
+        </div>
+    </div>
+
+    <div class="portlet-body form">
+        <form class="form-horizontal">
+            <div class="form-body">
+                <div class="portlet-body">
+                    <div class="row">
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                @*<label class="col-md-3 control-label"> Barcode </label>*@
+                                <div class="col-md-12">
+                                    @Html.TextBox("Barcode", "", new { @class = "searchInputs NumberValue form-control listFilter", @id = "OrderId", @placeholder = "Search by Invoice #" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                @*<label class="col-md-3 control-label"> Item Code </label>*@
+                                <div class="col-md-6">
+                                    @Html.TextBox("SaleFromDate", @Model.SearchRequest.OrderFromDate, new { @class = "searchInputs datepickerFormated cursorHand form-control listFilter", @id = "SaleFromDate", @placeholder = "Sale Date From", @readonly = true })
+                                </div>
+                                <div class="col-md-6">
+                                    @Html.TextBox("SaleToDate", @Model.SearchRequest.OrderToDate, new { @class = "searchInputs datepickerFormated cursorHand form-control listFilter", @id = "SaleToDate", @placeholder = "Sale Date To", @readonly=true })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                @*<label class="col-md-3 control-label"> Product Name </label>*@
+                                <div class="col-md-12">
+                                    @Html.TextBox("ProductName", "", new { @class = "searchInputs NumberValue form-control listFilter", @id = "ProductCode", @placeholder = "Search by Item Code" })
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        <div class="portlet box">
+            <div class="portlet-body flip-scroll">
+                <table id="dataTable" class="table table-bordered table-striped table-condensed flip-content">
+                    <thead class="flip-content">
+                        <tr>
+                            <th>Invoice #</th>
+                            <th>Date</th>
+                            <th>Total Items</th>
+                            <th>Sub Total</th>
+                            <th>Discount</th>
+                            <th>Net Total</th>
+                            <th>Sale By</th>
+                            <th >
+                                Action
+                                
+                            </th>
+                        </tr>
+                    </thead>
+
+                </table>
+            </div>
+        </div>
+           </form>
+    </div>
+    </div>
+
+
+
+
+
+    <script type="text/javascript">
+        jQuery(document).ready(function ($) {
+
+            var siteURL = $('#siteURL').val();
+            var start = ('@Model.SearchRequest.PageNo' - 1) * '@Model.SearchRequest.PageSize';
+            var isAsc = '@Model.SearchRequest.IsAsc' == "True" || '@Model.SearchRequest.IsAsc' == "true";
+            var sortBy = ['@Model.SearchRequest.SortBy', isAsc ? 'asc' : 'desc'];
+
+            var columns = [
+                { "data": "OrderDetailLink" },
+                { "data": "RecCreatedDate" },
+                { "data": "TotalItems" },
+                { "data": "SubTotal" },
+                { "data": "TotalDiscount" },
+                { "data": "NetTotal" },
+                { "data": "RecCreatedBy" },
+                {
+                    "orderable": false,
+                    "data": "OrderPrintLink",
+                    //"defaultContent": "<a class='details btn btn-sm'  href='javascript:;'><i class='fa fa-info-circle'></i> Details</a>",
+                    //"class": "textAlignRight"
+                }
+            ];
+
+            var oTable = $('#dataTable').dataTable({
+                "iDisplayLength": 11,
+                "displayStart": start || 0,
+                "bFilter": false,
+                "bLengthChange": false,
+                "aaSorting": [sortBy],
+                "aoColumnDefs": [
+                    { 'bSortable': false, 'aTargets': [3, 5, 7] }
+                    //{
+                    //    "targets": [0],
+                    //    "visible": false,
+                    //    "searchable": false
+                    //}
+                ],
+                "columns": columns,
+                "processing": true,
+                "serverSide": true,
+
+                "ajax": {
+                    url: siteURL + "Sale/History",
+                    type: "POST",
+                    dataType: "json",
+                    data: function (params) {
+                        params.PageNo = Math.ceil(params.start / params.length) + 1;
+                        if (params.PageNo === 0) {
+                            params.PageNo = 1;
+                        }
+                        params.PageSize = params.length;
+                        params.SortBy = params.order[0].column;
+                        params.IsAsc = params.order[0].dir === "asc";
+
+                        params.OrderId = $('#OrderId').val();
+                        params.OrderFromDate = $('#SaleFromDate').val();
+                        params.OrderToDate = $('#SaleToDate').val();
+                        params.ProductCode = $('#ProductCode').val();
+                    },
+                    complete: function (data) {
+                        //console.log(data);
+                    }
+                    
+                }
+            });
+            $('#btnFltr').on('click', function (e) {
+                oTable.fnDraw();
+            });
+
+            $('#btnResetFltr').on('click', function (e) {
+                $('#SaleToDate').css('border', 'none');
+                $('#OrderId').val("");
+                $('#SaleFromDate').val("");
+                $('#SaleToDate').val("");
+                $('#ProductCode').val("");
+                
+                oTable.fnFilter('');
+            });
+
+            $('#SaleToDate').on('change', function () {
+                var toDate = new Date($('#SaleToDate').val());
+                var fromDate = new Date($('#SaleFromDate').val());
+                if (toDate < fromDate) {
+                    $('#SaleToDate').val("");
+                    $('#SaleToDate').css('border', '1px solid red');
+                    toastr.error("Date-to cannot be less than Date-from", "Enter Valid Date Range");
+                } else {
+                    $('#SaleToDate').css('border', 'none');
+                }
+            });
+        });
+
+    </script>

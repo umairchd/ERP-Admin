@@ -1,0 +1,115 @@
+<!-- START Top Navbar-->
+<nav class="navbar topnavbar">
+    <!-- START navbar header-->
+    <div class="navbar-header">
+        <a href="#/" class="navbar-brand">
+            <div class="brand-logo">
+                <img src="~/Content/Images/logo.png" alt="App Logo" class="img-responsive" />
+            </div>
+            <div class="brand-logo-collapsed">
+                <img src="~/Content/Images/logo-single.png" alt="App Logo" class="img-responsive" />
+            </div>
+        </a>
+    </div>
+    <!-- END navbar header-->
+    <!-- START Nav wrapper-->
+    <div class="nav-wrapper">
+        <!-- START Left navbar-->
+        <ul class="nav navbar-nav">
+            <li>
+                <!-- Button used to collapse the left sidebar. Only visible on tablet and desktops-->
+                <a href="#" data-toggle-state="aside-collapsed" class="hidden-xs">
+                    <em class="fa fa-navicon"></em>
+                </a>
+                <!-- Button to show/hide the sidebar on mobile. Visible on mobile only.-->
+                <a href="#" data-toggle-state="aside-toggled" data-no-persist="true" class="visible-xs sidebar-toggle">
+                    <em class="fa fa-navicon"></em>
+                </a>
+            </li>
+            @if (Request.IsAuthenticated)
+            {
+                <li>
+                    <form action="@Url.Action("LogOff", "Account")" id="logout" method="POST">
+                        @Html.AntiForgeryToken()
+                    </form>
+                    <a href="#" onclick="document.getElementById('logout').submit()" title="logout">
+                        <em class="icon-logout"></em>
+                    </a>
+                </li>
+            }
+        </ul>
+        <!-- END Left navbar-->
+        <!-- START Right Navbar-->
+        <ul class="nav navbar-nav navbar-right">
+            <!-- Search icon-->
+            <li>
+                <a href="#" data-search-open="">
+                    <em class="icon-magnifier"></em>
+                </a>
+            </li>
+            <!-- START Alert menu-->
+            <li uib-dropdown="" class="dropdown dropdown-list">
+                <a uib-dropdown-toggle="">
+                    <em class="icon-people"></em>
+                    <div class="label label-danger" ng-show="vm.pendingFriendRequests.length > 0">
+                        {{vm.pendingFriendRequests.length}}
+                    </div>
+                </a>
+                <!-- START Dropdown menu-->
+                <ul class="dropdown-menu animated flipInX" style="min-width: 300px" ng-show="vm.pendingFriendRequests.length > 0">
+                    <li>
+                        <!-- START list group-->
+                        <div class="list-group" ng-repeat="request in vm.pendingFriendRequests">
+                            <div href="" class="list-group-item">
+                                <div class="media-box">
+                                    <div class="pull-left">
+                                        <img ng-src="{{request.SenderProfileImage}}" alt="Contact" class="media-object img-circle img-thumbnail thumb48" />
+                                    </div>
+                                    <div class="media-box-body clearfix">
+                                        <div style="float: left">
+                                            <p class="m0">{{request.RequestSentBy}}</p>
+                                            <p class="m0 text-muted">
+                                                <small>1 new follower</small>
+                                            </p>
+                                        </div>
+                                        <div style="float: right">
+                                            <button class="mb-sm btn btn-default" ng-click="vm.updateFriendRequest(request, false)">Ignore</button>
+                                            <button class="mb-sm btn btn-primary" ng-click="vm.updateFriendRequest(request, true)">Accept</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- last list item-->
+                            <a href="" class="list-group-item">
+                                <small translate="topbar.notification.MORE">More notifications</small>
+                                <span class="label label-danger pull-right">14</span>
+                            </a>
+                        </div>
+                        <!-- END list group-->
+                    </li>
+                </ul>
+                <!-- END Dropdown menu-->
+            </li>
+            <!-- END Alert menu-->
+            <!-- START Contacts button-->
+            <li>
+                <a href="#" data-toggle-state="offsidebar-open" data-no-persist="true">
+                    <em class="icon-notebook"></em>
+                </a>
+            </li>
+            <!-- END Contacts menu-->
+        </ul>
+        <!-- END Right Navbar-->
+    </div>
+    <!-- END Nav wrapper-->
+    <!-- START Search form-->
+    <form role="search" class="navbar-form" ng-submit="vm.redirectToSearch()">
+        <div class="form-group has-feedback">
+            <input type="text" ng-model="vm.searchTerm" placeholder="Type and hit enter ..." class="form-control" />
+            <div data-search-dismiss="" class="fa fa-times form-control-feedback"></div>
+        </div>
+        <button type="submit" class="hidden btn btn-default">Submit</button>
+    </form>
+    <!-- END Search form-->
+</nav>
+<!-- END Top Navbar-->

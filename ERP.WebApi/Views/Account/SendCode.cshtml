@@ -1,0 +1,33 @@
+﻿@model ERP.WebApi.Models.SendCodeViewModel
+@{
+    ViewBag.Title = "Send";
+    Layout = "~/Views/Shared/_LayoutPage.cshtml";
+}
+
+<div class="block-center mt-xl wd-xxl">
+    <!-- START panel-->
+    <div class="panel panel-dark panel-flat">
+        <div class="panel-heading text-center">
+            <a href="#">
+                <img src="~/Content/Images/logo.png" alt="Image" class="block-center img-rounded" />
+            </a>
+        </div>
+        <div class="panel-body">
+
+            @using (Html.BeginForm("SendCode", "Account", new { ReturnUrl = Model.ReturnUrl }, FormMethod.Post, new { @class = "mb-lg", role = "form" }))
+            {
+                @Html.AntiForgeryToken()
+                @Html.Hidden("rememberMe", @Model.RememberMe)
+                <h4 class="text-center">Send verification code</h4>
+                <hr />
+                <div class="form-group has-feedback">
+                    <label class="text-muted">How to send the code ?:</label>
+                    <br />
+                    @Html.DropDownListFor(model => model.SelectedProvider, Model.Providers, new { @class = "form-control" })
+
+                </div>
+                <button class="btn btn-block btn-primary" type="submit">Send Code</button>
+            }
+        </div>
+    </div>
+</div>

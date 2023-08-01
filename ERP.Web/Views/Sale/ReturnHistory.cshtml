@@ -1,0 +1,195 @@
+﻿@model ERP.Models.WebViewModels.SaleReturnViewModel
+@{
+    ViewBag.Title = "ReturnHistory";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    Session["SubMenuKey"] = "4";
+    Session["MenuKey"] = "2";
+}
+
+<div class="portlet light bg-inverse formBodyRemoveSideSpace formBodyMinHeight">
+    <div class="portlet-title">
+        <div class="caption">
+            <i class="icon-bulb font-red-sunglo"></i>
+            <span class="caption-subject font-red-sunglo bold uppercase">Sales</span>
+            <span class="caption-helper">@ViewBag.Title</span>
+        </div>
+        <div class="actions">
+            <a href="javascript:;" class="btn default red-stripe" id="btnResetFltr">
+                <i class="fa fa-recycle"></i>
+                <span class="hidden-480">
+                    Reset
+                </span>
+            </a>
+            <a href="javascript:;" class="btn default blue-stripe" id="btnFltr">
+                <i class="fa fa-filter"></i>
+                <span class="hidden-480">
+                    Filter
+                </span>
+            </a>
+            <a href="@Url.Action("Return","Sale")" class="btn default yellow-stripe">
+                <i class="fa fa-plus"></i>
+                <span class="hidden-480">
+                    Sale Return
+                </span>
+            </a>
+        </div>
+    </div>
+
+    <div class="portlet-body form">
+        <form class="form-horizontal">
+            <div class="form-body">
+                <div class="portlet-body">
+                    <div class="row">
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                @*<label class="col-md-3 control-label"> Barcode </label>*@
+                                <div class="col-md-12">
+                                    @Html.TextBox("Barcode", "", new { @class = "searchInputs NumberValue form-control listFilter", @id = "OrderId", @placeholder = "Search by Invoice #" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                @*<label class="col-md-3 control-label"> Item Code </label>*@
+                                <div class="col-md-6">
+                                    @Html.TextBox("ReturnDateFrom", @Model.SearchRequest.ReturnDateFrom, new { @class = "searchInputs datepickerFormated cursorHand form-control listFilter", @id = "ReturnDateFrom", @placeholder = "Return Date From", @readonly = true })
+                                </div>
+                                <div class="col-md-6">
+                                    @Html.TextBox("ReturnDateTo", @Model.SearchRequest.ReturnDateTo, new { @class = "searchInputs datepickerFormated cursorHand form-control listFilter", @id = "ReturnDateTo", @placeholder = "Return Date From", @readonly = true })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                @*<label class="col-md-3 control-label"> Product Name </label>*@
+                                <div class="col-md-12">
+                                    @Html.TextBox("ProductName", "", new { @class = "searchInputs NumberValue form-control listFilter", @id = "ProductCode", @placeholder = "Search by Item Code" })
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="portlet box">
+                <div class="portlet-body flip-scroll">
+                    <table id="dataTable" class="table table-bordered table-striped table-condensed flip-content">
+                        <thead class="flip-content">
+                            <tr>
+                                <th>Invoice #</th>
+                                <th>Return Date</th>
+                                <th>Item Code</th>
+                                <th>Quantity</th>
+                                <th>Price</th>
+                                <th>Net Total</th>
+                                <th>Recieved By</th>
+                                <th>
+                                    Action
+                                </th>
+                            </tr>
+                        </thead>
+
+                    </table>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+
+
+
+<script type="text/javascript">
+        jQuery(document).ready(function ($) {
+
+            var siteURL = $('#siteURL').val();
+            var start = ('@Model.SearchRequest.PageNo' - 1) * '@Model.SearchRequest.PageSize';
+            var isAsc = '@Model.SearchRequest.IsAsc' == "True" || '@Model.SearchRequest.IsAsc' == "true";
+            var sortBy = ['@Model.SearchRequest.SortBy', isAsc ? 'asc' : 'desc'];
+
+            var columns = [
+                { "data": "OrderId" },
+                { "data": "ReturnedDate" },
+                { "data": "ItemCode" },
+                { "data": "ReturnedQty" },
+                { "data": "Price" },
+                { "data": "NetTotal" },
+                { "data": "ReceivedBy" },
+                {
+                    "orderable": false,
+                    "data": null,
+                    "defaultContent": "<a class='details btn btn-sm'  href='javascript:;'><i class='fa fa-info-circle'></i> Details</a>",
+                    "class": "textAlignRight"
+                }
+            ];
+
+            var oTable = $('#dataTable').dataTable({
+                "iDisplayLength": 11,
+                "displayStart": start || 0,
+                "bFilter": false,
+                "bLengthChange": false,
+                "aaSorting": [sortBy],
+                "aoColumnDefs": [
+                    { 'bSortable': false, 'aTargets': [5, 7] }
+                ],
+                "columns": columns,
+                "processing": true,
+                "serverSide": true,
+
+                "ajax": {
+                    url: siteURL + "Sale/ReturnHistory",
+                    type: "POST",
+                    dataType: "json",
+                    data: function (params) {
+                        params.PageNo = Math.ceil(params.start / params.length) + 1;
+                        if (params.PageNo === 0) {
+                            params.PageNo = 1;
+                        }
+                        params.PageSize = params.length;
+                        params.SortBy = params.order[0].column;
+                        params.IsAsc = params.order[0].dir === "asc";
+
+                        params.OrderId = $('#OrderId').val();
+                        params.ReturnDateFrom = $('#ReturnDateFrom').val();
+                        params.ReturnDateTo = $('#ReturnDateTo').val();
+                        params.ProductCode = $('#ProductCode').val();
+                    }
+                }
+            });
+            $('#btnFltr').on('click', function (e) {
+                oTable.fnDraw();
+            });
+
+            $('#btnResetFltr').on('click', function (e) {
+                $('#OrderId').val("");
+                $('#ReturnDateFrom').val("");
+                $('#ReturnDateTo').val("");
+                $('#ReturnDateTo').css('border', 'none');
+                $('#ProductCode').val("");
+                oTable.fnFilter('');
+            });
+
+            $('#dataTable').on('click', '.details', function (e) {
+                e.preventDefault();
+                var nRow = $(this).parents('tr')[0];
+                var aData = oTable.fnGetData(nRow);
+                var siteUrl = '/Sale/Return/' + aData.ReturnId;
+                $(location).attr('href', siteUrl);
+
+            });
+
+            $('#ReturnDateTo').on('change', function () {
+                var toDate = new Date($('#ReturnDateTo').val());
+                var fromDate = new Date($('#ReturnDateFrom').val());
+                if ( toDate < fromDate) {
+                    $('#ReturnDateTo').val("");
+                    $('#ReturnDateTo').css('border', '1px solid red');
+                    toastr.error("Date-to cannot be less than Date-from", "Enter Valid Date Range");
+                } else {
+                    $('#ReturnDateTo').css('border', 'none');
+                }
+            });
+        });
+
+</script>
+

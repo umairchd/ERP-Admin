@@ -1,0 +1,101 @@
+﻿@model ERP.Models.WebViewModels.SupplierPaymentHistoryCreateViewModel
+@{
+    ViewBag.Title = "Add Payment";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    string btnText = "Save";
+    var setDiasble = "false";
+    if (Model != null && Model.PaymentHistoryWebModel.PaymentMethodId !=null)
+    {
+        if (Model.PaymentHistoryWebModel.PaymentMethodId > 0)
+        {
+            ViewBag.Title = "Update Payment";
+            btnText = "Update";
+            setDiasble = "readonly";
+        }
+    }
+}
+
+@using (Html.BeginForm("New", "SupplierPaymentHistory", FormMethod.Post, new { @class = "form-horizontal", @id = "SupplierPaymentHistoryForm", role = "form" }))
+{
+    <div class="portlet light bg-inverse formBodyRemoveSideSpace formBodyMinHeight">
+        <div class="portlet-title">
+            <div class="caption">
+                <i class="icon-bulb font-red-sunglo"></i>
+                <span class="caption-subject font-red-sunglo bold uppercase">Supplier Payment</span>
+                <span class="caption-helper">@ViewBag.Title</span>
+            </div>
+            <div class="actions">
+                <button class="btn default blue-stripe toBeHidden" id="btnResetFltr" type="submit" form="SupplierPaymentHistoryForm" name="saveNew" onclick="return (ValidateFields(event));">
+                    <i class="fa fa-plus-square-o"></i>
+                    <span class="hidden-480">
+                        Save & New
+                    </span>
+                </button>
+                <button class="btn default green-stripe toBeHidden" id="btnResetFltr" type="submit" form="SupplierPaymentHistoryForm" name="saveClose" onclick="return (ValidateFields(event));">
+                    <i class="fa fa-save"></i>
+                    <span class="hidden-480">
+                        Save & Close
+                    </span>
+                </button>
+                <button class="btn default red-stripe toBeHidden" type="reset" form="SupplierPaymentHistoryForm" name="reset">
+                    <i class="fa fa-undo"></i>
+                    <span class="hidden-480">
+                        Undo All
+                    </span>
+                </button>
+                <a href="@Url.Action("History","SupplierPaymentHistory")" class="btn default yellow-stripe">
+                    <i class="fa fa-list"></i>
+                    <span class="hidden-480">
+                        Payments History
+                    </span>
+                </a>
+            </div>
+        </div>
+        <div class="portlet-body form">
+
+            <div class="container-fluid">
+                @Html.AntiForgeryToken()
+                @Html.HiddenFor(m => m.PaymentHistoryWebModel.SupplierPaymentHistoryId)
+                @Html.HiddenFor(m => m.PaymentHistoryWebModel.RecCreatedBy)
+                @Html.HiddenFor(m => m.PaymentHistoryWebModel.RecCreatedDate)
+
+                <div class="form-group margin-top-20">
+                    @Html.Label("Amount", new { @class = "col-md-3 control-label requiredLabel" })
+                    <div class="col-md-4">
+                        @Html.TextBoxFor(m => m.PaymentHistoryWebModel.Amount, new { @class = "form-control mandatory", placeholder = "Expense Date", @id = "Amount" })
+                        @Html.ValidationMessageFor(x=>x.PaymentHistoryWebModel.Amount)
+                    </div>
+                </div>
+
+                <div class="form-group margin-top-20">
+                    @Html.Label("Vendor", new { @class = "col-md-3 control-label" })
+                    <div class="col-md-4">
+                        @Html.DropDownListFor(m => m.PaymentHistoryWebModel.SupplierId, new SelectList(Model.VendorsDdl, "VendorId", "Name", Model.PaymentHistoryWebModel.SupplierId), "Select One", new { @class = "form-control  select2me mandatory", @id = "VendorId" })
+                    </div>
+                </div>
+
+                <div class="form-group margin-top-20">
+                    @Html.Label("Payment Method", new { @class = "col-md-3 control-label requiredLabel" })
+                    <div class="col-md-4">
+                        @Html.DropDownListFor(m => m.PaymentHistoryWebModel.PaymentMethodId, new SelectList(Model.PaymentMethods, "PaymentMethodId", "Title", Model.PaymentHistoryWebModel.PaymentMethodId), "Select One", new { @class = "form-control  select2me mandatory", @id = "PaymentMethodId" })
+                    </div>
+                </div>
+                
+                <div class="form-group margin-top-20">
+                    @Html.Label("Bank Account", new { @class = "col-md-3 control-label requiredLabel" })
+                    <div class="col-md-4">
+                        @Html.DropDownListFor(m => m.PaymentHistoryWebModel.SupplierBankAccountId, new SelectList(Model.SupplierBankAccounts, "SupplierBankAccountId", "AccountTitle", Model.PaymentHistoryWebModel.SupplierBankAccountId), "Select One", new { @class = "form-control  select2me mandatory", @id = "SupplierBankAccountId" })
+                    </div>
+                </div>
+
+                <div class="form-group margin-top-20">
+                    @Html.LabelFor(m => m.PaymentHistoryWebModel.Description, new { @class = "col-md-3 control-label" })
+                    <div class="col-md-4">
+                        @Html.TextAreaFor(m => m.PaymentHistoryWebModel.Description, new { @class = "form-control", placeholder = "Description" })
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+

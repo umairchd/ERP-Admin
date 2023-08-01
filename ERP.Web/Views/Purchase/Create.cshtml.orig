@@ -1,0 +1,192 @@
+﻿@model TMD.Models.WebViewModels.InventoryItemViewModel
+@{
+    ViewBag.Title = "Create/Update Inventory";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    var isEdit = (Model.InventoryItem != null && Model.InventoryItem.ItemId > 0); 
+    Session["MenuKey"] = 11;
+}
+
+
+@using (Html.BeginForm("Create", "Inventory", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+{
+    <div class="portlet box blue-hoki">
+        <div class="portlet-title">
+
+            <div class="tools">
+                @*<a href="javascript:;" class="collapse">
+                    </a>*@
+
+                <button type="submit" id="btnInventoryItemSubmit" disabled="disabled" class="btn blue savebuttons" onclick="return(ValidateFields(event));">Save</button>
+                <button type="submit" class="btn blue savebuttons" disabled="disabled" name="saveCreate" onclick="return (ValidateFields(event));">Save & Add New</button>
+                <a href="~/Inventory/Index">
+                    <button type="button" class="btn default">Cancel</button>
+                </a>
+            </div>
+            <div class="caption">
+                <i class="fa fa-male"></i>Create/Update Inventory
+            </div>
+        </div>
+
+        <div class="portlet-body form">
+            <div class="container-fluid">
+                @Html.AntiForgeryToken()
+                @Html.HiddenFor(m => m.InventoryItem.ItemId)
+                @Html.HiddenFor(m => m.InventoryItem.RecCreatedBy)
+                @Html.HiddenFor(m => m.InventoryItem.RecCreatedDate)
+                
+                <div class="form-group margin-top-20">
+                    @Html.Label("Vendor Barcode", new { @class = "col-md-3 control-label" })
+                    <div class="col-md-4">
+<<<<<<< HEAD
+                        @Html.TextBox("Barcode", null, new { @id = "Barcode", @class = "form-control ",@autofocus="autofocus", @onchange = "LoadProductByCode(this);" })
+=======
+                        @Html.TextBox("Barcode", null, new { @id = "Barcode", @class = "form-control",@autofocus="autofocus", @onchange = "LoadProductByCode(this);" })
+>>>>>>> 630479c3f9a44cce30a0d33265161cad61fb2f04
+                    </div>
+                    
+                    @Html.Label("Name", new { @class = "col-md-1 control-label" })
+                    <div class="col-md-3">
+<<<<<<< HEAD
+                        @Html.TextBox("ProductName", null, new { @id = "ProductName", @class = "form-control ", @readonly = true, @tabindex = 100 })
+=======
+                        @Html.TextBox("ProductName", null, new { @id = "ProductName", @class = "form-control", @readonly = true, @tabindex = 100 })
+>>>>>>> 630479c3f9a44cce30a0d33265161cad61fb2f04
+                    </div>
+                </div>
+                
+                <div class="form-group margin-top-20">
+                    @Html.LabelFor(m => m.InventoryItem.ProductId, new { @class = "col-md-3 control-label requiredLabel" })
+                    <div class="col-md-4">
+<<<<<<< HEAD
+                        @Html.TextBoxFor(m => m.InventoryItem.ProductId, new { @id = "ProductId", @class = "form-control  mandatory", @onchange = "LoadProductByCode(this);" })
+=======
+                        @Html.TextBoxFor(m => m.InventoryItem.ProductId, new { @id = "ProductId", @class = "form-control mandatory", @onchange = "LoadProductByCode(this);" })
+>>>>>>> 630479c3f9a44cce30a0d33265161cad61fb2f04
+                        @Html.ValidationMessageFor(model => model.InventoryItem.ProductId)
+                    </div>
+                    @Html.Label("Description", new { @class = "col-md-1 control-label" })
+                    <div class="col-md-3">
+<<<<<<< HEAD
+                        @Html.TextArea("ProductDescription", null, new { @id = "ProductDescription", @class = "form-control ", @readonly = true, @tabindex = 100 })
+=======
+                        @Html.TextArea("ProductDescription", null, new { @id = "ProductDescription", @class = "form-control", @readonly = true, @tabindex = 100 })
+>>>>>>> 630479c3f9a44cce30a0d33265161cad61fb2f04
+                    </div>
+                </div>
+
+                <div class="form-group margin-top-20">
+                    @Html.LabelFor(m => m.InventoryItem.Quantity, new { @class = "col-md-3 control-label requiredLabel" })
+                    <div class="col-md-4">
+<<<<<<< HEAD
+                        @Html.TextBoxFor(m => m.InventoryItem.Quantity, new { @class = "form-control  mandatory" })
+=======
+                        @Html.TextBoxFor(m => m.InventoryItem.Quantity, new { @class = "form-control mandatory" })
+>>>>>>> 630479c3f9a44cce30a0d33265161cad61fb2f04
+                        @Html.ValidationMessageFor(model => model.InventoryItem.Quantity)
+                    </div>
+                    
+                    @Html.Label("Available Stock", new { @class = "col-md-1 control-label" })
+                    <div class="col-sm-2">
+<<<<<<< HEAD
+                        @Html.TextBox("Stock", null, new { @id = "AvailableItems", @class = "form-control ", @readonly = true, @tabindex = 100 })
+=======
+                        @Html.TextBox("Stock", null, new { @id = "AvailableItems", @class = "form-control", @readonly = true, @tabindex = 100 })
+>>>>>>> 630479c3f9a44cce30a0d33265161cad61fb2f04
+                    </div>
+                </div>
+
+                <div class="form-group margin-top-20">
+                    @Html.LabelFor(m => m.InventoryItem.PurchasePrice, new { @class = "col-md-3 control-label requiredLabel" })
+                    <div class="col-md-4">
+<<<<<<< HEAD
+                        @Html.TextBoxFor(m => m.InventoryItem.PurchasePrice, new { @id = "PurchasePrice",@onchange="ShowProfit();", @class = "form-control  mandatory" })
+=======
+                        @Html.TextBoxFor(m => m.InventoryItem.PurchasePrice, new { @id = "PurchasePrice",@onchange="ShowProfit();", @class = "form-control mandatory" })
+>>>>>>> 630479c3f9a44cce30a0d33265161cad61fb2f04
+                        @Html.ValidationMessageFor(model => model.InventoryItem.PurchasePrice)
+                    </div>
+                </div>
+                
+                <div class="form-group margin-top-20">
+                    @Html.LabelFor(m => m.InventoryItem.SalePrice, new { @class = "col-md-3 control-label requiredLabel" })
+                    <div class="col-md-4">
+<<<<<<< HEAD
+                        @Html.TextBoxFor(m => m.InventoryItem.SalePrice, new { @id = "SalePrice", @onchange = "ShowProfit();", @class = "form-control  mandatory" })
+=======
+                        @Html.TextBoxFor(m => m.InventoryItem.SalePrice, new { @id = "SalePrice", @onchange = "ShowProfit();", @class = "form-control mandatory" })
+>>>>>>> 630479c3f9a44cce30a0d33265161cad61fb2f04
+                        @Html.ValidationMessageFor(model => model.InventoryItem.SalePrice)
+                    </div>
+                    
+                    @Html.Label("% Profit", new { @class = "col-md-1 control-label" })
+                    <div class="col-md-2">
+<<<<<<< HEAD
+                        @Html.TextBox("Profit", null, new { @id = "Profit", @class = "form-control ", @readonly = true, @tabindex = 100 })
+=======
+                        @Html.TextBox("Profit", null, new { @id = "Profit", @class = "form-control", @readonly = true, @tabindex = 100 })
+>>>>>>> 630479c3f9a44cce30a0d33265161cad61fb2f04
+                    </div>
+                </div>
+                <div class="form-group margin-top-20">
+                    @Html.LabelFor(m => m.InventoryItem.VendorId, new { @class = "col-md-3 control-label requiredLabel" })
+                    <div class="col-md-4">
+                        @Html.DropDownListFor(model => model.InventoryItem.VendorId, new SelectList(Model.Vendors, "VendorId", "Name", Model.InventoryItem.VendorId), "Select Vendor", new { @class = "form-control  mandatory select2me", @id = "Vendors" })
+                        @Html.ValidationMessageFor(model => model.InventoryItem.VendorId)
+                    </div>
+                    
+                </div>
+                <div class="form-group margin-top-20">
+                    @Html.LabelFor(m => m.InventoryItem.UnitId, new { @class = "col-md-3 control-label requiredLabel" })
+                    <div class="col-md-4">
+                        @Html.DropDownListFor(model => model.InventoryItem.UnitId, new SelectList(Model.Units, "UnitId", "UnitTitle"), "Select Unit", new { @class = "form-control  mandatory select2me", @id = "Units" })
+                        @Html.ValidationMessageFor(model => model.InventoryItem.UnitId)
+                    </div>
+
+                </div>
+                <div class="form-group margin-top-20">
+                    @Html.LabelFor(m => m.InventoryItem.ShelfId, new { @class = "col-md-3 control-label requiredLabel" })
+                    <div class="col-md-4">
+                        @Html.DropDownListFor(model => model.InventoryItem.ShelfId, new SelectList(Model.Shelf, "ShelfId", "Title"), "Select Shelf", new { @class = "form-control  mandatory select2me", @id = "Shelves" })
+                        @Html.ValidationMessageFor(model => model.InventoryItem.ShelfId)
+                    </div>
+
+                </div>
+
+                <div class="form-group margin-top-20">
+                    @Html.LabelFor(m => m.InventoryItem.PurchasingDate, new { @class = "col-md-3 control-label requiredLabel" })
+                    <div class="col-md-4">
+<<<<<<< HEAD
+                        @Html.TextBoxFor(m => m.InventoryItem.PurchasingDate, "{0:d}", new { @class = "form-control  mandatory datepickerDefaultDate" })
+=======
+                        @Html.TextBoxFor(m => m.InventoryItem.PurchasingDate, "{0:d}", new { @class = "form-control mandatory datepickerDefaultDate" })
+>>>>>>> 630479c3f9a44cce30a0d33265161cad61fb2f04
+                        @Html.ValidationMessageFor(model => model.InventoryItem.PurchasingDate)
+                    </div>
+                </div>
+                <div class="form-group margin-top-20">
+                    @Html.LabelFor(m => m.InventoryItem.Comments, new { @class = "col-md-3 control-label " })
+                    <div class="col-md-4">
+<<<<<<< HEAD
+                        @Html.TextAreaFor(m => m.InventoryItem.Comments, new { @class = "form-control " })
+=======
+                        @Html.TextAreaFor(m => m.InventoryItem.Comments, new { @class = "form-control" })
+>>>>>>> 630479c3f9a44cce30a0d33265161cad61fb2f04
+                    </div>
+                </div>
+
+                
+                
+            </div>
+
+        </div>
+    </div>
+}
+<script src="~/Scripts/InventoryScripts.js"></script>
+<script>
+    $(document).ready(function () {
+        if ('@isEdit'=="True") {
+            ShowProfit();
+            $(".savebuttons").attr("disabled", false);
+        } 
+    });
+</script>

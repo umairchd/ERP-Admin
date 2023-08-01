@@ -1,0 +1,95 @@
+﻿@model LoveBirds.Models.WebModels.UserModel
+@{
+    ViewBag.Title = "My Profile";
+}
+
+<h2>My Profile</h2>
+@if(ViewBag.Message != null)
+    {
+        <div class="col-md-12 alert alert-success alert-dismissable fade in">
+            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+            <strong>Success !</strong> @ViewBag.Message
+        </div>
+    }
+@using (Html.BeginForm("UserProfile", "Account", FormMethod.Post, new { @class = "form-horizontal", role = "form", enctype = "multipart/form-data" }))
+{
+    <h4>Change your profile.</h4>
+    <hr />
+    @Html.ValidationSummary("", new { @class = "text-danger" })
+    @Html.HiddenFor(x => x.Id)
+    @Html.HiddenFor(x => x.ActiveFlag)
+    <input type="hidden" value="@Model.ProfileImage" name="ProfileImage"/>
+    <div class="form-group">
+        @Html.LabelFor(m => m.ProfileImage, new { @class = "col-md-2 control-label" })
+        <div class="col-md-10">
+            @if (!string.IsNullOrEmpty(Model.ProfileImage))
+            {
+                <img src="@Model.ProfileImage" class="img-responsive img-thumbnail" style="height: 200px" />
+            }
+            <input type="file" class="form-control" name="Image" />
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.EmailAddress, new { @class = "col-md-2 control-label" })
+        <div class="col-md-10">
+            <input type="text" class="form-control" value="@Model.EmailAddress" disabled="disabled" />
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.FirstName, new { @class = "col-md-2 control-label" })
+        <div class="col-md-10">
+            @Html.TextBoxFor(m => m.FirstName, new { @class = "form-control" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.LastName, new { @class = "col-md-2 control-label" })
+        <div class="col-md-10">
+            @Html.TextBoxFor(m => m.LastName, new { @class = "form-control" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.MobilePhone, new { @class = "col-md-2 control-label" })
+        <div class="col-md-10">
+            @(Model.MobilePhone ?? "Not Registered") [
+            @if (Model.MobilePhone != null)
+                {
+                @Html.ActionLink("Change", "AddPhoneNumber", "Manage")
+                @: &nbsp;|&nbsp;
+                @Html.ActionLink("Remove", "RemovePhoneNumber", "manage")
+            }
+            else
+            {
+                @Html.ActionLink("Add", "AddPhoneNumber", "Manage")
+            }
+            ]
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.WorkPhone, new { @class = "col-md-2 control-label" })
+        <div class="col-md-10">
+            @Html.TextBoxFor(m => m.WorkPhone, new { @class = "form-control" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.WorkExtension, new { @class = "col-md-2 control-label" })
+        <div class="col-md-10">
+            @Html.TextBoxFor(m => m.WorkExtension, new { @class = "form-control" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" class="btn btn-default" value="Save Profile" />
+        </div>
+    </div>
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

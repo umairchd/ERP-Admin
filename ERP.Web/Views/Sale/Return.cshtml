@@ -1,0 +1,239 @@
+﻿@model ERP.Models.WebModels.ReturnedOrderItemModel
+@{
+    ViewBag.Title = "Return";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    Session["MenuKey"] = 2;
+    Session["SubMenuKey"] = 2;
+
+}
+<div class="portlet light bg-inverse formBodyRemoveSideSpace formBodyMinHeight">
+    <div class="portlet-title">
+        <div class="caption">
+            <i class="icon-bulb font-red-sunglo"></i>
+            <span class="caption-subject font-red-sunglo bold uppercase">Sale</span>
+            <span class="caption-helper">@ViewBag.Title</span>
+        </div>
+        <div class="actions">
+            <button class="btn default blue-stripe toBeHidden" id="btnFltr" type="submit" form="ReturnItemForm" name="saveCreate" onclick="return (validateReturnItem()(event));">
+                <i class="fa fa-plus-square-o"></i>
+                <span class="hidden-480">
+                    Save & New
+                </span>
+            </button>
+            <button class="btn default green-stripe toBeHidden" id="btnFltr" type="submit" form="ReturnItemForm" name="save" onclick="return (validateReturnItem()(event));">
+                <i class="fa fa-save"></i>
+                <span class="hidden-480">
+                    Save & Close
+                </span>
+            </button>
+            <a href="~/Sale/History" class="btn default yellow-stripe">
+                <i class="fa fa-list"></i>
+                <span class="hidden-480">
+                    All Returned Items
+                </span>
+            </a>
+        </div>
+    </div>
+    <div class="portlet-body form">
+        @using (Html.BeginForm("Return", "Sale", FormMethod.Post, new { @class = "form-horizontal", @id = "ReturnItemForm", role = "form" }))
+        {
+            <div class="form-body">
+                @Html.AntiForgeryToken()
+                @Html.HiddenFor(m=>m.ReceivedBy)
+                @Html.HiddenFor(m=>m.ReceivedDate)
+                <div class="row">
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label class="col-md-4 control-label">Invoice #</label>
+                            <div class="col-md-8">
+                                @Html.TextBoxFor(m => m.OrderId, new { @class = "form-control mandatory toBeEmpty NumberValue", placeholder = "Inv. #", id = "OrderId" })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label class="col-md-4 control-label">Barcode</label>
+                            <div class="col-md-8">
+                                @Html.TextBoxFor(m => m.ProductVariationId, new { @class = "form-control mandatory toBeEmpty NumberValue", placeholder = "Barcode or Item Code", id = "itemId"})
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <div class="col-md-8">
+                                <div class="input-group">
+                                    <span class="input-group-btn">
+                                        <button class="btn default blue-stripe" title="Search Item" id="btnSearchOrderItem">
+                                            @*<a href="~/Sale/History" class="btn default blue-stripe" title="Search Item">*@
+                                            <i class="fa fa-search"></i>
+                                        </button>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label class="col-md-4 control-label">Sale Qty</label>
+                            <div class="col-md-8">
+                                @Html.TextBoxFor(m => m.SaleQty, new { @class = "form-control toBeClear", placeholder = "Sale Qty", id = "SaleQty",@readonly="true" })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label class="col-md-4 control-label">Sale Price</label>
+                            <div class="col-md-8">
+                                @Html.TextBoxFor(m => m.SalePrice, new { @class = "form-control toBeClear", placeholder = "Sale Price per Item", id = "SalePrice", @readonly = "true" })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label class="col-md-4 control-label">Discount</label>
+                            <div class="col-md-8">
+                                @Html.TextBoxFor(m => m.SaleDiscount, new { @class = "form-control toBeClear", placeholder = "Total Discount", id = "discount", @readonly = "true" })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label class="col-md-4 control-label">Total</label>
+                            <div class="col-md-8">
+                                @Html.TextBoxFor(m => m.SaleSubTotal, new { @class = "form-control toBeClear", placeholder = "Sale Total", id = "PriceSubTotal", @readonly = "true" })
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label class="col-md-4 control-label">Deduction %</label>
+                            <div class="col-md-8">
+                                @Html.TextBoxFor(m => m.Deduction, new { @class = "form-control mandatory CalculateReturn DecimalValue toBeClear toBeEmpty", placeholder = "Dedution Percentage", id = "Deduction" })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label class="col-md-4 control-label">Returned Qty</label>
+                            <div class="col-md-8">
+                                @Html.TextBoxFor(m => m.ReturnedQty, new { @class = "form-control mandatory CalculateReturn NumberValue toBeClear toBeEmpty", PlaceHolder = "Returned Qty", id = "ReturnedQty" })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label class="col-md-4 control-label">Return Price</label>
+                            <div class="col-md-8">
+                                @Html.TextBoxFor(m => m.Price, new { @class = "form-control toBeClear", placeholder = "Return Price Per Item", id = "ReturnPrice",@readonly=true })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label class="col-md-4 control-label">Sub Total</label>
+                            <div class="col-md-8">
+                                @Html.TextBoxFor(m => m.ReturnedSubTotal, new { @class = "form-control toBeClear", placeholder = "Total Amount to be returned", id = "ReturnSubTotal", @readonly = true })
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+<script>
+    $(document).ready(function () {
+        $('#btnSearchOrderItem').on("click", function (event) {
+            event.preventDefault();
+            event.stopPropagation();
+            $(".toBeClear").val('');
+            var invoiceId = $("#OrderId").val();
+            var barcode = $("#itemId").val();
+            if (invoiceId != "" && barcode != "") {
+                $.blockUI({ message: '<h3><img src="../../Images/loading.gif" height=55px; width=55px; /> Fetching Product...</h3>' });
+                $.ajax({
+                    url: "/Api/OrderItem",
+                    type: "GET",
+                    data: { "itemId": barcode, "orderId": invoiceId },
+                    dataType: "json",
+                    success: returnedOrderItem,
+                    error: function(textStatus, errorThrown) {
+                        $.unblockUI();
+                        alert("Status: " + textStatus);
+                        alert("Error: " + errorThrown);
+                    }
+                });
+            } else {
+                toastr.error("Invoice # and Barcode must be provided");
+
+            }
+        });
+        function returnedOrderItem(data) {
+            $.unblockUI();
+            if (data.OrderItemId <= 0) {
+                toastr.error("No Product Item found with given Code");
+            } else {
+                toastr.success("Order Item found successfully");
+                $("#SaleQty").val(data.Quantity);
+                $("#SalePrice").val(data.SalePrice);
+                $("#discount").val(data.Discount);
+                $("#PriceSubTotal").val(data.TotalItemAmount);
+            }
+        }
+
+        if ('@Model.OrderId' > 0) {
+            
+        } else {
+            $(".toBeEmpty").val('');
+            $(".toBeClear").val('');
+        }
+    });
+    function validateReturnItem(event) {
+        var returnQty = $("#ReturnedQty").val() == "" ? 0 : $("#ReturnedQty").val();
+        var saleQty = $("#SaleQty").val();
+
+        //totalPrice after discount
+        var totalPrice = $("#PriceSubTotal").val();
+
+        var pricePerItem = $("#SalePrice").val();
+        var deduction = $("#Deduction").val() == "" ? 0 : $("#Deduction").val();
+        var returnprice = 0;
+        if (returnQty > saleQty && returnQty <1) {
+            toastr.info("Return quantity must be greater than zero (0) and should not be greater than sale quantity");
+            //event.preventDefault();
+            return false;
+        } else {
+            //Price Per Item after Discount
+            pricePerItem = parseFloat(totalPrice) / parseFloat(saleQty);
+            deduction = ((parseFloat(deduction) / parseFloat(pricePerItem)) * 100);
+            //Price Per Item after Deduction
+            var priceAfterDeduction = parseFloat(pricePerItem) - parseFloat(deduction);
+            if (returnprice > pricePerItem) {
+                toastr.info("Return price should not greater than sale price.");
+                event.preventDefault();
+                return false;
+            } else {
+                $("#ReturnPrice").val(parseFloat(priceAfterDeduction));
+                $("#ReturnSubTotal").val(parseFloat(priceAfterDeduction * returnQty));
+                return true;
+            }
+        }
+    }
+    $(".CalculateReturn").on('keydown', function (event) {
+   
+        if (event.which == 13 || event.which == 9) {
+            validateReturnItem();
+            if (event.which == 13) {
+                event.preventDefault();
+                return false;
+            }
+            
+        }
+    });
+   
+</script>

@@ -1,0 +1,83 @@
+﻿@model List<ERP.Models.WebModels.AspNetUserModel>
+
+@{
+    ViewBag.Title = "Users";
+    Session["MenuKey"] = 5;
+    Session["SubMenuKey"] = 2;
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="portlet light bg-inverse formBodyRemoveSideSpace formBodyMinHeight">
+    <div class="portlet-title">
+        <div class="caption">
+            <i class="icon-bulb font-red-sunglo"></i>
+            <span class="caption-subject font-red-sunglo bold uppercase"> Users <small>(employee and members)</small></span>
+            <span class="caption-helper">All</span>
+        </div>
+        <div class="actions">
+            <a href="~/Account/Create" class="btn default yellow-stripe">
+                <i class="fa fa-plus"></i>
+                <span class="hidden-480">
+                    Add New Employee
+                </span>
+            </a>
+            <a href="javascript:;" class="btn default red-stripe" id="btnResetFltr">
+                <i class="fa fa-recycle"></i>
+                <span class="hidden-480">
+                    Reset
+                </span>
+            </a>
+            <a href="javascript:;" class="btn default blue-stripe" id="btnFltr">
+                <i class="fa fa-filter"></i>
+                <span class="hidden-480">
+                    Filter
+                </span>
+            </a>
+        </div>
+    </div>
+    <div class="portlet box">
+        <div class="portlet-body flip-scroll">
+            <table id="dataTable" class="table table-bordered table-striped table-condensed flip-content">
+                <thead class="flip-content">
+                    <tr>
+                        <th>Users</th>
+                        <th>User Name</th>
+                        <th>Registered Email</th>
+                        <th>Role</th>
+                        <th>Address</th>
+                        <th>Is locked</th>
+                        <th>Is Confirmed</th>
+                        <th>Telephone</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>@Html.ActionLink(@item.FirstName + " " + @item.LastName, "Create", new { userName = item.UserName }) </td>
+                            <td>@item.UserName</td>
+                            <td>@item.Email</td>
+                            <td>@item.RoleName</td>
+                            <td>@item.Address</td>
+                            <td>@item.LockoutEnabledString</td>
+                            <td>@item.IsConfirmedString</td>
+                            <td>@item.Telephone</td>
+
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#UserList').dataTable({
+            "sPaginationType": "full_numbers",
+            "iDisplayLength": 10,
+            "bFilter": false,
+            "bLengthChange": false
+        });
+    });
+</script>

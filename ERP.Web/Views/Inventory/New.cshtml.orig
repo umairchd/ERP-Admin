@@ -1,0 +1,358 @@
+﻿@model TMD.Models.WebViewModels.ProductViewModel
+@{
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    var isEdit = (Model.ProductModel != null && Model.ProductModel.ProductId > 0);
+    Session["MenuKey"] = 4;
+    Session["SubMenuKey"] = 2;
+    var formAction = isEdit ? "Update" : "New";
+    ViewBag.Title = formAction +" Product";
+    //var imageDefaultURL = Model.ProductModel!=null?Model.ProductModel.ProductDefaultImageURL:"";
+}
+
+<div class="portlet light bg-inverse formBodyRemoveSideSpace">
+    
+    <div class="portlet-title">
+        <div class="caption">
+            <i class="icon-bulb font-red-sunglo"></i>
+            <span class="caption-subject font-red-sunglo bold uppercase">Product</span>
+            <span class="caption-helper">@formAction</span>
+        </div>
+        <div class="actions">
+            <button class="btn default green-stripe toBeHidden" id="btnFltr" type="submit" form="ProductCreateForm" name="saveCreate" onclick="return (ValidateFields(event));">
+                <i class="fa fa-plus-square-o"></i>
+                <span class="hidden-480">
+                    Save & New
+                </span>
+            </button>
+            <button class="btn default blue-stripe toBeHidden" id="btnFltr" type="submit" form="ProductCreateForm" name="save" onclick="return (ValidateFields(event));">
+                <i class="fa fa-save"></i>
+                <span class="hidden-480">
+                    Save & Close
+                </span>
+            </button>
+            <a href="~/Product/Index" class="btn default yellow-stripe">
+                <i class="fa fa-list"></i>
+                <span class="hidden-480">
+                    All Products
+                </span>
+            </a>
+        </div>
+    </div>
+
+    <div class="portlet-body form">
+<<<<<<< HEAD:TMD.Web/Views/Inventory/New.cshtml
+        @using (Html.BeginForm("New", "Inventory", FormMethod.Post, new { @class = "form-horizontal", role = "form", enctype = "multipart/form-data" }))
+=======
+        @using (Html.BeginForm("Create", "Product", FormMethod.Post, new { @class = "form-horizontal",@id="ProductCreateForm" ,role = "form", enctype = "multipart/form-data" }))
+>>>>>>> 9b10258892324bf15334c751caa6eaee0397ac71:TMD.Web/Views/Product/Create.cshtml
+        {
+            <div class="form-body">
+                <h3 class="form-section">
+                    Product's Basic Info
+                    @*<span style="font-size: 12px">@Html.CheckBoxFor(m => m.ProductModel.IsWeb, new { @class = "form-control", @id = "isWeb" }) @Html.LabelFor(m => m.ProductModel.IsWeb, new { @class = "control-label" })</span>*@
+                </h3>
+                @Html.AntiForgeryToken()
+                @Html.HiddenFor(m => m.ProductModel.ProductId)
+                @Html.HiddenFor(m => m.ProductModel.RecCreatedBy)
+                @Html.HiddenFor(m => m.ProductModel.RecCreatedDate)
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.ProductModel.Name, new { @class = "col-md-4 control-label requiredLabel" })
+                            <div class="col-md-8">
+                                @Html.TextBoxFor(m => m.ProductModel.Name, new { @class = "form-control mandatory searchBarcode", @autofocus = "autofocus", @id = "ProductName" })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.ProductModel.CategoryId, new { @class = "col-md-4 control-label requiredLabel" })
+                            <div class="col-md-8">
+                                <div class="input-group">
+                                    @Html.DropDownListFor(model => model.ProductModel.CategoryId, new SelectList(Model.ProductCategories.OrderBy(x => x.NameWithMainCategory), "CategoryId", "NameWithMainCategory"), "Select Category", new { @class = "form-control mandatory  select2me", @id = "Category" })
+                                    <span class="input-group-btn">
+                                        <a href="~/ProductCategory/Create" class="btn default blue-stripe" title="Add New Category">
+                                            <i class="fa fa-plus"></i>
+                                        </a>
+                                    </span>
+                                </div>
+                                @Html.ValidationMessageFor(model => model.ProductModel.CategoryId)
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.ProductModel.BrandId, new { @class = "col-md-4 control-label" })
+                            <div class="col-md-8">
+                                <div class="input-group">
+                                    @Html.DropDownListFor(model => model.ProductModel.BrandId, new SelectList(Model.ProductBrands.OrderBy(x => x.BrandName), "BrandId", "BrandName"), "Select Brand", new { @class = "form-control mandatory  select2me", @id = "Brand" })
+                                    <span class="input-group-btn">
+                                        <a href="~/Brand/Create" class="btn default blue-stripe" title="Add New Brand">
+                                            <i class="fa fa-plus"></i>
+                                        </a>
+                                    </span>
+                                </div>
+                                
+                                @Html.ValidationMessageFor(model => model.ProductModel.BrandId)
+                            </div>
+                        </div>
+                    </div>
+                   
+                </div>
+                <div class="row">
+                   
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.ProductModel.ProductDescription, new { @class = "col-md-4 control-label" })
+                            <div class="col-md-8">
+                                @Html.TextAreaFor(m => m.ProductModel.ProductDescription, new { rows = "2",@id="ProductDescription", @class = "form-control", placeholder = "(Optional)" })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.ProductModel.Comments, new { @class = "col-md-4 control-label" })
+                            <div class="col-md-8">
+                                @Html.TextAreaFor(m => m.ProductModel.Comments, new { rows = "2", @class = "form-control", placeholder = "Comments, if any. (Optional)" })
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+
+                <h3 class="form-section">
+                    Product Item(s)
+                </h3>
+                <div id="ProductVariantForm">
+                    <div class="row">
+                        <input type="hidden" id="itemRowIndex" value=""/>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                @Html.Label("Barcode", new { @class = "col-md-4 control-label requiredLabel" })
+                                <div class="col-md-8">
+                                    <div class="input-group">
+                                        @Html.TextBox("GenerateBarcode", null, new { @id = "Barcode", @class = "form-control mandatoryModal searchBarcode", @autofocus = "autofocus" })
+                                        <span class="input-group-btn">
+                                            <button class="btn default blue-stripe" type="button" onclick=" $('#Barcode').val(newbarcode()); enableAddButton();">Generate</button>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                @Html.Label("Unit", new { @class = "col-md-4 control-label" })
+                                <div class="col-md-8">
+                                    <div class="input-group">
+                                        @Html.DropDownList("Unit", new SelectList(Model.Units.OrderBy(x => x.UnitTitle), "UnitId", "UnitTitle"), "Select Unit", new { @class = "form-control select2me", @id = "UnitId" })
+                                        <span class="input-group-btn">
+                                            <a href="~/Unit/Create" class="btn default blue-stripe" title="Add New Unit">
+                                                <i class="fa fa-plus"></i>
+                                            </a>
+                                        </span>
+                                    </div>
+                                    
+                                    @Html.ValidationMessageFor(model => model.ProductModel.BrandId)
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                @Html.Label("Shelf", new { @class = "col-md-4 control-label" })
+                                <div class="col-md-8">
+                                    <div class="input-group">
+                                        @Html.DropDownList("Shelf", new SelectList(Model.Shelves.OrderBy(x => x.Title), "ShelfId", "Title"), "Select Shelf", new { @class = "form-control select2me", @id = "ShelfId" })
+                                        <span class="input-group-btn">
+                                            <a href="~/Shelf/Create" class="btn default blue-stripe" title="Add New Shelf">
+                                                <i class="fa fa-plus"></i>
+                                            </a>
+                                        </span>
+                                    </div>
+                                    
+                                    @Html.ValidationMessageFor(model => model.ProductModel.BrandId)
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label class="col-md-4 control-label" title="Minimum level of stock for this item.">
+                                    Stock <span style="font-size: 8px">Min. Level</span>
+                                </label>
+                                <div class="col-md-8">
+                                    @*@Html.TextBox("MinStockLevel", null, new { @id = "MinStockLevel", @class = "form-control", @autofocus = "autofocus" })*@
+                                    <input type="number" id="MinStockLevel" class="form-control" autofocus="autofocus" max="2147483647" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                @Html.Label("Description", new { @class = "col-md-4 control-label"})
+                                <div class="col-md-8">
+                                    @Html.TextArea("ItemDescription", new { @id="ItemDescription",rows="2",@class = "form-control", placeholder = "Optional" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <div class="col-md-4">  </div>
+                                <div class="col-md-8">
+                                    <a class="btn green-meadow disabled" id="ProductItemAddBtn">
+                                        <i class="fa fa-plus-square-o"></i>
+                                        <span class="hidden-480">
+                                            Add
+                                        </span>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                
+
+                <div class="portlet box">
+                    <div class="portlet-body flip-scroll">
+                        <table class="table table-bordered table-striped table-condensed flip-content">
+                            <thead class="flip-content">
+                                <tr>
+                                    <th style='display:none'></th>
+                                    <th width="20%">
+                                        Barcode
+                                    </th>
+                                    <th width="10%">
+                                        Unit
+                                    </th>
+                                    <th width="10%">
+                                        Shelf
+                                    </th>
+                                    <th width="10%" title="Minimum stock level">
+                                        Min. Stock
+                                    </th>
+                                    <th width="40%" title="Item Description">
+                                        Desc
+                                    </th>
+                                    <th width="10%">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody id="ProductVariationTableBody">
+                                @for (int i = 0; i < Model.ProductVariations.Count; i++)
+                                {
+                                    <tr data-id="@i">
+                                        <td style='display:none'>
+                                            <input name='ProductVariations.Index' type='hidden' value='@i' />
+                                            @Html.HiddenFor(model => model.ProductVariations[i].ProductId)
+                                            @Html.HiddenFor(model => model.ProductVariations[i].ProductVariationId)
+                                            @Html.HiddenFor(model => model.ProductVariations[i].RecCreatedBy)
+                                            @Html.HiddenFor(model => model.ProductVariations[i].RecCreatedDate)
+                                        </td>
+                                        <td>
+                                            @Html.TextBoxFor(model => model.ProductVariations[i].Barcode, new { @readOnly = "readOnly", @class = "ProductTableColumn", tabindex = "-1" })
+                                        </td>
+                                        <td>
+                                            @Html.HiddenFor(model => model.ProductVariations[i].UnitId)
+                                            @Html.TextBoxFor(model => model.ProductVariations[i].UnitTitle, new { @readOnly = "readOnly", @class = "ProductTableColumn", tabindex = "-1" })
+                                        </td>
+                                        <td>
+                                            @Html.HiddenFor(model => model.ProductVariations[i].ShelfId)
+                                            @Html.TextBoxFor(model => model.ProductVariations[i].ShelfTitle, new { @readOnly = "readOnly", @class = "ProductTableColumn", tabindex = "-1" })
+                                        </td>
+                                        <td>
+                                            @Html.TextBoxFor(model => model.ProductVariations[i].MinimumStockLimit, new { @readOnly = "readOnly", @class = "ProductTableColumn", tabindex = "-1" })
+                                        </td>
+                                        <td>
+                                            @Html.TextBoxFor(model => model.ProductVariations[i].ProductVariantDescription, new { @readOnly = "readOnly", @class = "ProductTableColumn", tabindex = "-1" })
+                                        </td>
+                                        <td>
+                                            <a href="javascript:;" class="btn default btn-xs blue editRow" title="Edit"><i class="fa fa-pencil"></i></a>
+                                            <a href="javascript:;" class="btn default btn-xs red deleteRow" title="Delete"><i class="fa fa-trash-o"></i></a>
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+
+                        </table>
+                    </div>
+                </div>
+
+                @*<div class="form-group margin-top-20 imagediv">
+                    @Html.Label("Other Images", new { @class = "col-md-4 control-label" })
+                    <div class="col-md-4" style="margin-top:7px;">
+                        @Html.TextBoxFor(model => model.ProductImages, new { @id = "ProductOtherImages", @class = "form-control ", multiple = "multiple", type = "file", accept = "image/*" })
+                    </div>
+                </div>*@
+
+            </div>
+
+    <div class="form-actions right">
+        <button type="submit" class="btn green-meadow" name="save" onclick="return (ValidateFields(event));">Save & Close</button>
+        <button type="submit" class="btn btn-primary" name="saveCreate" onclick="return (ValidateFields(event));">Save & New</button>
+        <a href="~/Inventory/All">
+            <button type="button" class="btn btn-warning">Move to Product's List</button>
+        </a>
+    </div>
+
+        }
+    </div>
+</div>
+<script src="~/Scripts/GenerateBarcode.js"></script>
+@*<script src="~/Scripts/InventoryScripts.js"></script>*@
+<script src="~/Scripts/AddProductPage.js"></script>
+<script>
+    jQuery(document).on('keydown', '.searchBarcode', function (ev) {
+        if (ev.which === 13) {
+            LoadProductByCode(this);
+            // Avoid form submit
+            return false;
+        }
+    });
+    $(document).ready(function () {
+        @*if ('@isEdit') {
+            ShowProfit();
+        }
+        toggleImageDiv("#isWeb");*@
+        $(function () {
+            return $("#MinStockLevel").keydown(isNumberKey);
+        });
+
+    });
+
+    //$('#isWeb').change(function () {
+    //    toggleImageDiv(this);
+    //});
+    function toggleImageDiv(control) {
+        if ($(control).is(":checked")) {
+            $('.imagediv').fadeIn();
+            $('html, body').animate({
+                scrollTop: $(document).height()
+            }, 'slow');
+        } else {
+            $('.imagediv').fadeOut();
+            $('html, body').animate({
+                scrollTop: 0
+            }, 'slow');
+
+        }
+    }
+    function SetMinSalePrice() {
+        $("#MinSalePriceAllowed").val($("#SalePrice").val());
+    }
+    function ValidateCustomFields() {
+        var Cost = parseInt($('#PurchasePrice').val());
+        var Sale = parseInt($('#SalePrice').val());
+
+        if (Cost < Sale) {
+            if ($('#isWeb').is(":checked") && $('#ProductDefaultImage').val() == "" && $("#ProductDefaultImageURL").attr('src') == "") {
+                $('#ProductDefaultImage').css('border-color', 'red');
+                toastr.error("Must upload product default image.");
+                return false;
+            } else {
+                $('#ProductDefaultImage').css('border-color', 'gainsboro');
+                return true;
+            }
+        }
+        toastr.error("Sale Price should be greater than Purchase Price");
+        return false;
+    }
+</script>

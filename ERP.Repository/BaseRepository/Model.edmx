@@ -1,0 +1,2602 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="TMDModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="AspNetRoles">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="256" Nullable="false" />
+        </EntityType>
+        <EntityType Name="AspNetUserClaims">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserId" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="ClaimType" Type="nvarchar(max)" />
+          <Property Name="ClaimValue" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="AspNetUserLogins">
+          <Key>
+            <PropertyRef Name="LoginProvider" />
+            <PropertyRef Name="ProviderKey" />
+            <PropertyRef Name="UserId" />
+          </Key>
+          <Property Name="LoginProvider" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="ProviderKey" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="UserId" Type="nvarchar" MaxLength="128" Nullable="false" />
+        </EntityType>
+        <EntityType Name="AspNetUserRoles">
+          <Key>
+            <PropertyRef Name="RoleId" />
+            <PropertyRef Name="UserId" />
+          </Key>
+          <Property Name="RoleId" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="UserId" Type="nvarchar" MaxLength="128" Nullable="false" />
+        </EntityType>
+        <EntityType Name="AspNetUsers">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="Email" Type="nvarchar" MaxLength="256" />
+          <Property Name="EmailConfirmed" Type="bit" Nullable="false" />
+          <Property Name="PasswordHash" Type="nvarchar(max)" />
+          <Property Name="SecurityStamp" Type="nvarchar(max)" />
+          <Property Name="TwoFactorEnabled" Type="bit" Nullable="false" />
+          <Property Name="LockoutEndDateUtc" Type="datetime" />
+          <Property Name="LockoutEnabled" Type="bit" Nullable="false" />
+          <Property Name="AccessFailedCount" Type="int" Nullable="false" />
+          <Property Name="UserName" Type="nvarchar" MaxLength="256" Nullable="false" />
+          <Property Name="Address" Type="nvarchar" MaxLength="200" />
+          <Property Name="ImageName" Type="nvarchar(max)" />
+          <Property Name="FirstName" Type="nvarchar" MaxLength="200" />
+          <Property Name="LastName" Type="nvarchar" MaxLength="200" />
+          <Property Name="Telephone" Type="nvarchar" MaxLength="200" />
+          <Property Name="UserComments" Type="nvarchar" MaxLength="1000" />
+        </EntityType>
+        <EntityType Name="Brand">
+          <Key>
+            <PropertyRef Name="BrandId" />
+          </Key>
+          <Property Name="BrandId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="BrandName" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="BrandDescription" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="RecCreatedDate" Type="datetime" Nullable="false" />
+          <Property Name="RecLastUpdatedDate" Type="datetime" Nullable="false" />
+          <Property Name="RecCreatedBy" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="RecLastUpdatedBy" Type="nvarchar" MaxLength="128" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Categories">
+          <Key>
+            <PropertyRef Name="CategoryID" />
+          </Key>
+          <Property Name="CategoryID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CategoryName" Type="nvarchar" MaxLength="64" Nullable="false" />
+        </EntityType>
+        <EntityType Name="CategoryLogs">
+          <Key>
+            <PropertyRef Name="CategoryLogID" />
+          </Key>
+          <Property Name="CategoryLogID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CategoryID" Type="int" Nullable="false" />
+          <Property Name="LogID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Configurations">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Type" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Value" Type="nvarchar" MaxLength="1024" />
+        </EntityType>
+        <EntityType Name="Customer">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="500" Nullable="false" />
+          <Property Name="Phone" Type="nvarchar" MaxLength="100" />
+          <Property Name="Address" Type="nvarchar" MaxLength="500" />
+          <Property Name="Email" Type="nvarchar" MaxLength="100" />
+          <Property Name="Comments" Type="nvarchar" MaxLength="500" />
+          <Property Name="RecCreatedDate" Type="datetime" Nullable="false" />
+          <Property Name="RecLastUpdatedDate" Type="datetime" Nullable="false" />
+          <Property Name="RecCreatedBy" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="RecLastUpdatedBy" Type="nvarchar" MaxLength="128" Nullable="false" />
+        </EntityType>
+        <EntityType Name="CustomerOrders">
+          <Key>
+            <PropertyRef Name="CustomerId" />
+            <PropertyRef Name="OrderId" />
+          </Key>
+          <Property Name="CustomerId" Type="bigint" Nullable="false" />
+          <Property Name="OrderId" Type="bigint" Nullable="false" />
+          <Property Name="Comments" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="ExpenseCategory">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="Description" Type="nvarchar" MaxLength="500" />
+          <Property Name="RecCreatedDate" Type="datetime" Nullable="false" />
+          <Property Name="RecLastUpdatedDate" Type="datetime" Nullable="false" />
+          <Property Name="RecCreatedBy" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="RecLastUpdatedBy" Type="nvarchar" MaxLength="128" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Expenses">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="VendorId" Type="bigint" />
+          <Property Name="ExpenseDate" Type="datetime" Nullable="false" />
+          <Property Name="ExpenseCategoryId" Type="bigint" Nullable="false" />
+          <Property Name="ExpenseAmount" Type="decimal" Precision="9" Scale="2" Nullable="false" />
+          <Property Name="Description" Type="nvarchar" MaxLength="500" />
+          <Property Name="RecCreatedDate" Type="datetime" Nullable="false" />
+          <Property Name="RecLastUpdatedDate" Type="datetime" Nullable="false" />
+          <Property Name="RecCreatedBy" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="RecLastUpdatedBy" Type="nvarchar" MaxLength="128" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Logs">
+          <Key>
+            <PropertyRef Name="LogID" />
+          </Key>
+          <Property Name="LogID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="EventID" Type="int" />
+          <Property Name="Priority" Type="int" Nullable="false" />
+          <Property Name="Severity" Type="nvarchar" MaxLength="32" Nullable="false" />
+          <Property Name="Title" Type="nvarchar" MaxLength="256" Nullable="false" />
+          <Property Name="Timestamp" Type="datetime" Nullable="false" />
+          <Property Name="MachineName" Type="nvarchar" MaxLength="32" Nullable="false" />
+          <Property Name="AppDomainName" Type="nvarchar" MaxLength="512" Nullable="false" />
+          <Property Name="ProcessID" Type="nvarchar" MaxLength="256" Nullable="false" />
+          <Property Name="ProcessName" Type="nvarchar" MaxLength="512" Nullable="false" />
+          <Property Name="ThreadName" Type="nvarchar" MaxLength="512" />
+          <Property Name="Win32ThreadId" Type="nvarchar" MaxLength="128" />
+          <Property Name="Message" Type="nvarchar" MaxLength="1500" />
+          <Property Name="FormattedMessage" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="Notes">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="NotesDate" Type="datetime" Nullable="false" />
+          <Property Name="NotesCategoryId" Type="bigint" Nullable="false" />
+          <Property Name="Description" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="IsOpen" Type="bit" Nullable="false" />
+          <Property Name="Amount" Type="decimal" Precision="9" Scale="2" />
+          <Property Name="RecCreatedDate" Type="datetime" Nullable="false" />
+          <Property Name="RecLastUpdatedDate" Type="datetime" Nullable="false" />
+          <Property Name="RecCreatedBy" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="RecLastUpdatedBy" Type="nvarchar" MaxLength="128" Nullable="false" />
+        </EntityType>
+        <EntityType Name="NotesCategory">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="Description" Type="nvarchar" MaxLength="500" Nullable="false" />
+          <Property Name="RecCreatedDate" Type="datetime" Nullable="false" />
+          <Property Name="RecLastUpdatedDate" Type="datetime" Nullable="false" />
+          <Property Name="RecCreatedBy" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="RecLastUpdatedBy" Type="nvarchar" MaxLength="128" Nullable="false" />
+        </EntityType>
+        <EntityType Name="OrderItems">
+          <Key>
+            <PropertyRef Name="OrderItemId" />
+          </Key>
+          <Property Name="OrderItemId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Quantity" Type="int" Nullable="false" />
+          <Property Name="OrderId" Type="bigint" Nullable="false" />
+          <Property Name="ProductVariationId" Type="bigint" Nullable="false" />
+          <Property Name="PurchasePrice" Type="decimal" Precision="9" Scale="2" Nullable="false" />
+          <Property Name="SalePrice" Type="decimal" Precision="9" Scale="2" Nullable="false" />
+          <Property Name="Discount" Type="decimal" Precision="9" Scale="2" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Orders">
+          <Key>
+            <PropertyRef Name="OrderId" />
+          </Key>
+          <Property Name="OrderId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IsModified" Type="bit" Nullable="false" />
+          <Property Name="RecCreatedDate" Type="datetime" Nullable="false" />
+          <Property Name="RecLastUpdatedDate" Type="datetime" Nullable="false" />
+          <Property Name="RecCreatedBy" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="RecLastUpdatedBy" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="Comments" Type="nvarchar" MaxLength="1000" />
+          <Property Name="IsDeleted" Type="bit" />
+        </EntityType>
+        <EntityType Name="PaymentMethod">
+          <Key>
+            <PropertyRef Name="PaymentMethodId" />
+          </Key>
+          <Property Name="PaymentMethodId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Title" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Description" Type="nvarchar" MaxLength="250" />
+          <Property Name="RecCreatedDate" Type="datetime" Nullable="false" />
+          <Property Name="RecLastUpdatedDate" Type="datetime" Nullable="false" />
+          <Property Name="RecCreatedBy" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="RecLastUpdatedBy" Type="nvarchar" MaxLength="128" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ProductCategory">
+          <Key>
+            <PropertyRef Name="CategoryId" />
+          </Key>
+          <Property Name="CategoryId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="Description" Type="nvarchar" MaxLength="500" Nullable="false" />
+          <Property Name="RecCreatedDate" Type="datetime" Nullable="false" />
+          <Property Name="RecLastUpdatedDate" Type="datetime" Nullable="false" />
+          <Property Name="RecCreatedBy" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="RecLastUpdatedBy" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="ParentCategoryId" Type="bigint" />
+          <Property Name="IsParentCategory" Type="bit" Nullable="false" />
+          <Property Name="IsWeb" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ProductConfiguration">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="MaxAllowedDiscount" Type="tinyint" Nullable="false" />
+          <Property Name="Emails" Type="nvarchar(max)" />
+          <Property Name="SecurityPassword" Type="nvarchar" MaxLength="100" />
+          <Property Name="ProductCodePrefix" Type="nvarchar" MaxLength="20" />
+          <Property Name="Comments" Type="nvarchar" MaxLength="1000" />
+          <Property Name="RecCreatedDate" Type="datetime" Nullable="false" />
+          <Property Name="RecLastUpdatedDate" Type="datetime" Nullable="false" />
+          <Property Name="RecCreatedBy" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="RecLastUpdatedBy" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="DefaultVendorId" Type="bigint" />
+        </EntityType>
+        <EntityType Name="ProductImages">
+          <Key>
+            <PropertyRef Name="ImageId" />
+          </Key>
+          <Property Name="ImageId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ProductVariationId" Type="bigint" Nullable="false" />
+          <Property Name="ImageData" Type="varbinary(max)" Nullable="false" />
+          <Property Name="ContentType" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="IsDefault" Type="bit" Nullable="false" />
+          <Property Name="RecCreatedDate" Type="datetime" Nullable="false" />
+          <Property Name="RecLastUpdatedDate" Type="datetime" Nullable="false" />
+          <Property Name="RecCreatedBy" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="RecLastUpdatedBy" Type="nvarchar" MaxLength="128" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Products">
+          <Key>
+            <PropertyRef Name="ProductId" />
+          </Key>
+          <Property Name="ProductId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="CategoryId" Type="bigint" Nullable="false" />
+          <Property Name="RecCreatedDate" Type="datetime" Nullable="false" />
+          <Property Name="RecLastUpdatedDate" Type="datetime" Nullable="false" />
+          <Property Name="RecCreatedBy" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="RecLastUpdatedBy" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="Comments" Type="nvarchar" MaxLength="1000" />
+          <Property Name="IsWeb" Type="bit" Nullable="false" />
+          <Property Name="ProductDescription" Type="nvarchar(max)" />
+          <Property Name="BrandId" Type="bigint" />
+        </EntityType>
+        <EntityType Name="ProductVariation">
+          <Key>
+            <PropertyRef Name="ProductVariationId" />
+          </Key>
+          <Property Name="ProductVariationId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ProductId" Type="bigint" Nullable="false" />
+          <Property Name="UnitId" Type="int" />
+          <Property Name="Barcode" Type="nvarchar" MaxLength="30" Nullable="false" />
+          <Property Name="Purchaseprice" Type="decimal" Precision="9" Scale="2" Nullable="false" />
+          <Property Name="Saleprice" Type="decimal" Precision="9" Scale="2" Nullable="false" />
+          <Property Name="MinimumStockLimit" Type="int" Nullable="false" />
+          <Property Name="RecCreatedDate" Type="datetime" Nullable="false" />
+          <Property Name="RecLastUpdatedDate" Type="datetime" Nullable="false" />
+          <Property Name="RecCreatedBy" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="RecLastUpdatedBy" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="ShelfId" Type="bigint" />
+          <Property Name="ProductVariantDescription" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="PurchaseBill">
+          <Key>
+            <PropertyRef Name="PurchaseBillId" />
+          </Key>
+          <Property Name="PurchaseBillId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="VendorId" Type="bigint" />
+          <Property Name="VendorInvoiceNo" Type="nvarchar" MaxLength="25" />
+          <Property Name="TotalDiscount" Type="decimal" Precision="9" Scale="2" Nullable="false" />
+          <Property Name="PaidAmount" Type="decimal" Precision="9" Scale="2" Nullable="false" />
+          <Property Name="PurchaseDate" Type="datetime" Nullable="false" />
+          <Property Name="RecCreatedDate" Type="datetime" Nullable="false" />
+          <Property Name="RecLastUpdatedDate" Type="datetime" Nullable="false" />
+          <Property Name="RecCreatedBy" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="RecLastUpdatedBy" Type="nvarchar" MaxLength="128" Nullable="false" />
+        </EntityType>
+        <EntityType Name="PurchaseBillItems">
+          <Key>
+            <PropertyRef Name="ItemId" />
+          </Key>
+          <Property Name="ItemId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ProductVariationId" Type="bigint" Nullable="false" />
+          <Property Name="Quantity" Type="bigint" Nullable="false" />
+          <Property Name="PurchasePrice" Type="decimal" Precision="9" Scale="2" Nullable="false" />
+          <Property Name="SalePrice" Type="decimal" Precision="9" Scale="2" Nullable="false" />
+          <Property Name="PurchaseBillId" Type="bigint" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ReturnedOrderItems">
+          <Key>
+            <PropertyRef Name="ReturnId" />
+          </Key>
+          <Property Name="ReturnId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="OrderId" Type="bigint" Nullable="false" />
+          <Property Name="ProductVariationId" Type="bigint" Nullable="false" />
+          <Property Name="ReturnedQty" Type="int" Nullable="false" />
+          <Property Name="ReceivedBy" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="ReceivedDate" Type="datetime" Nullable="false" />
+          <Property Name="Price" Type="decimal" Precision="9" Scale="2" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Shelf">
+          <Key>
+            <PropertyRef Name="ShelfId" />
+          </Key>
+          <Property Name="ShelfId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Title" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Description" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="RecCreatedDate" Type="datetime" Nullable="false" />
+          <Property Name="RecLastUpdatedDate" Type="datetime" Nullable="false" />
+          <Property Name="RecCreatedBy" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="RecLastUpdatedBy" Type="nvarchar" MaxLength="128" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Supplier">
+          <Key>
+            <PropertyRef Name="SupplierId" />
+          </Key>
+          <Property Name="SupplierId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="ContactNo" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="Email" Type="nvarchar" MaxLength="100" />
+          <Property Name="Address" Type="nvarchar" MaxLength="250" />
+          <Property Name="ActiveFlag" Type="bit" Nullable="false" />
+          <Property Name="RecCreatedDate" Type="datetime" Nullable="false" />
+          <Property Name="RecLastUpdatedDate" Type="datetime" Nullable="false" />
+          <Property Name="RecCreatedBy" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="RecLastUpdatedBy" Type="nvarchar" MaxLength="128" Nullable="false" />
+        </EntityType>
+        <EntityType Name="SupplierBankAccount">
+          <Key>
+            <PropertyRef Name="SupplierBankAccountId" />
+          </Key>
+          <Property Name="SupplierBankAccountId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="SupplierId" Type="bigint" Nullable="false" />
+          <Property Name="AccountTitle" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="AccountNo" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="Description" Type="nvarchar" MaxLength="250" />
+          <Property Name="IsActive" Type="bit" Nullable="false" />
+          <Property Name="RecCreatedDate" Type="datetime" Nullable="false" />
+          <Property Name="RecLastUpdatedDate" Type="datetime" Nullable="false" />
+          <Property Name="RecCreatedBy" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="RecLastUpdatedBy" Type="nvarchar" MaxLength="128" Nullable="false" />
+        </EntityType>
+        <EntityType Name="SupplierPaymentHistory">
+          <Key>
+            <PropertyRef Name="SupplierPaymentHistoryId" />
+          </Key>
+          <Property Name="SupplierPaymentHistoryId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="SupplierId" Type="bigint" Nullable="false" />
+          <Property Name="SupplierBankAccountId" Type="bigint" />
+          <Property Name="PaymentMethodId" Type="int" Nullable="false" />
+          <Property Name="Amount" Type="decimal" Precision="9" Scale="2" Nullable="false" />
+          <Property Name="Description" Type="nvarchar" MaxLength="250" />
+          <Property Name="RecCreatedDate" Type="datetime" Nullable="false" />
+          <Property Name="RecLastUpdatedDate" Type="datetime" Nullable="false" />
+          <Property Name="RecCreatedBy" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="RecLastUpdatedBy" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="PurchaseBillId" Type="bigint" />
+        </EntityType>
+        <EntityType Name="Unit">
+          <Key>
+            <PropertyRef Name="UnitId" />
+          </Key>
+          <Property Name="UnitId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UnitTitle" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="UnitValue" Type="int" Nullable="false" />
+          <Property Name="RecCreatedDate" Type="datetime" Nullable="false" />
+          <Property Name="RecLastUpdatedDate" Type="datetime" Nullable="false" />
+          <Property Name="RecCreatedBy" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="RecLastUpdatedBy" Type="nvarchar" MaxLength="128" Nullable="false" />
+        </EntityType>
+        <EntityType Name="WebSiteSlider">
+          <Key>
+            <PropertyRef Name="SlideId" />
+          </Key>
+          <Property Name="SlideId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="MainTitle" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="SubTitle" Type="nvarchar(max)" />
+          <Property Name="ImageData" Type="varbinary(max)" Nullable="false" />
+          <Property Name="ImageType" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="IsActive" Type="bit" Nullable="false" />
+          <Property Name="RecCreatedDate" Type="datetime" Nullable="false" />
+          <Property Name="RecLastUpdatedDate" Type="datetime" Nullable="false" />
+          <Property Name="RecCreatedBy" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="RecLastUpdatedBy" Type="nvarchar" MaxLength="128" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_AspNetUserRoles_AspNetRole">
+          <End Role="AspNetRoles" Type="Self.AspNetRoles" Multiplicity="1" />
+          <End Role="AspNetUserRoles" Type="Self.AspNetUserRoles" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetRoles">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AspNetUserRoles">
+              <PropertyRef Name="RoleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AspNetUserRoles_AspNetUser">
+          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1" />
+          <End Role="AspNetUserRoles" Type="Self.AspNetUserRoles" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AspNetUserRoles">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CategoryLog_Category">
+          <End Role="Categories" Type="Self.Categories" Multiplicity="1" />
+          <End Role="CategoryLogs" Type="Self.CategoryLogs" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Categories">
+              <PropertyRef Name="CategoryID" />
+            </Principal>
+            <Dependent Role="CategoryLogs">
+              <PropertyRef Name="CategoryID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CustomerOrder_Customer">
+          <End Role="Customer" Type="Self.Customer" Multiplicity="1" />
+          <End Role="CustomerOrders" Type="Self.CustomerOrders" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Customer">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="CustomerOrders">
+              <PropertyRef Name="CustomerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CustomerOrder_Orders">
+          <End Role="Orders" Type="Self.Orders" Multiplicity="1" />
+          <End Role="CustomerOrders" Type="Self.CustomerOrders" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Orders">
+              <PropertyRef Name="OrderId" />
+            </Principal>
+            <Dependent Role="CustomerOrders">
+              <PropertyRef Name="OrderId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
+          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="AspNetUserClaims" Type="Self.AspNetUserClaims" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AspNetUserClaims">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId">
+          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="AspNetUserLogins" Type="Self.AspNetUserLogins" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AspNetUserLogins">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Expenses_ExpenseCategory">
+          <End Role="ExpenseCategory" Type="Self.ExpenseCategory" Multiplicity="1" />
+          <End Role="Expenses" Type="Self.Expenses" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ExpenseCategory">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Expenses">
+              <PropertyRef Name="ExpenseCategoryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Expenses_Vendors">
+          <End Role="Supplier" Type="Self.Supplier" Multiplicity="0..1" />
+          <End Role="Expenses" Type="Self.Expenses" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Supplier">
+              <PropertyRef Name="SupplierId" />
+            </Principal>
+            <Dependent Role="Expenses">
+              <PropertyRef Name="VendorId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_InventoryItems_ProductVariation">
+          <End Role="ProductVariation" Type="Self.ProductVariation" Multiplicity="1" />
+          <End Role="PurchaseBillItems" Type="Self.PurchaseBillItems" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ProductVariation">
+              <PropertyRef Name="ProductVariationId" />
+            </Principal>
+            <Dependent Role="PurchaseBillItems">
+              <PropertyRef Name="ProductVariationId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Notes_NotesCategory">
+          <End Role="NotesCategory" Type="Self.NotesCategory" Multiplicity="1" />
+          <End Role="Notes" Type="Self.Notes" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="NotesCategory">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Notes">
+              <PropertyRef Name="NotesCategoryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_OrderItems_Orders">
+          <End Role="Orders" Type="Self.Orders" Multiplicity="1" />
+          <End Role="OrderItems" Type="Self.OrderItems" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Orders">
+              <PropertyRef Name="OrderId" />
+            </Principal>
+            <Dependent Role="OrderItems">
+              <PropertyRef Name="OrderId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_OrderItems_ProductVariation">
+          <End Role="ProductVariation" Type="Self.ProductVariation" Multiplicity="1" />
+          <End Role="OrderItems" Type="Self.OrderItems" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ProductVariation">
+              <PropertyRef Name="ProductVariationId" />
+            </Principal>
+            <Dependent Role="OrderItems">
+              <PropertyRef Name="ProductVariationId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Orders_AspNetUsers">
+          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1" />
+          <End Role="Orders" Type="Self.Orders" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Orders">
+              <PropertyRef Name="RecCreatedBy" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ProductCategory_ProductCategory">
+          <End Role="ProductCategory" Type="Self.ProductCategory" Multiplicity="0..1" />
+          <End Role="ProductCategory1" Type="Self.ProductCategory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ProductCategory">
+              <PropertyRef Name="CategoryId" />
+            </Principal>
+            <Dependent Role="ProductCategory1">
+              <PropertyRef Name="ParentCategoryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ProductImages_ProductVariation">
+          <End Role="ProductVariation" Type="Self.ProductVariation" Multiplicity="1" />
+          <End Role="ProductImages" Type="Self.ProductImages" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ProductVariation">
+              <PropertyRef Name="ProductVariationId" />
+            </Principal>
+            <Dependent Role="ProductImages">
+              <PropertyRef Name="ProductVariationId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Products_Brand">
+          <End Role="Brand" Type="Self.Brand" Multiplicity="0..1" />
+          <End Role="Products" Type="Self.Products" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Brand">
+              <PropertyRef Name="BrandId" />
+            </Principal>
+            <Dependent Role="Products">
+              <PropertyRef Name="BrandId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Products_ProductCategory">
+          <End Role="ProductCategory" Type="Self.ProductCategory" Multiplicity="1" />
+          <End Role="Products" Type="Self.Products" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ProductCategory">
+              <PropertyRef Name="CategoryId" />
+            </Principal>
+            <Dependent Role="Products">
+              <PropertyRef Name="CategoryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ProductVariation_Products">
+          <End Role="Products" Type="Self.Products" Multiplicity="1" />
+          <End Role="ProductVariation" Type="Self.ProductVariation" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Products">
+              <PropertyRef Name="ProductId" />
+            </Principal>
+            <Dependent Role="ProductVariation">
+              <PropertyRef Name="ProductId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ProductVariation_Shelf">
+          <End Role="Shelf" Type="Self.Shelf" Multiplicity="0..1" />
+          <End Role="ProductVariation" Type="Self.ProductVariation" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Shelf">
+              <PropertyRef Name="ShelfId" />
+            </Principal>
+            <Dependent Role="ProductVariation">
+              <PropertyRef Name="ShelfId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ProductVariation_Unit">
+          <End Role="Unit" Type="Self.Unit" Multiplicity="0..1" />
+          <End Role="ProductVariation" Type="Self.ProductVariation" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Unit">
+              <PropertyRef Name="UnitId" />
+            </Principal>
+            <Dependent Role="ProductVariation">
+              <PropertyRef Name="UnitId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PurchaseBill_CreatedBy">
+          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1" />
+          <End Role="PurchaseBill" Type="Self.PurchaseBill" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PurchaseBill">
+              <PropertyRef Name="RecCreatedBy" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PurchaseBill_Supplier">
+          <End Role="Supplier" Type="Self.Supplier" Multiplicity="0..1" />
+          <End Role="PurchaseBill" Type="Self.PurchaseBill" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Supplier">
+              <PropertyRef Name="SupplierId" />
+            </Principal>
+            <Dependent Role="PurchaseBill">
+              <PropertyRef Name="VendorId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PurchaseBillItems_PurchaseBill">
+          <End Role="PurchaseBill" Type="Self.PurchaseBill" Multiplicity="1" />
+          <End Role="PurchaseBillItems" Type="Self.PurchaseBillItems" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PurchaseBill">
+              <PropertyRef Name="PurchaseBillId" />
+            </Principal>
+            <Dependent Role="PurchaseBillItems">
+              <PropertyRef Name="PurchaseBillId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ReturnedItems_Orders">
+          <End Role="Orders" Type="Self.Orders" Multiplicity="1" />
+          <End Role="ReturnedOrderItems" Type="Self.ReturnedOrderItems" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Orders">
+              <PropertyRef Name="OrderId" />
+            </Principal>
+            <Dependent Role="ReturnedOrderItems">
+              <PropertyRef Name="OrderId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ReturnedItems_ProductVariation">
+          <End Role="ProductVariation" Type="Self.ProductVariation" Multiplicity="1" />
+          <End Role="ReturnedOrderItems" Type="Self.ReturnedOrderItems" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ProductVariation">
+              <PropertyRef Name="ProductVariationId" />
+            </Principal>
+            <Dependent Role="ReturnedOrderItems">
+              <PropertyRef Name="ProductVariationId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ReturnedItems_ReceivedBy">
+          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1" />
+          <End Role="ReturnedOrderItems" Type="Self.ReturnedOrderItems" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ReturnedOrderItems">
+              <PropertyRef Name="ReceivedBy" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SupplierBankAccount_Supplier">
+          <End Role="Supplier" Type="Self.Supplier" Multiplicity="1" />
+          <End Role="SupplierBankAccount" Type="Self.SupplierBankAccount" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Supplier">
+              <PropertyRef Name="SupplierId" />
+            </Principal>
+            <Dependent Role="SupplierBankAccount">
+              <PropertyRef Name="SupplierId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SupplierPaymentHistory_PaymentMethod">
+          <End Role="PaymentMethod" Type="Self.PaymentMethod" Multiplicity="1" />
+          <End Role="SupplierPaymentHistory" Type="Self.SupplierPaymentHistory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PaymentMethod">
+              <PropertyRef Name="PaymentMethodId" />
+            </Principal>
+            <Dependent Role="SupplierPaymentHistory">
+              <PropertyRef Name="PaymentMethodId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SupplierPaymentHistory_PurchaseBill">
+          <End Role="PurchaseBill" Type="Self.PurchaseBill" Multiplicity="0..1" />
+          <End Role="SupplierPaymentHistory" Type="Self.SupplierPaymentHistory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PurchaseBill">
+              <PropertyRef Name="PurchaseBillId" />
+            </Principal>
+            <Dependent Role="SupplierPaymentHistory">
+              <PropertyRef Name="PurchaseBillId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SupplierPaymentHistory_Supplier">
+          <End Role="Supplier" Type="Self.Supplier" Multiplicity="1" />
+          <End Role="SupplierPaymentHistory" Type="Self.SupplierPaymentHistory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Supplier">
+              <PropertyRef Name="SupplierId" />
+            </Principal>
+            <Dependent Role="SupplierPaymentHistory">
+              <PropertyRef Name="SupplierId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SupplierPaymentHistory_SupplierBankAccount">
+          <End Role="SupplierBankAccount" Type="Self.SupplierBankAccount" Multiplicity="0..1" />
+          <End Role="SupplierPaymentHistory" Type="Self.SupplierPaymentHistory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SupplierBankAccount">
+              <PropertyRef Name="SupplierBankAccountId" />
+            </Principal>
+            <Dependent Role="SupplierPaymentHistory">
+              <PropertyRef Name="SupplierBankAccountId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="TMDModelStoreContainer">
+          <EntitySet Name="AspNetRoles" EntityType="Self.AspNetRoles" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AspNetUserClaims" EntityType="Self.AspNetUserClaims" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AspNetUserLogins" EntityType="Self.AspNetUserLogins" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AspNetUserRoles" EntityType="Self.AspNetUserRoles" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AspNetUsers" EntityType="Self.AspNetUsers" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Brand" EntityType="Self.Brand" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Categories" EntityType="Self.Categories" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CategoryLogs" EntityType="Self.CategoryLogs" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Configurations" EntityType="Self.Configurations" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Customer" EntityType="Self.Customer" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CustomerOrders" EntityType="Self.CustomerOrders" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ExpenseCategory" EntityType="Self.ExpenseCategory" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Expenses" EntityType="Self.Expenses" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Logs" EntityType="Self.Logs" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Notes" EntityType="Self.Notes" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="NotesCategory" EntityType="Self.NotesCategory" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="OrderItems" EntityType="Self.OrderItems" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Orders" EntityType="Self.Orders" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PaymentMethod" EntityType="Self.PaymentMethod" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ProductCategory" EntityType="Self.ProductCategory" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ProductConfiguration" EntityType="Self.ProductConfiguration" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ProductImages" EntityType="Self.ProductImages" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Products" EntityType="Self.Products" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ProductVariation" EntityType="Self.ProductVariation" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PurchaseBill" EntityType="Self.PurchaseBill" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PurchaseBillItems" EntityType="Self.PurchaseBillItems" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ReturnedOrderItems" EntityType="Self.ReturnedOrderItems" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Shelf" EntityType="Self.Shelf" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Supplier" EntityType="Self.Supplier" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SupplierBankAccount" EntityType="Self.SupplierBankAccount" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SupplierPaymentHistory" EntityType="Self.SupplierPaymentHistory" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Unit" EntityType="Self.Unit" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="WebSiteSlider" EntityType="Self.WebSiteSlider" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_AspNetUserRoles_AspNetRole" Association="Self.FK_AspNetUserRoles_AspNetRole">
+            <End Role="AspNetRoles" EntitySet="AspNetRoles" />
+            <End Role="AspNetUserRoles" EntitySet="AspNetUserRoles" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AspNetUserRoles_AspNetUser" Association="Self.FK_AspNetUserRoles_AspNetUser">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="AspNetUserRoles" EntitySet="AspNetUserRoles" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CategoryLog_Category" Association="Self.FK_CategoryLog_Category">
+            <End Role="Categories" EntitySet="Categories" />
+            <End Role="CategoryLogs" EntitySet="CategoryLogs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CustomerOrder_Customer" Association="Self.FK_CustomerOrder_Customer">
+            <End Role="Customer" EntitySet="Customer" />
+            <End Role="CustomerOrders" EntitySet="CustomerOrders" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CustomerOrder_Orders" Association="Self.FK_CustomerOrder_Orders">
+            <End Role="Orders" EntitySet="Orders" />
+            <End Role="CustomerOrders" EntitySet="CustomerOrders" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" Association="Self.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="AspNetUserClaims" EntitySet="AspNetUserClaims" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" Association="Self.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="AspNetUserLogins" EntitySet="AspNetUserLogins" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Expenses_ExpenseCategory" Association="Self.FK_Expenses_ExpenseCategory">
+            <End Role="ExpenseCategory" EntitySet="ExpenseCategory" />
+            <End Role="Expenses" EntitySet="Expenses" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Expenses_Vendors" Association="Self.FK_Expenses_Vendors">
+            <End Role="Supplier" EntitySet="Supplier" />
+            <End Role="Expenses" EntitySet="Expenses" />
+          </AssociationSet>
+          <AssociationSet Name="FK_InventoryItems_ProductVariation" Association="Self.FK_InventoryItems_ProductVariation">
+            <End Role="ProductVariation" EntitySet="ProductVariation" />
+            <End Role="PurchaseBillItems" EntitySet="PurchaseBillItems" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Notes_NotesCategory" Association="Self.FK_Notes_NotesCategory">
+            <End Role="NotesCategory" EntitySet="NotesCategory" />
+            <End Role="Notes" EntitySet="Notes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_OrderItems_Orders" Association="Self.FK_OrderItems_Orders">
+            <End Role="Orders" EntitySet="Orders" />
+            <End Role="OrderItems" EntitySet="OrderItems" />
+          </AssociationSet>
+          <AssociationSet Name="FK_OrderItems_ProductVariation" Association="Self.FK_OrderItems_ProductVariation">
+            <End Role="ProductVariation" EntitySet="ProductVariation" />
+            <End Role="OrderItems" EntitySet="OrderItems" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Orders_AspNetUsers" Association="Self.FK_Orders_AspNetUsers">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="Orders" EntitySet="Orders" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ProductCategory_ProductCategory" Association="Self.FK_ProductCategory_ProductCategory">
+            <End Role="ProductCategory" EntitySet="ProductCategory" />
+            <End Role="ProductCategory1" EntitySet="ProductCategory" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ProductImages_ProductVariation" Association="Self.FK_ProductImages_ProductVariation">
+            <End Role="ProductVariation" EntitySet="ProductVariation" />
+            <End Role="ProductImages" EntitySet="ProductImages" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Products_Brand" Association="Self.FK_Products_Brand">
+            <End Role="Brand" EntitySet="Brand" />
+            <End Role="Products" EntitySet="Products" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Products_ProductCategory" Association="Self.FK_Products_ProductCategory">
+            <End Role="ProductCategory" EntitySet="ProductCategory" />
+            <End Role="Products" EntitySet="Products" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ProductVariation_Products" Association="Self.FK_ProductVariation_Products">
+            <End Role="Products" EntitySet="Products" />
+            <End Role="ProductVariation" EntitySet="ProductVariation" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ProductVariation_Shelf" Association="Self.FK_ProductVariation_Shelf">
+            <End Role="Shelf" EntitySet="Shelf" />
+            <End Role="ProductVariation" EntitySet="ProductVariation" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ProductVariation_Unit" Association="Self.FK_ProductVariation_Unit">
+            <End Role="Unit" EntitySet="Unit" />
+            <End Role="ProductVariation" EntitySet="ProductVariation" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PurchaseBill_CreatedBy" Association="Self.FK_PurchaseBill_CreatedBy">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="PurchaseBill" EntitySet="PurchaseBill" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PurchaseBill_Supplier" Association="Self.FK_PurchaseBill_Supplier">
+            <End Role="Supplier" EntitySet="Supplier" />
+            <End Role="PurchaseBill" EntitySet="PurchaseBill" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PurchaseBillItems_PurchaseBill" Association="Self.FK_PurchaseBillItems_PurchaseBill">
+            <End Role="PurchaseBill" EntitySet="PurchaseBill" />
+            <End Role="PurchaseBillItems" EntitySet="PurchaseBillItems" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ReturnedItems_Orders" Association="Self.FK_ReturnedItems_Orders">
+            <End Role="Orders" EntitySet="Orders" />
+            <End Role="ReturnedOrderItems" EntitySet="ReturnedOrderItems" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ReturnedItems_ProductVariation" Association="Self.FK_ReturnedItems_ProductVariation">
+            <End Role="ProductVariation" EntitySet="ProductVariation" />
+            <End Role="ReturnedOrderItems" EntitySet="ReturnedOrderItems" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ReturnedItems_ReceivedBy" Association="Self.FK_ReturnedItems_ReceivedBy">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="ReturnedOrderItems" EntitySet="ReturnedOrderItems" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SupplierBankAccount_Supplier" Association="Self.FK_SupplierBankAccount_Supplier">
+            <End Role="Supplier" EntitySet="Supplier" />
+            <End Role="SupplierBankAccount" EntitySet="SupplierBankAccount" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SupplierPaymentHistory_PaymentMethod" Association="Self.FK_SupplierPaymentHistory_PaymentMethod">
+            <End Role="PaymentMethod" EntitySet="PaymentMethod" />
+            <End Role="SupplierPaymentHistory" EntitySet="SupplierPaymentHistory" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SupplierPaymentHistory_PurchaseBill" Association="Self.FK_SupplierPaymentHistory_PurchaseBill">
+            <End Role="PurchaseBill" EntitySet="PurchaseBill" />
+            <End Role="SupplierPaymentHistory" EntitySet="SupplierPaymentHistory" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SupplierPaymentHistory_Supplier" Association="Self.FK_SupplierPaymentHistory_Supplier">
+            <End Role="Supplier" EntitySet="Supplier" />
+            <End Role="SupplierPaymentHistory" EntitySet="SupplierPaymentHistory" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SupplierPaymentHistory_SupplierBankAccount" Association="Self.FK_SupplierPaymentHistory_SupplierBankAccount">
+            <End Role="SupplierBankAccount" EntitySet="SupplierBankAccount" />
+            <End Role="SupplierPaymentHistory" EntitySet="SupplierPaymentHistory" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="TMD.Models.DomainModels" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="Entities" annotation:LazyLoadingEnabled="true">
+          <FunctionImport Name="spIsEbayLoadRunning" ReturnType="Collection(Int32)" />
+          <FunctionImport Name="spUpsertEbayLoadStartTimeFromConfiguration" ReturnType="Collection(Int32)">
+          <Parameter Name="EbayLoadStartTimeFrom" Mode="In" Type="DateTime" />
+          </FunctionImport>
+          <FunctionImport Name="spGetEbayLoadStartTimeFrom" ReturnType="Collection(String)" />
+          <FunctionImport Name="spEbayItemExists">
+          <Parameter Name="itemId" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="AddCategory" ReturnType="Collection(Int32)">
+            <Parameter Name="CategoryName" Mode="In" Type="String" />
+            <Parameter Name="LogID" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="ClearLogs" />
+          <FunctionImport Name="InsertCategoryLog" ReturnType="Collection(Int32)">
+            <Parameter Name="CategoryID" Mode="In" Type="Int32" />
+            <Parameter Name="LogID" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <EntitySet Name="AspNetRoles" EntityType="TMD.Models.DomainModels.AspNetRole" />
+          <EntitySet Name="AspNetUserClaims" EntityType="TMD.Models.DomainModels.AspNetUserClaim" />
+          <EntitySet Name="AspNetUserLogins" EntityType="TMD.Models.DomainModels.AspNetUserLogin" />
+          <EntitySet Name="AspNetUsers" EntityType="TMD.Models.DomainModels.AspNetUser" />
+          <AssociationSet Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" Association="TMD.Models.DomainModels.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
+            <End Role="AspNetUser" EntitySet="AspNetUsers" />
+            <End Role="AspNetUserClaim" EntitySet="AspNetUserClaims" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" Association="TMD.Models.DomainModels.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId">
+            <End Role="AspNetUser" EntitySet="AspNetUsers" />
+            <End Role="AspNetUserLogin" EntitySet="AspNetUserLogins" />
+          </AssociationSet>
+          <AssociationSet Name="AspNetUserRoles" Association="TMD.Models.DomainModels.AspNetUserRoles">
+            <End Role="AspNetRole" EntitySet="AspNetRoles" />
+            <End Role="AspNetUser" EntitySet="AspNetUsers" />
+          </AssociationSet>
+          <EntitySet Name="Brands" EntityType="TMD.Models.DomainModels.Brand" />
+          <EntitySet Name="Categories" EntityType="TMD.Models.DomainModels.Category" />
+          <EntitySet Name="CategoryLogs" EntityType="TMD.Models.DomainModels.CategoryLog" />
+          <EntitySet Name="Configurations" EntityType="TMD.Models.DomainModels.Configuration" />
+          <EntitySet Name="Customers" EntityType="TMD.Models.DomainModels.Customer" />
+          <EntitySet Name="CustomerOrders" EntityType="TMD.Models.DomainModels.CustomerOrder" />
+          <EntitySet Name="ExpenseCategories" EntityType="TMD.Models.DomainModels.ExpenseCategory" />
+          <EntitySet Name="Expenses" EntityType="TMD.Models.DomainModels.Expense" />
+          <EntitySet Name="Logs" EntityType="TMD.Models.DomainModels.Log" />
+          <EntitySet Name="Notes" EntityType="TMD.Models.DomainModels.Note" />
+          <EntitySet Name="NotesCategories" EntityType="TMD.Models.DomainModels.NotesCategory" />
+          <EntitySet Name="OrderItems" EntityType="TMD.Models.DomainModels.OrderItem" />
+          <EntitySet Name="Orders" EntityType="TMD.Models.DomainModels.Order" />
+          <EntitySet Name="PaymentMethods" EntityType="TMD.Models.DomainModels.PaymentMethod" />
+          <EntitySet Name="ProductCategories" EntityType="TMD.Models.DomainModels.ProductCategory" />
+          <EntitySet Name="ProductConfigurations" EntityType="TMD.Models.DomainModels.ProductConfiguration" />
+          <EntitySet Name="ProductImages" EntityType="TMD.Models.DomainModels.ProductImage" />
+          <EntitySet Name="Products" EntityType="TMD.Models.DomainModels.Product" />
+          <EntitySet Name="ProductVariations" EntityType="TMD.Models.DomainModels.ProductVariation" />
+          <EntitySet Name="PurchaseBills" EntityType="TMD.Models.DomainModels.PurchaseBill" />
+          <EntitySet Name="PurchaseBillItems" EntityType="TMD.Models.DomainModels.PurchaseBillItem" />
+          <EntitySet Name="ReturnedOrderItems" EntityType="TMD.Models.DomainModels.ReturnedOrderItem" />
+          <EntitySet Name="Shelves" EntityType="TMD.Models.DomainModels.Shelf" />
+          <EntitySet Name="Suppliers" EntityType="TMD.Models.DomainModels.Supplier" />
+          <EntitySet Name="SupplierBankAccounts" EntityType="TMD.Models.DomainModels.SupplierBankAccount" />
+          <EntitySet Name="SupplierPaymentHistories" EntityType="TMD.Models.DomainModels.SupplierPaymentHistory" />
+          <EntitySet Name="Units" EntityType="TMD.Models.DomainModels.Unit" />
+          <EntitySet Name="WebSiteSliders" EntityType="TMD.Models.DomainModels.WebSiteSlider" />
+          <AssociationSet Name="FK_Orders_AspNetUsers" Association="TMD.Models.DomainModels.FK_Orders_AspNetUsers">
+            <End Role="AspNetUser" EntitySet="AspNetUsers" />
+            <End Role="Order" EntitySet="Orders" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PurchaseBill_CreatedBy" Association="TMD.Models.DomainModels.FK_PurchaseBill_CreatedBy">
+            <End Role="AspNetUser" EntitySet="AspNetUsers" />
+            <End Role="PurchaseBill" EntitySet="PurchaseBills" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ReturnedItems_ReceivedBy" Association="TMD.Models.DomainModels.FK_ReturnedItems_ReceivedBy">
+            <End Role="AspNetUser" EntitySet="AspNetUsers" />
+            <End Role="ReturnedOrderItem" EntitySet="ReturnedOrderItems" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Products_Brand" Association="TMD.Models.DomainModels.FK_Products_Brand">
+            <End Role="Brand" EntitySet="Brands" />
+            <End Role="Product" EntitySet="Products" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CategoryLog_Category" Association="TMD.Models.DomainModels.FK_CategoryLog_Category">
+            <End Role="Category" EntitySet="Categories" />
+            <End Role="CategoryLog" EntitySet="CategoryLogs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CustomerOrder_Customer" Association="TMD.Models.DomainModels.FK_CustomerOrder_Customer">
+            <End Role="Customer" EntitySet="Customers" />
+            <End Role="CustomerOrder" EntitySet="CustomerOrders" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CustomerOrder_Orders" Association="TMD.Models.DomainModels.FK_CustomerOrder_Orders">
+            <End Role="Order" EntitySet="Orders" />
+            <End Role="CustomerOrder" EntitySet="CustomerOrders" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Expenses_ExpenseCategory" Association="TMD.Models.DomainModels.FK_Expenses_ExpenseCategory">
+            <End Role="ExpenseCategory" EntitySet="ExpenseCategories" />
+            <End Role="Expens" EntitySet="Expenses" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Expenses_Vendors" Association="TMD.Models.DomainModels.FK_Expenses_Vendors">
+            <End Role="Supplier" EntitySet="Suppliers" />
+            <End Role="Expens" EntitySet="Expenses" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Notes_NotesCategory" Association="TMD.Models.DomainModels.FK_Notes_NotesCategory">
+            <End Role="NotesCategory" EntitySet="NotesCategories" />
+            <End Role="Note" EntitySet="Notes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_OrderItems_Orders" Association="TMD.Models.DomainModels.FK_OrderItems_Orders">
+            <End Role="Order" EntitySet="Orders" />
+            <End Role="OrderItem" EntitySet="OrderItems" />
+          </AssociationSet>
+          <AssociationSet Name="FK_OrderItems_ProductVariation" Association="TMD.Models.DomainModels.FK_OrderItems_ProductVariation">
+            <End Role="ProductVariation" EntitySet="ProductVariations" />
+            <End Role="OrderItem" EntitySet="OrderItems" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ReturnedItems_Orders" Association="TMD.Models.DomainModels.FK_ReturnedItems_Orders">
+            <End Role="Order" EntitySet="Orders" />
+            <End Role="ReturnedOrderItem" EntitySet="ReturnedOrderItems" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SupplierPaymentHistory_PaymentMethod" Association="TMD.Models.DomainModels.FK_SupplierPaymentHistory_PaymentMethod">
+            <End Role="PaymentMethod" EntitySet="PaymentMethods" />
+            <End Role="SupplierPaymentHistory" EntitySet="SupplierPaymentHistories" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ProductCategory_ProductCategory" Association="TMD.Models.DomainModels.FK_ProductCategory_ProductCategory">
+            <End Role="ProductCategory" EntitySet="ProductCategories" />
+            <End Role="ProductCategory1" EntitySet="ProductCategories" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Products_ProductCategory" Association="TMD.Models.DomainModels.FK_Products_ProductCategory">
+            <End Role="ProductCategory" EntitySet="ProductCategories" />
+            <End Role="Product" EntitySet="Products" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ProductImages_ProductVariation" Association="TMD.Models.DomainModels.FK_ProductImages_ProductVariation">
+            <End Role="ProductVariation" EntitySet="ProductVariations" />
+            <End Role="ProductImage" EntitySet="ProductImages" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ProductVariation_Products" Association="TMD.Models.DomainModels.FK_ProductVariation_Products">
+            <End Role="Product" EntitySet="Products" />
+            <End Role="ProductVariation" EntitySet="ProductVariations" />
+          </AssociationSet>
+          <AssociationSet Name="FK_InventoryItems_ProductVariation" Association="TMD.Models.DomainModels.FK_InventoryItems_ProductVariation">
+            <End Role="ProductVariation" EntitySet="ProductVariations" />
+            <End Role="PurchaseBillItem" EntitySet="PurchaseBillItems" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ProductVariation_Shelf" Association="TMD.Models.DomainModels.FK_ProductVariation_Shelf">
+            <End Role="Shelf" EntitySet="Shelves" />
+            <End Role="ProductVariation" EntitySet="ProductVariations" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ProductVariation_Unit" Association="TMD.Models.DomainModels.FK_ProductVariation_Unit">
+            <End Role="Unit" EntitySet="Units" />
+            <End Role="ProductVariation" EntitySet="ProductVariations" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ReturnedItems_ProductVariation" Association="TMD.Models.DomainModels.FK_ReturnedItems_ProductVariation">
+            <End Role="ProductVariation" EntitySet="ProductVariations" />
+            <End Role="ReturnedOrderItem" EntitySet="ReturnedOrderItems" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PurchaseBill_Supplier" Association="TMD.Models.DomainModels.FK_PurchaseBill_Supplier">
+            <End Role="Supplier" EntitySet="Suppliers" />
+            <End Role="PurchaseBill" EntitySet="PurchaseBills" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PurchaseBillItems_PurchaseBill" Association="TMD.Models.DomainModels.FK_PurchaseBillItems_PurchaseBill">
+            <End Role="PurchaseBill" EntitySet="PurchaseBills" />
+            <End Role="PurchaseBillItem" EntitySet="PurchaseBillItems" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SupplierPaymentHistory_PurchaseBill" Association="TMD.Models.DomainModels.FK_SupplierPaymentHistory_PurchaseBill">
+            <End Role="PurchaseBill" EntitySet="PurchaseBills" />
+            <End Role="SupplierPaymentHistory" EntitySet="SupplierPaymentHistories" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SupplierBankAccount_Supplier" Association="TMD.Models.DomainModels.FK_SupplierBankAccount_Supplier">
+            <End Role="Supplier" EntitySet="Suppliers" />
+            <End Role="SupplierBankAccount" EntitySet="SupplierBankAccounts" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SupplierPaymentHistory_Supplier" Association="TMD.Models.DomainModels.FK_SupplierPaymentHistory_Supplier">
+            <End Role="Supplier" EntitySet="Suppliers" />
+            <End Role="SupplierPaymentHistory" EntitySet="SupplierPaymentHistories" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SupplierPaymentHistory_SupplierBankAccount" Association="TMD.Models.DomainModels.FK_SupplierPaymentHistory_SupplierBankAccount">
+            <End Role="SupplierBankAccount" EntitySet="SupplierBankAccounts" />
+            <End Role="SupplierPaymentHistory" EntitySet="SupplierPaymentHistories" />
+          </AssociationSet>
+          </EntityContainer>
+        <ComplexType Name="spEbayItemExists_SProcResult">
+          <Property Type="Int32" Name="EbayItemtId" Nullable="false" />
+          <Property Type="Int32" Name="EbayBatchImportId" Nullable="false" />
+          <Property Type="Int32" Name="ToyGraderItemId" Nullable="true" />
+          <Property Type="Int32" Name="CreatedBy" Nullable="false" />
+          <Property Type="DateTime" Name="CreatedOn" Nullable="false" Precision="23" />
+          <Property Type="Int32" Name="ModifiedBy" Nullable="true" />
+          <Property Type="DateTime" Name="ModifiedOn" Nullable="true" Precision="23" />
+          <Property Type="Boolean" Name="Deleted" Nullable="false" />
+          <Property Type="DateTime" Name="DeletedOn" Nullable="true" Precision="23" />
+          <Property Type="Int32" Name="DeletedBy" Nullable="true" />
+          <Property Type="String" Name="Condition" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="CountryCode" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="GalleryURL" Nullable="true" MaxLength="2048" />
+          <Property Type="String" Name="GlobalId" Nullable="true" MaxLength="12" />
+          <Property Type="String" Name="ItemId" Nullable="false" MaxLength="19" />
+          <Property Type="Boolean" Name="ListingInfoBuyItNowAvailable" Nullable="true" />
+          <Property Type="Decimal" Name="ListingInfoBuyItNowPrice" Nullable="true" Precision="19" />
+          <Property Type="DateTime" Name="ListingInfoEndTime" Nullable="true" Precision="23" />
+          <Property Type="Boolean" Name="ListingInfoGift" Nullable="true" />
+          <Property Type="String" Name="ListingInfoListingType" Nullable="true" MaxLength="20" />
+          <Property Type="DateTime" Name="ListingInfoStartTime" Nullable="true" Precision="23" />
+          <Property Type="String" Name="PrimaryCategory" Nullable="true" MaxLength="30" />
+          <Property Type="String" Name="ProducitId" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="SecondaryCategory" Nullable="true" MaxLength="30" />
+          <Property Type="Boolean" Name="SellerInfoTopRatedSeller" Nullable="true" />
+          <Property Type="Int32" Name="SellingStatusBidCount" Nullable="true" />
+          <Property Type="Decimal" Name="SellingStatusCurrentPrice" Nullable="true" Precision="19" />
+          <Property Type="String" Name="SellingStatusSellingState" Nullable="true" MaxLength="20" />
+          <Property Type="DateTime" Name="SellingStatusTimeLeft" Nullable="true" Precision="23" />
+          <Property Type="String" Name="StoreInfoStoreName" Nullable="true" MaxLength="200" />
+          <Property Type="String" Name="StoreInfoStoreURL" Nullable="true" MaxLength="2048" />
+          <Property Type="String" Name="SubTitle" Nullable="true" MaxLength="1024" />
+          <Property Type="String" Name="Title" Nullable="true" MaxLength="1024" />
+          <Property Type="String" Name="ViewItemUrl" Nullable="true" MaxLength="2048" />
+        </ComplexType>
+        <ComplexType Name="ComplexType1" />
+        <EntityType Name="AspNetRole">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="AspNetUsers" Relationship="TMD.Models.DomainModels.AspNetUserRoles" FromRole="AspNetRole" ToRole="AspNetUser" />
+        </EntityType>
+        <EntityType Name="AspNetUserClaim">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserId" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="ClaimType" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="ClaimValue" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="AspNetUser" Relationship="TMD.Models.DomainModels.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" FromRole="AspNetUserClaim" ToRole="AspNetUser" />
+        </EntityType>
+        <EntityType Name="AspNetUserLogin">
+          <Key>
+            <PropertyRef Name="LoginProvider" />
+            <PropertyRef Name="ProviderKey" />
+            <PropertyRef Name="UserId" />
+          </Key>
+          <Property Name="LoginProvider" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="ProviderKey" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="UserId" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="AspNetUser" Relationship="TMD.Models.DomainModels.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" FromRole="AspNetUserLogin" ToRole="AspNetUser" />
+        </EntityType>
+        <EntityType Name="AspNetUser">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="Email" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="EmailConfirmed" Type="Boolean" Nullable="false" />
+          <Property Name="PasswordHash" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="SecurityStamp" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="TwoFactorEnabled" Type="Boolean" Nullable="false" />
+          <Property Name="LockoutEndDateUtc" Type="DateTime" Precision="3" />
+          <Property Name="LockoutEnabled" Type="Boolean" Nullable="false" />
+          <Property Name="AccessFailedCount" Type="Int32" Nullable="false" />
+          <Property Name="UserName" Type="String" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="Address" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="ImageName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="FirstName" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="LastName" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="Telephone" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="UserComments" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="AspNetUserClaims" Relationship="TMD.Models.DomainModels.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" FromRole="AspNetUser" ToRole="AspNetUserClaim" />
+          <NavigationProperty Name="AspNetUserLogins" Relationship="TMD.Models.DomainModels.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" FromRole="AspNetUser" ToRole="AspNetUserLogin" />
+          <NavigationProperty Name="AspNetRoles" Relationship="TMD.Models.DomainModels.AspNetUserRoles" FromRole="AspNetUser" ToRole="AspNetRole" />
+          <NavigationProperty Name="Orders" Relationship="TMD.Models.DomainModels.FK_Orders_AspNetUsers" FromRole="AspNetUser" ToRole="Order" />
+          <NavigationProperty Name="PurchaseBills" Relationship="TMD.Models.DomainModels.FK_PurchaseBill_CreatedBy" FromRole="AspNetUser" ToRole="PurchaseBill" />
+          <NavigationProperty Name="ReturnedOrderItems" Relationship="TMD.Models.DomainModels.FK_ReturnedItems_ReceivedBy" FromRole="AspNetUser" ToRole="ReturnedOrderItem" />
+        </EntityType>
+        <Association Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
+          <End Type="TMD.Models.DomainModels.AspNetUser" Role="AspNetUser" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="TMD.Models.DomainModels.AspNetUserClaim" Role="AspNetUserClaim" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUser">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AspNetUserClaim">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId">
+          <End Type="TMD.Models.DomainModels.AspNetUser" Role="AspNetUser" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="TMD.Models.DomainModels.AspNetUserLogin" Role="AspNetUserLogin" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUser">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AspNetUserLogin">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="AspNetUserRoles">
+          <End Type="TMD.Models.DomainModels.AspNetRole" Role="AspNetRole" Multiplicity="*" />
+          <End Type="TMD.Models.DomainModels.AspNetUser" Role="AspNetUser" Multiplicity="*" />
+        </Association>
+        <EntityType Name="Brand">
+          <Key>
+            <PropertyRef Name="BrandId" />
+          </Key>
+          <Property Name="BrandId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="BrandName" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="BrandDescription" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="RecCreatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="RecLastUpdatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="RecCreatedBy" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="RecLastUpdatedBy" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Products" Relationship="TMD.Models.DomainModels.FK_Products_Brand" FromRole="Brand" ToRole="Product" />
+        </EntityType>
+        <EntityType Name="Category">
+          <Key>
+            <PropertyRef Name="CategoryID" />
+          </Key>
+          <Property Name="CategoryID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CategoryName" Type="String" Nullable="false" MaxLength="64" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="CategoryLogs" Relationship="TMD.Models.DomainModels.FK_CategoryLog_Category" FromRole="Category" ToRole="CategoryLog" />
+        </EntityType>
+        <EntityType Name="CategoryLog">
+          <Key>
+            <PropertyRef Name="CategoryLogID" />
+          </Key>
+          <Property Name="CategoryLogID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CategoryID" Type="Int32" Nullable="false" />
+          <Property Name="LogID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Category" Relationship="TMD.Models.DomainModels.FK_CategoryLog_Category" FromRole="CategoryLog" ToRole="Category" />
+        </EntityType>
+        <EntityType Name="Configuration">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Type" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Value" Type="String" MaxLength="1024" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="Customer">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="Phone" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Address" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="Email" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Comments" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="RecCreatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="RecLastUpdatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="RecCreatedBy" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="RecLastUpdatedBy" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="CustomerOrders" Relationship="TMD.Models.DomainModels.FK_CustomerOrder_Customer" FromRole="Customer" ToRole="CustomerOrder" />
+        </EntityType>
+        <EntityType Name="CustomerOrder">
+          <Key>
+            <PropertyRef Name="CustomerId" />
+            <PropertyRef Name="OrderId" />
+          </Key>
+          <Property Name="CustomerId" Type="Int64" Nullable="false" />
+          <Property Name="OrderId" Type="Int64" Nullable="false" />
+          <Property Name="Comments" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Customer" Relationship="TMD.Models.DomainModels.FK_CustomerOrder_Customer" FromRole="CustomerOrder" ToRole="Customer" />
+          <NavigationProperty Name="Order" Relationship="TMD.Models.DomainModels.FK_CustomerOrder_Orders" FromRole="CustomerOrder" ToRole="Order" />
+        </EntityType>
+        <EntityType Name="ExpenseCategory">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="Description" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="RecCreatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="RecLastUpdatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="RecCreatedBy" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="RecLastUpdatedBy" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Expenses" Relationship="TMD.Models.DomainModels.FK_Expenses_ExpenseCategory" FromRole="ExpenseCategory" ToRole="Expens" />
+        </EntityType>
+        <EntityType Name="Expense">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="VendorId" Type="Int64" />
+          <Property Name="ExpenseDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="ExpenseCategoryId" Type="Int64" Nullable="false" />
+          <Property Name="ExpenseAmount" Type="Decimal" Nullable="false" Precision="9" Scale="2" />
+          <Property Name="Description" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="RecCreatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="RecLastUpdatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="RecCreatedBy" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="RecLastUpdatedBy" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="ExpenseCategory" Relationship="TMD.Models.DomainModels.FK_Expenses_ExpenseCategory" FromRole="Expens" ToRole="ExpenseCategory" />
+          <NavigationProperty Name="Supplier" Relationship="TMD.Models.DomainModels.FK_Expenses_Vendors" FromRole="Expens" ToRole="Supplier" />
+        </EntityType>
+        <EntityType Name="Log">
+          <Key>
+            <PropertyRef Name="LogID" />
+          </Key>
+          <Property Name="LogID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="EventID" Type="Int32" />
+          <Property Name="Priority" Type="Int32" Nullable="false" />
+          <Property Name="Severity" Type="String" Nullable="false" MaxLength="32" FixedLength="false" Unicode="true" />
+          <Property Name="Title" Type="String" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="Timestamp" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="MachineName" Type="String" Nullable="false" MaxLength="32" FixedLength="false" Unicode="true" />
+          <Property Name="AppDomainName" Type="String" Nullable="false" MaxLength="512" FixedLength="false" Unicode="true" />
+          <Property Name="ProcessID" Type="String" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="ProcessName" Type="String" Nullable="false" MaxLength="512" FixedLength="false" Unicode="true" />
+          <Property Name="ThreadName" Type="String" MaxLength="512" FixedLength="false" Unicode="true" />
+          <Property Name="Win32ThreadId" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="Message" Type="String" MaxLength="1500" FixedLength="false" Unicode="true" />
+          <Property Name="FormattedMessage" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="Note">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="NotesDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="NotesCategoryId" Type="Int64" Nullable="false" />
+          <Property Name="Description" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="IsOpen" Type="Boolean" Nullable="false" />
+          <Property Name="Amount" Type="Decimal" Precision="9" Scale="2" />
+          <Property Name="RecCreatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="RecLastUpdatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="RecCreatedBy" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="RecLastUpdatedBy" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="NotesCategory" Relationship="TMD.Models.DomainModels.FK_Notes_NotesCategory" FromRole="Note" ToRole="NotesCategory" />
+        </EntityType>
+        <EntityType Name="NotesCategory">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="Description" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="RecCreatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="RecLastUpdatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="RecCreatedBy" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="RecLastUpdatedBy" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Notes" Relationship="TMD.Models.DomainModels.FK_Notes_NotesCategory" FromRole="NotesCategory" ToRole="Note" />
+        </EntityType>
+        <EntityType Name="OrderItem">
+          <Key>
+            <PropertyRef Name="OrderItemId" />
+          </Key>
+          <Property Name="OrderItemId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Quantity" Type="Int32" Nullable="false" />
+          <Property Name="OrderId" Type="Int64" Nullable="false" />
+          <Property Name="ProductVariationId" Type="Int64" Nullable="false" />
+          <Property Name="PurchasePrice" Type="Decimal" Nullable="false" Precision="9" Scale="2" />
+          <Property Name="SalePrice" Type="Decimal" Nullable="false" Precision="9" Scale="2" />
+          <Property Name="Discount" Type="Decimal" Nullable="false" Precision="9" Scale="2" />
+          <NavigationProperty Name="Order" Relationship="TMD.Models.DomainModels.FK_OrderItems_Orders" FromRole="OrderItem" ToRole="Order" />
+          <NavigationProperty Name="ProductVariation" Relationship="TMD.Models.DomainModels.FK_OrderItems_ProductVariation" FromRole="OrderItem" ToRole="ProductVariation" />
+        </EntityType>
+        <EntityType Name="Order">
+          <Key>
+            <PropertyRef Name="OrderId" />
+          </Key>
+          <Property Name="OrderId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IsModified" Type="Boolean" Nullable="false" />
+          <Property Name="RecCreatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="RecLastUpdatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="RecCreatedBy" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="RecLastUpdatedBy" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="Comments" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="IsDeleted" Type="Boolean" />
+          <NavigationProperty Name="AspNetUser" Relationship="TMD.Models.DomainModels.FK_Orders_AspNetUsers" FromRole="Order" ToRole="AspNetUser" />
+          <NavigationProperty Name="CustomerOrders" Relationship="TMD.Models.DomainModels.FK_CustomerOrder_Orders" FromRole="Order" ToRole="CustomerOrder" />
+          <NavigationProperty Name="OrderItems" Relationship="TMD.Models.DomainModels.FK_OrderItems_Orders" FromRole="Order" ToRole="OrderItem" />
+          <NavigationProperty Name="ReturnedOrderItems" Relationship="TMD.Models.DomainModels.FK_ReturnedItems_Orders" FromRole="Order" ToRole="ReturnedOrderItem" />
+        </EntityType>
+        <EntityType Name="PaymentMethod">
+          <Key>
+            <PropertyRef Name="PaymentMethodId" />
+          </Key>
+          <Property Name="PaymentMethodId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Title" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Description" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="RecCreatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="RecLastUpdatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="RecCreatedBy" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="RecLastUpdatedBy" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="SupplierPaymentHistories" Relationship="TMD.Models.DomainModels.FK_SupplierPaymentHistory_PaymentMethod" FromRole="PaymentMethod" ToRole="SupplierPaymentHistory" />
+        </EntityType>
+        <EntityType Name="ProductCategory">
+          <Key>
+            <PropertyRef Name="CategoryId" />
+          </Key>
+          <Property Name="CategoryId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="Description" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="RecCreatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="RecLastUpdatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="RecCreatedBy" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="RecLastUpdatedBy" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="ParentCategoryId" Type="Int64" />
+          <Property Name="IsParentCategory" Type="Boolean" Nullable="false" />
+          <Property Name="IsWeb" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="SubCategories" Relationship="TMD.Models.DomainModels.FK_ProductCategory_ProductCategory" FromRole="ProductCategory" ToRole="ProductCategory1" />
+          <NavigationProperty Name="MainCategory" Relationship="TMD.Models.DomainModels.FK_ProductCategory_ProductCategory" FromRole="ProductCategory1" ToRole="ProductCategory" />
+          <NavigationProperty Name="Products" Relationship="TMD.Models.DomainModels.FK_Products_ProductCategory" FromRole="ProductCategory" ToRole="Product" />
+        </EntityType>
+        <EntityType Name="ProductConfiguration">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="MaxAllowedDiscount" Type="Byte" Nullable="false" />
+          <Property Name="Emails" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="SecurityPassword" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="ProductCodePrefix" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="Comments" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="RecCreatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="RecLastUpdatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="RecCreatedBy" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="RecLastUpdatedBy" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="DefaultVendorId" Type="Int64" />
+        </EntityType>
+        <EntityType Name="ProductImage">
+          <Key>
+            <PropertyRef Name="ImageId" />
+          </Key>
+          <Property Name="ImageId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ProductVariationId" Type="Int64" Nullable="false" />
+          <Property Name="ImageData" Type="Binary" Nullable="false" MaxLength="Max" FixedLength="false" />
+          <Property Name="ContentType" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="IsDefault" Type="Boolean" Nullable="false" />
+          <Property Name="RecCreatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="RecLastUpdatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="RecCreatedBy" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="RecLastUpdatedBy" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="ProductVariation" Relationship="TMD.Models.DomainModels.FK_ProductImages_ProductVariation" FromRole="ProductImage" ToRole="ProductVariation" />
+        </EntityType>
+        <EntityType Name="Product">
+          <Key>
+            <PropertyRef Name="ProductId" />
+          </Key>
+          <Property Name="ProductId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CategoryId" Type="Int64" Nullable="false" />
+          <Property Name="RecCreatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="RecLastUpdatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="RecCreatedBy" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="RecLastUpdatedBy" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="Comments" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="IsWeb" Type="Boolean" Nullable="false" />
+          <Property Name="ProductDescription" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="BrandId" Type="Int64" />
+          <NavigationProperty Name="Brand" Relationship="TMD.Models.DomainModels.FK_Products_Brand" FromRole="Product" ToRole="Brand" />
+          <NavigationProperty Name="ProductCategory" Relationship="TMD.Models.DomainModels.FK_Products_ProductCategory" FromRole="Product" ToRole="ProductCategory" />
+          <NavigationProperty Name="ProductVariations" Relationship="TMD.Models.DomainModels.FK_ProductVariation_Products" FromRole="Product" ToRole="ProductVariation" />
+        </EntityType>
+        <EntityType Name="ProductVariation">
+          <Key>
+            <PropertyRef Name="ProductVariationId" />
+          </Key>
+          <Property Name="ProductVariationId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ProductId" Type="Int64" Nullable="false" />
+          <Property Name="UnitId" Type="Int32" />
+          <Property Name="Barcode" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="Purchaseprice" Type="Decimal" Nullable="false" Precision="9" Scale="2" />
+          <Property Name="Saleprice" Type="Decimal" Nullable="false" Precision="9" Scale="2" />
+          <Property Name="MinimumStockLimit" Type="Int32" Nullable="false" />
+          <Property Name="RecCreatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="RecLastUpdatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="RecCreatedBy" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="RecLastUpdatedBy" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="ShelfId" Type="Int64" />
+          <Property Name="ProductVariantDescription" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="OrderItems" Relationship="TMD.Models.DomainModels.FK_OrderItems_ProductVariation" FromRole="ProductVariation" ToRole="OrderItem" />
+          <NavigationProperty Name="ProductImages" Relationship="TMD.Models.DomainModels.FK_ProductImages_ProductVariation" FromRole="ProductVariation" ToRole="ProductImage" />
+          <NavigationProperty Name="Product" Relationship="TMD.Models.DomainModels.FK_ProductVariation_Products" FromRole="ProductVariation" ToRole="Product" />
+          <NavigationProperty Name="PurchaseBillItems" Relationship="TMD.Models.DomainModels.FK_InventoryItems_ProductVariation" FromRole="ProductVariation" ToRole="PurchaseBillItem" />
+          <NavigationProperty Name="Shelf" Relationship="TMD.Models.DomainModels.FK_ProductVariation_Shelf" FromRole="ProductVariation" ToRole="Shelf" />
+          <NavigationProperty Name="Unit" Relationship="TMD.Models.DomainModels.FK_ProductVariation_Unit" FromRole="ProductVariation" ToRole="Unit" />
+          <NavigationProperty Name="ReturnedOrderItems" Relationship="TMD.Models.DomainModels.FK_ReturnedItems_ProductVariation" FromRole="ProductVariation" ToRole="ReturnedOrderItem" />
+        </EntityType>
+        <EntityType Name="PurchaseBill">
+          <Key>
+            <PropertyRef Name="PurchaseBillId" />
+          </Key>
+          <Property Name="PurchaseBillId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="VendorId" Type="Int64" />
+          <Property Name="VendorInvoiceNo" Type="String" MaxLength="25" FixedLength="false" Unicode="true" />
+          <Property Name="TotalDiscount" Type="Decimal" Nullable="false" Precision="9" Scale="2" />
+          <Property Name="PaidAmount" Type="Decimal" Nullable="false" Precision="9" Scale="2" />
+          <Property Name="PurchaseDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="RecCreatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="RecLastUpdatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="RecCreatedBy" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="RecLastUpdatedBy" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="AspNetUser" Relationship="TMD.Models.DomainModels.FK_PurchaseBill_CreatedBy" FromRole="PurchaseBill" ToRole="AspNetUser" />
+          <NavigationProperty Name="Supplier" Relationship="TMD.Models.DomainModels.FK_PurchaseBill_Supplier" FromRole="PurchaseBill" ToRole="Supplier" />
+          <NavigationProperty Name="PurchaseBillItems" Relationship="TMD.Models.DomainModels.FK_PurchaseBillItems_PurchaseBill" FromRole="PurchaseBill" ToRole="PurchaseBillItem" />
+          <NavigationProperty Name="SupplierPaymentHistories" Relationship="TMD.Models.DomainModels.FK_SupplierPaymentHistory_PurchaseBill" FromRole="PurchaseBill" ToRole="SupplierPaymentHistory" />
+        </EntityType>
+        <EntityType Name="PurchaseBillItem">
+          <Key>
+            <PropertyRef Name="ItemId" />
+          </Key>
+          <Property Name="ItemId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ProductVariationId" Type="Int64" Nullable="false" />
+          <Property Name="Quantity" Type="Int64" Nullable="false" />
+          <Property Name="PurchasePrice" Type="Decimal" Nullable="false" Precision="9" Scale="2" />
+          <Property Name="SalePrice" Type="Decimal" Nullable="false" Precision="9" Scale="2" />
+          <Property Name="PurchaseBillId" Type="Int64" Nullable="false" />
+          <NavigationProperty Name="ProductVariation" Relationship="TMD.Models.DomainModels.FK_InventoryItems_ProductVariation" FromRole="PurchaseBillItem" ToRole="ProductVariation" />
+          <NavigationProperty Name="PurchaseBill" Relationship="TMD.Models.DomainModels.FK_PurchaseBillItems_PurchaseBill" FromRole="PurchaseBillItem" ToRole="PurchaseBill" />
+        </EntityType>
+        <EntityType Name="ReturnedOrderItem">
+          <Key>
+            <PropertyRef Name="ReturnId" />
+          </Key>
+          <Property Name="ReturnId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="OrderId" Type="Int64" Nullable="false" />
+          <Property Name="ProductVariationId" Type="Int64" Nullable="false" />
+          <Property Name="ReturnedQty" Type="Int32" Nullable="false" />
+          <Property Name="ReceivedBy" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="ReceivedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Price" Type="Decimal" Nullable="false" Precision="9" Scale="2" />
+          <NavigationProperty Name="AspNetUser" Relationship="TMD.Models.DomainModels.FK_ReturnedItems_ReceivedBy" FromRole="ReturnedOrderItem" ToRole="AspNetUser" />
+          <NavigationProperty Name="Order" Relationship="TMD.Models.DomainModels.FK_ReturnedItems_Orders" FromRole="ReturnedOrderItem" ToRole="Order" />
+          <NavigationProperty Name="ProductVariation" Relationship="TMD.Models.DomainModels.FK_ReturnedItems_ProductVariation" FromRole="ReturnedOrderItem" ToRole="ProductVariation" />
+        </EntityType>
+        <EntityType Name="Shelf">
+          <Key>
+            <PropertyRef Name="ShelfId" />
+          </Key>
+          <Property Name="ShelfId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Title" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Description" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="RecCreatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="RecLastUpdatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="RecCreatedBy" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="RecLastUpdatedBy" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="ProductVariations" Relationship="TMD.Models.DomainModels.FK_ProductVariation_Shelf" FromRole="Shelf" ToRole="ProductVariation" />
+        </EntityType>
+        <EntityType Name="Supplier">
+          <Key>
+            <PropertyRef Name="SupplierId" />
+          </Key>
+          <Property Name="SupplierId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="ContactNo" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="Email" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Address" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="ActiveFlag" Type="Boolean" Nullable="false" />
+          <Property Name="RecCreatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="RecLastUpdatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="RecCreatedBy" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="RecLastUpdatedBy" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Expenses" Relationship="TMD.Models.DomainModels.FK_Expenses_Vendors" FromRole="Supplier" ToRole="Expens" />
+          <NavigationProperty Name="PurchaseBills" Relationship="TMD.Models.DomainModels.FK_PurchaseBill_Supplier" FromRole="Supplier" ToRole="PurchaseBill" />
+          <NavigationProperty Name="SupplierBankAccounts" Relationship="TMD.Models.DomainModels.FK_SupplierBankAccount_Supplier" FromRole="Supplier" ToRole="SupplierBankAccount" />
+          <NavigationProperty Name="SupplierPaymentHistories" Relationship="TMD.Models.DomainModels.FK_SupplierPaymentHistory_Supplier" FromRole="Supplier" ToRole="SupplierPaymentHistory" />
+        </EntityType>
+        <EntityType Name="SupplierBankAccount">
+          <Key>
+            <PropertyRef Name="SupplierBankAccountId" />
+          </Key>
+          <Property Name="SupplierBankAccountId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="SupplierId" Type="Int64" Nullable="false" />
+          <Property Name="AccountTitle" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="AccountNo" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Description" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="IsActive" Type="Boolean" Nullable="false" />
+          <Property Name="RecCreatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="RecLastUpdatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="RecCreatedBy" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="RecLastUpdatedBy" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Supplier" Relationship="TMD.Models.DomainModels.FK_SupplierBankAccount_Supplier" FromRole="SupplierBankAccount" ToRole="Supplier" />
+          <NavigationProperty Name="SupplierPaymentHistories" Relationship="TMD.Models.DomainModels.FK_SupplierPaymentHistory_SupplierBankAccount" FromRole="SupplierBankAccount" ToRole="SupplierPaymentHistory" />
+        </EntityType>
+        <EntityType Name="SupplierPaymentHistory">
+          <Key>
+            <PropertyRef Name="SupplierPaymentHistoryId" />
+          </Key>
+          <Property Name="SupplierPaymentHistoryId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="SupplierId" Type="Int64" Nullable="false" />
+          <Property Name="SupplierBankAccountId" Type="Int64" />
+          <Property Name="PaymentMethodId" Type="Int32" Nullable="false" />
+          <Property Name="Amount" Type="Decimal" Nullable="false" Precision="9" Scale="2" />
+          <Property Name="Description" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="RecCreatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="RecLastUpdatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="RecCreatedBy" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="RecLastUpdatedBy" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="PurchaseBillId" Type="Int64" />
+          <NavigationProperty Name="PaymentMethod" Relationship="TMD.Models.DomainModels.FK_SupplierPaymentHistory_PaymentMethod" FromRole="SupplierPaymentHistory" ToRole="PaymentMethod" />
+          <NavigationProperty Name="PurchaseBill" Relationship="TMD.Models.DomainModels.FK_SupplierPaymentHistory_PurchaseBill" FromRole="SupplierPaymentHistory" ToRole="PurchaseBill" />
+          <NavigationProperty Name="Supplier" Relationship="TMD.Models.DomainModels.FK_SupplierPaymentHistory_Supplier" FromRole="SupplierPaymentHistory" ToRole="Supplier" />
+          <NavigationProperty Name="SupplierBankAccount" Relationship="TMD.Models.DomainModels.FK_SupplierPaymentHistory_SupplierBankAccount" FromRole="SupplierPaymentHistory" ToRole="SupplierBankAccount" />
+        </EntityType>
+        <EntityType Name="Unit">
+          <Key>
+            <PropertyRef Name="UnitId" />
+          </Key>
+          <Property Name="UnitId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UnitTitle" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="UnitValue" Type="Int32" Nullable="false" />
+          <Property Name="RecCreatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="RecLastUpdatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="RecCreatedBy" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="RecLastUpdatedBy" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="ProductVariations" Relationship="TMD.Models.DomainModels.FK_ProductVariation_Unit" FromRole="Unit" ToRole="ProductVariation" />
+        </EntityType>
+        <EntityType Name="WebSiteSlider">
+          <Key>
+            <PropertyRef Name="SlideId" />
+          </Key>
+          <Property Name="SlideId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="MainTitle" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="SubTitle" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="ImageData" Type="Binary" Nullable="false" MaxLength="Max" FixedLength="false" />
+          <Property Name="ImageType" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="IsActive" Type="Boolean" Nullable="false" />
+          <Property Name="RecCreatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="RecLastUpdatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="RecCreatedBy" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="RecLastUpdatedBy" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <Association Name="FK_Orders_AspNetUsers">
+          <End Type="TMD.Models.DomainModels.AspNetUser" Role="AspNetUser" Multiplicity="1" />
+          <End Type="TMD.Models.DomainModels.Order" Role="Order" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUser">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Order">
+              <PropertyRef Name="RecCreatedBy" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PurchaseBill_CreatedBy">
+          <End Type="TMD.Models.DomainModels.AspNetUser" Role="AspNetUser" Multiplicity="1" />
+          <End Type="TMD.Models.DomainModels.PurchaseBill" Role="PurchaseBill" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUser">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PurchaseBill">
+              <PropertyRef Name="RecCreatedBy" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ReturnedItems_ReceivedBy">
+          <End Type="TMD.Models.DomainModels.AspNetUser" Role="AspNetUser" Multiplicity="1" />
+          <End Type="TMD.Models.DomainModels.ReturnedOrderItem" Role="ReturnedOrderItem" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUser">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ReturnedOrderItem">
+              <PropertyRef Name="ReceivedBy" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Products_Brand">
+          <End Type="TMD.Models.DomainModels.Brand" Role="Brand" Multiplicity="0..1" />
+          <End Type="TMD.Models.DomainModels.Product" Role="Product" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Brand">
+              <PropertyRef Name="BrandId" />
+            </Principal>
+            <Dependent Role="Product">
+              <PropertyRef Name="BrandId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CategoryLog_Category">
+          <End Type="TMD.Models.DomainModels.Category" Role="Category" Multiplicity="1" />
+          <End Type="TMD.Models.DomainModels.CategoryLog" Role="CategoryLog" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Category">
+              <PropertyRef Name="CategoryID" />
+            </Principal>
+            <Dependent Role="CategoryLog">
+              <PropertyRef Name="CategoryID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CustomerOrder_Customer">
+          <End Type="TMD.Models.DomainModels.Customer" Role="Customer" Multiplicity="1" />
+          <End Type="TMD.Models.DomainModels.CustomerOrder" Role="CustomerOrder" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Customer">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="CustomerOrder">
+              <PropertyRef Name="CustomerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CustomerOrder_Orders">
+          <End Type="TMD.Models.DomainModels.Order" Role="Order" Multiplicity="1" />
+          <End Type="TMD.Models.DomainModels.CustomerOrder" Role="CustomerOrder" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Order">
+              <PropertyRef Name="OrderId" />
+            </Principal>
+            <Dependent Role="CustomerOrder">
+              <PropertyRef Name="OrderId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Expenses_ExpenseCategory">
+          <End Type="TMD.Models.DomainModels.ExpenseCategory" Role="ExpenseCategory" Multiplicity="1" />
+          <End Type="TMD.Models.DomainModels.Expense" Role="Expens" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ExpenseCategory">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Expens">
+              <PropertyRef Name="ExpenseCategoryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Expenses_Vendors">
+          <End Type="TMD.Models.DomainModels.Supplier" Role="Supplier" Multiplicity="0..1" />
+          <End Type="TMD.Models.DomainModels.Expense" Role="Expens" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Supplier">
+              <PropertyRef Name="SupplierId" />
+            </Principal>
+            <Dependent Role="Expens">
+              <PropertyRef Name="VendorId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Notes_NotesCategory">
+          <End Type="TMD.Models.DomainModels.NotesCategory" Role="NotesCategory" Multiplicity="1" />
+          <End Type="TMD.Models.DomainModels.Note" Role="Note" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="NotesCategory">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Note">
+              <PropertyRef Name="NotesCategoryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_OrderItems_Orders">
+          <End Type="TMD.Models.DomainModels.Order" Role="Order" Multiplicity="1" />
+          <End Type="TMD.Models.DomainModels.OrderItem" Role="OrderItem" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Order">
+              <PropertyRef Name="OrderId" />
+            </Principal>
+            <Dependent Role="OrderItem">
+              <PropertyRef Name="OrderId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_OrderItems_ProductVariation">
+          <End Type="TMD.Models.DomainModels.ProductVariation" Role="ProductVariation" Multiplicity="1" />
+          <End Type="TMD.Models.DomainModels.OrderItem" Role="OrderItem" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ProductVariation">
+              <PropertyRef Name="ProductVariationId" />
+            </Principal>
+            <Dependent Role="OrderItem">
+              <PropertyRef Name="ProductVariationId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ReturnedItems_Orders">
+          <End Type="TMD.Models.DomainModels.Order" Role="Order" Multiplicity="1" />
+          <End Type="TMD.Models.DomainModels.ReturnedOrderItem" Role="ReturnedOrderItem" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Order">
+              <PropertyRef Name="OrderId" />
+            </Principal>
+            <Dependent Role="ReturnedOrderItem">
+              <PropertyRef Name="OrderId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SupplierPaymentHistory_PaymentMethod">
+          <End Type="TMD.Models.DomainModels.PaymentMethod" Role="PaymentMethod" Multiplicity="1" />
+          <End Type="TMD.Models.DomainModels.SupplierPaymentHistory" Role="SupplierPaymentHistory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PaymentMethod">
+              <PropertyRef Name="PaymentMethodId" />
+            </Principal>
+            <Dependent Role="SupplierPaymentHistory">
+              <PropertyRef Name="PaymentMethodId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ProductCategory_ProductCategory">
+          <End Type="TMD.Models.DomainModels.ProductCategory" Role="ProductCategory" Multiplicity="0..1" />
+          <End Type="TMD.Models.DomainModels.ProductCategory" Role="ProductCategory1" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ProductCategory">
+              <PropertyRef Name="CategoryId" />
+            </Principal>
+            <Dependent Role="ProductCategory1">
+              <PropertyRef Name="ParentCategoryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Products_ProductCategory">
+          <End Type="TMD.Models.DomainModels.ProductCategory" Role="ProductCategory" Multiplicity="1" />
+          <End Type="TMD.Models.DomainModels.Product" Role="Product" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ProductCategory">
+              <PropertyRef Name="CategoryId" />
+            </Principal>
+            <Dependent Role="Product">
+              <PropertyRef Name="CategoryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ProductImages_ProductVariation">
+          <End Type="TMD.Models.DomainModels.ProductVariation" Role="ProductVariation" Multiplicity="1" />
+          <End Type="TMD.Models.DomainModels.ProductImage" Role="ProductImage" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ProductVariation">
+              <PropertyRef Name="ProductVariationId" />
+            </Principal>
+            <Dependent Role="ProductImage">
+              <PropertyRef Name="ProductVariationId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ProductVariation_Products">
+          <End Type="TMD.Models.DomainModels.Product" Role="Product" Multiplicity="1" />
+          <End Type="TMD.Models.DomainModels.ProductVariation" Role="ProductVariation" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="ProductId" />
+            </Principal>
+            <Dependent Role="ProductVariation">
+              <PropertyRef Name="ProductId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_InventoryItems_ProductVariation">
+          <End Type="TMD.Models.DomainModels.ProductVariation" Role="ProductVariation" Multiplicity="1" />
+          <End Type="TMD.Models.DomainModels.PurchaseBillItem" Role="PurchaseBillItem" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ProductVariation">
+              <PropertyRef Name="ProductVariationId" />
+            </Principal>
+            <Dependent Role="PurchaseBillItem">
+              <PropertyRef Name="ProductVariationId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ProductVariation_Shelf">
+          <End Type="TMD.Models.DomainModels.Shelf" Role="Shelf" Multiplicity="0..1" />
+          <End Type="TMD.Models.DomainModels.ProductVariation" Role="ProductVariation" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Shelf">
+              <PropertyRef Name="ShelfId" />
+            </Principal>
+            <Dependent Role="ProductVariation">
+              <PropertyRef Name="ShelfId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ProductVariation_Unit">
+          <End Type="TMD.Models.DomainModels.Unit" Role="Unit" Multiplicity="0..1" />
+          <End Type="TMD.Models.DomainModels.ProductVariation" Role="ProductVariation" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Unit">
+              <PropertyRef Name="UnitId" />
+            </Principal>
+            <Dependent Role="ProductVariation">
+              <PropertyRef Name="UnitId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ReturnedItems_ProductVariation">
+          <End Type="TMD.Models.DomainModels.ProductVariation" Role="ProductVariation" Multiplicity="1" />
+          <End Type="TMD.Models.DomainModels.ReturnedOrderItem" Role="ReturnedOrderItem" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ProductVariation">
+              <PropertyRef Name="ProductVariationId" />
+            </Principal>
+            <Dependent Role="ReturnedOrderItem">
+              <PropertyRef Name="ProductVariationId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PurchaseBill_Supplier">
+          <End Type="TMD.Models.DomainModels.Supplier" Role="Supplier" Multiplicity="0..1" />
+          <End Type="TMD.Models.DomainModels.PurchaseBill" Role="PurchaseBill" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Supplier">
+              <PropertyRef Name="SupplierId" />
+            </Principal>
+            <Dependent Role="PurchaseBill">
+              <PropertyRef Name="VendorId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PurchaseBillItems_PurchaseBill">
+          <End Type="TMD.Models.DomainModels.PurchaseBill" Role="PurchaseBill" Multiplicity="1" />
+          <End Type="TMD.Models.DomainModels.PurchaseBillItem" Role="PurchaseBillItem" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PurchaseBill">
+              <PropertyRef Name="PurchaseBillId" />
+            </Principal>
+            <Dependent Role="PurchaseBillItem">
+              <PropertyRef Name="PurchaseBillId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SupplierPaymentHistory_PurchaseBill">
+          <End Type="TMD.Models.DomainModels.PurchaseBill" Role="PurchaseBill" Multiplicity="0..1" />
+          <End Type="TMD.Models.DomainModels.SupplierPaymentHistory" Role="SupplierPaymentHistory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PurchaseBill">
+              <PropertyRef Name="PurchaseBillId" />
+            </Principal>
+            <Dependent Role="SupplierPaymentHistory">
+              <PropertyRef Name="PurchaseBillId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SupplierBankAccount_Supplier">
+          <End Type="TMD.Models.DomainModels.Supplier" Role="Supplier" Multiplicity="1" />
+          <End Type="TMD.Models.DomainModels.SupplierBankAccount" Role="SupplierBankAccount" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Supplier">
+              <PropertyRef Name="SupplierId" />
+            </Principal>
+            <Dependent Role="SupplierBankAccount">
+              <PropertyRef Name="SupplierId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SupplierPaymentHistory_Supplier">
+          <End Type="TMD.Models.DomainModels.Supplier" Role="Supplier" Multiplicity="1" />
+          <End Type="TMD.Models.DomainModels.SupplierPaymentHistory" Role="SupplierPaymentHistory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Supplier">
+              <PropertyRef Name="SupplierId" />
+            </Principal>
+            <Dependent Role="SupplierPaymentHistory">
+              <PropertyRef Name="SupplierId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SupplierPaymentHistory_SupplierBankAccount">
+          <End Type="TMD.Models.DomainModels.SupplierBankAccount" Role="SupplierBankAccount" Multiplicity="0..1" />
+          <End Type="TMD.Models.DomainModels.SupplierPaymentHistory" Role="SupplierPaymentHistory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SupplierBankAccount">
+              <PropertyRef Name="SupplierBankAccountId" />
+            </Principal>
+            <Dependent Role="SupplierPaymentHistory">
+              <PropertyRef Name="SupplierBankAccountId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="TMDModelStoreContainer" CdmEntityContainer="Entities">
+          <EntitySetMapping Name="AspNetRoles">
+            <EntityTypeMapping TypeName="TMD.Models.DomainModels.AspNetRole">
+              <MappingFragment StoreEntitySet="AspNetRoles">
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AspNetUserClaims">
+            <EntityTypeMapping TypeName="TMD.Models.DomainModels.AspNetUserClaim">
+              <MappingFragment StoreEntitySet="AspNetUserClaims">
+                <ScalarProperty Name="ClaimValue" ColumnName="ClaimValue" />
+                <ScalarProperty Name="ClaimType" ColumnName="ClaimType" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AspNetUserLogins">
+            <EntityTypeMapping TypeName="TMD.Models.DomainModels.AspNetUserLogin">
+              <MappingFragment StoreEntitySet="AspNetUserLogins">
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="ProviderKey" ColumnName="ProviderKey" />
+                <ScalarProperty Name="LoginProvider" ColumnName="LoginProvider" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AspNetUsers">
+            <EntityTypeMapping TypeName="TMD.Models.DomainModels.AspNetUser">
+              <MappingFragment StoreEntitySet="AspNetUsers">
+                <ScalarProperty Name="UserComments" ColumnName="UserComments" />
+                <ScalarProperty Name="Telephone" ColumnName="Telephone" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="ImageName" ColumnName="ImageName" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="AccessFailedCount" ColumnName="AccessFailedCount" />
+                <ScalarProperty Name="LockoutEnabled" ColumnName="LockoutEnabled" />
+                <ScalarProperty Name="LockoutEndDateUtc" ColumnName="LockoutEndDateUtc" />
+                <ScalarProperty Name="TwoFactorEnabled" ColumnName="TwoFactorEnabled" />
+                <ScalarProperty Name="SecurityStamp" ColumnName="SecurityStamp" />
+                <ScalarProperty Name="PasswordHash" ColumnName="PasswordHash" />
+                <ScalarProperty Name="EmailConfirmed" ColumnName="EmailConfirmed" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <AssociationSetMapping Name="AspNetUserRoles" TypeName="TMD.Models.DomainModels.AspNetUserRoles" StoreEntitySet="AspNetUserRoles">
+            <EndProperty Name="AspNetUser">
+              <ScalarProperty Name="Id" ColumnName="UserId" />
+            </EndProperty>
+            <EndProperty Name="AspNetRole">
+              <ScalarProperty Name="Id" ColumnName="RoleId" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <EntitySetMapping Name="Brands">
+            <EntityTypeMapping TypeName="TMD.Models.DomainModels.Brand">
+              <MappingFragment StoreEntitySet="Brand">
+                <ScalarProperty Name="RecLastUpdatedBy" ColumnName="RecLastUpdatedBy" />
+                <ScalarProperty Name="RecCreatedBy" ColumnName="RecCreatedBy" />
+                <ScalarProperty Name="RecLastUpdatedDate" ColumnName="RecLastUpdatedDate" />
+                <ScalarProperty Name="RecCreatedDate" ColumnName="RecCreatedDate" />
+                <ScalarProperty Name="BrandDescription" ColumnName="BrandDescription" />
+                <ScalarProperty Name="BrandName" ColumnName="BrandName" />
+                <ScalarProperty Name="BrandId" ColumnName="BrandId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Categories">
+            <EntityTypeMapping TypeName="TMD.Models.DomainModels.Category">
+              <MappingFragment StoreEntitySet="Categories">
+                <ScalarProperty Name="CategoryName" ColumnName="CategoryName" />
+                <ScalarProperty Name="CategoryID" ColumnName="CategoryID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CategoryLogs">
+            <EntityTypeMapping TypeName="TMD.Models.DomainModels.CategoryLog">
+              <MappingFragment StoreEntitySet="CategoryLogs">
+                <ScalarProperty Name="LogID" ColumnName="LogID" />
+                <ScalarProperty Name="CategoryID" ColumnName="CategoryID" />
+                <ScalarProperty Name="CategoryLogID" ColumnName="CategoryLogID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Configurations">
+            <EntityTypeMapping TypeName="TMD.Models.DomainModels.Configuration">
+              <MappingFragment StoreEntitySet="Configurations">
+                <ScalarProperty Name="Value" ColumnName="Value" />
+                <ScalarProperty Name="Type" ColumnName="Type" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Customers">
+            <EntityTypeMapping TypeName="TMD.Models.DomainModels.Customer">
+              <MappingFragment StoreEntitySet="Customer">
+                <ScalarProperty Name="RecLastUpdatedBy" ColumnName="RecLastUpdatedBy" />
+                <ScalarProperty Name="RecCreatedBy" ColumnName="RecCreatedBy" />
+                <ScalarProperty Name="RecLastUpdatedDate" ColumnName="RecLastUpdatedDate" />
+                <ScalarProperty Name="RecCreatedDate" ColumnName="RecCreatedDate" />
+                <ScalarProperty Name="Comments" ColumnName="Comments" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="Phone" ColumnName="Phone" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CustomerOrders">
+            <EntityTypeMapping TypeName="TMD.Models.DomainModels.CustomerOrder">
+              <MappingFragment StoreEntitySet="CustomerOrders">
+                <ScalarProperty Name="Comments" ColumnName="Comments" />
+                <ScalarProperty Name="OrderId" ColumnName="OrderId" />
+                <ScalarProperty Name="CustomerId" ColumnName="CustomerId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ExpenseCategories">
+            <EntityTypeMapping TypeName="TMD.Models.DomainModels.ExpenseCategory">
+              <MappingFragment StoreEntitySet="ExpenseCategory">
+                <ScalarProperty Name="RecLastUpdatedBy" ColumnName="RecLastUpdatedBy" />
+                <ScalarProperty Name="RecCreatedBy" ColumnName="RecCreatedBy" />
+                <ScalarProperty Name="RecLastUpdatedDate" ColumnName="RecLastUpdatedDate" />
+                <ScalarProperty Name="RecCreatedDate" ColumnName="RecCreatedDate" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Expenses">
+            <EntityTypeMapping TypeName="TMD.Models.DomainModels.Expense">
+              <MappingFragment StoreEntitySet="Expenses">
+                <ScalarProperty Name="RecLastUpdatedBy" ColumnName="RecLastUpdatedBy" />
+                <ScalarProperty Name="RecCreatedBy" ColumnName="RecCreatedBy" />
+                <ScalarProperty Name="RecLastUpdatedDate" ColumnName="RecLastUpdatedDate" />
+                <ScalarProperty Name="RecCreatedDate" ColumnName="RecCreatedDate" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="ExpenseAmount" ColumnName="ExpenseAmount" />
+                <ScalarProperty Name="ExpenseCategoryId" ColumnName="ExpenseCategoryId" />
+                <ScalarProperty Name="ExpenseDate" ColumnName="ExpenseDate" />
+                <ScalarProperty Name="VendorId" ColumnName="VendorId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Logs">
+            <EntityTypeMapping TypeName="TMD.Models.DomainModels.Log">
+              <MappingFragment StoreEntitySet="Logs">
+                <ScalarProperty Name="FormattedMessage" ColumnName="FormattedMessage" />
+                <ScalarProperty Name="Message" ColumnName="Message" />
+                <ScalarProperty Name="Win32ThreadId" ColumnName="Win32ThreadId" />
+                <ScalarProperty Name="ThreadName" ColumnName="ThreadName" />
+                <ScalarProperty Name="ProcessName" ColumnName="ProcessName" />
+                <ScalarProperty Name="ProcessID" ColumnName="ProcessID" />
+                <ScalarProperty Name="AppDomainName" ColumnName="AppDomainName" />
+                <ScalarProperty Name="MachineName" ColumnName="MachineName" />
+                <ScalarProperty Name="Timestamp" ColumnName="Timestamp" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="Severity" ColumnName="Severity" />
+                <ScalarProperty Name="Priority" ColumnName="Priority" />
+                <ScalarProperty Name="EventID" ColumnName="EventID" />
+                <ScalarProperty Name="LogID" ColumnName="LogID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Notes">
+            <EntityTypeMapping TypeName="TMD.Models.DomainModels.Note">
+              <MappingFragment StoreEntitySet="Notes">
+                <ScalarProperty Name="RecLastUpdatedBy" ColumnName="RecLastUpdatedBy" />
+                <ScalarProperty Name="RecCreatedBy" ColumnName="RecCreatedBy" />
+                <ScalarProperty Name="RecLastUpdatedDate" ColumnName="RecLastUpdatedDate" />
+                <ScalarProperty Name="RecCreatedDate" ColumnName="RecCreatedDate" />
+                <ScalarProperty Name="Amount" ColumnName="Amount" />
+                <ScalarProperty Name="IsOpen" ColumnName="IsOpen" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="NotesCategoryId" ColumnName="NotesCategoryId" />
+                <ScalarProperty Name="NotesDate" ColumnName="NotesDate" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="NotesCategories">
+            <EntityTypeMapping TypeName="TMD.Models.DomainModels.NotesCategory">
+              <MappingFragment StoreEntitySet="NotesCategory">
+                <ScalarProperty Name="RecLastUpdatedBy" ColumnName="RecLastUpdatedBy" />
+                <ScalarProperty Name="RecCreatedBy" ColumnName="RecCreatedBy" />
+                <ScalarProperty Name="RecLastUpdatedDate" ColumnName="RecLastUpdatedDate" />
+                <ScalarProperty Name="RecCreatedDate" ColumnName="RecCreatedDate" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="OrderItems">
+            <EntityTypeMapping TypeName="TMD.Models.DomainModels.OrderItem">
+              <MappingFragment StoreEntitySet="OrderItems">
+                <ScalarProperty Name="Discount" ColumnName="Discount" />
+                <ScalarProperty Name="SalePrice" ColumnName="SalePrice" />
+                <ScalarProperty Name="PurchasePrice" ColumnName="PurchasePrice" />
+                <ScalarProperty Name="ProductVariationId" ColumnName="ProductVariationId" />
+                <ScalarProperty Name="OrderId" ColumnName="OrderId" />
+                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+                <ScalarProperty Name="OrderItemId" ColumnName="OrderItemId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Orders">
+            <EntityTypeMapping TypeName="TMD.Models.DomainModels.Order">
+              <MappingFragment StoreEntitySet="Orders">
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+                <ScalarProperty Name="Comments" ColumnName="Comments" />
+                <ScalarProperty Name="RecLastUpdatedBy" ColumnName="RecLastUpdatedBy" />
+                <ScalarProperty Name="RecCreatedBy" ColumnName="RecCreatedBy" />
+                <ScalarProperty Name="RecLastUpdatedDate" ColumnName="RecLastUpdatedDate" />
+                <ScalarProperty Name="RecCreatedDate" ColumnName="RecCreatedDate" />
+                <ScalarProperty Name="IsModified" ColumnName="IsModified" />
+                <ScalarProperty Name="OrderId" ColumnName="OrderId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PaymentMethods">
+            <EntityTypeMapping TypeName="TMD.Models.DomainModels.PaymentMethod">
+              <MappingFragment StoreEntitySet="PaymentMethod">
+                <ScalarProperty Name="RecLastUpdatedBy" ColumnName="RecLastUpdatedBy" />
+                <ScalarProperty Name="RecCreatedBy" ColumnName="RecCreatedBy" />
+                <ScalarProperty Name="RecLastUpdatedDate" ColumnName="RecLastUpdatedDate" />
+                <ScalarProperty Name="RecCreatedDate" ColumnName="RecCreatedDate" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="PaymentMethodId" ColumnName="PaymentMethodId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ProductCategories">
+            <EntityTypeMapping TypeName="TMD.Models.DomainModels.ProductCategory">
+              <MappingFragment StoreEntitySet="ProductCategory">
+                <ScalarProperty Name="IsWeb" ColumnName="IsWeb" />
+                <ScalarProperty Name="IsParentCategory" ColumnName="IsParentCategory" />
+                <ScalarProperty Name="ParentCategoryId" ColumnName="ParentCategoryId" />
+                <ScalarProperty Name="RecLastUpdatedBy" ColumnName="RecLastUpdatedBy" />
+                <ScalarProperty Name="RecCreatedBy" ColumnName="RecCreatedBy" />
+                <ScalarProperty Name="RecLastUpdatedDate" ColumnName="RecLastUpdatedDate" />
+                <ScalarProperty Name="RecCreatedDate" ColumnName="RecCreatedDate" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="CategoryId" ColumnName="CategoryId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ProductConfigurations">
+            <EntityTypeMapping TypeName="TMD.Models.DomainModels.ProductConfiguration">
+              <MappingFragment StoreEntitySet="ProductConfiguration">
+                <ScalarProperty Name="DefaultVendorId" ColumnName="DefaultVendorId" />
+                <ScalarProperty Name="RecLastUpdatedBy" ColumnName="RecLastUpdatedBy" />
+                <ScalarProperty Name="RecCreatedBy" ColumnName="RecCreatedBy" />
+                <ScalarProperty Name="RecLastUpdatedDate" ColumnName="RecLastUpdatedDate" />
+                <ScalarProperty Name="RecCreatedDate" ColumnName="RecCreatedDate" />
+                <ScalarProperty Name="Comments" ColumnName="Comments" />
+                <ScalarProperty Name="ProductCodePrefix" ColumnName="ProductCodePrefix" />
+                <ScalarProperty Name="SecurityPassword" ColumnName="SecurityPassword" />
+                <ScalarProperty Name="Emails" ColumnName="Emails" />
+                <ScalarProperty Name="MaxAllowedDiscount" ColumnName="MaxAllowedDiscount" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ProductImages">
+            <EntityTypeMapping TypeName="TMD.Models.DomainModels.ProductImage">
+              <MappingFragment StoreEntitySet="ProductImages">
+                <ScalarProperty Name="RecLastUpdatedBy" ColumnName="RecLastUpdatedBy" />
+                <ScalarProperty Name="RecCreatedBy" ColumnName="RecCreatedBy" />
+                <ScalarProperty Name="RecLastUpdatedDate" ColumnName="RecLastUpdatedDate" />
+                <ScalarProperty Name="RecCreatedDate" ColumnName="RecCreatedDate" />
+                <ScalarProperty Name="IsDefault" ColumnName="IsDefault" />
+                <ScalarProperty Name="ContentType" ColumnName="ContentType" />
+                <ScalarProperty Name="ImageData" ColumnName="ImageData" />
+                <ScalarProperty Name="ProductVariationId" ColumnName="ProductVariationId" />
+                <ScalarProperty Name="ImageId" ColumnName="ImageId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Products">
+            <EntityTypeMapping TypeName="TMD.Models.DomainModels.Product">
+              <MappingFragment StoreEntitySet="Products">
+                <ScalarProperty Name="BrandId" ColumnName="BrandId" />
+                <ScalarProperty Name="ProductDescription" ColumnName="ProductDescription" />
+                <ScalarProperty Name="IsWeb" ColumnName="IsWeb" />
+                <ScalarProperty Name="Comments" ColumnName="Comments" />
+                <ScalarProperty Name="RecLastUpdatedBy" ColumnName="RecLastUpdatedBy" />
+                <ScalarProperty Name="RecCreatedBy" ColumnName="RecCreatedBy" />
+                <ScalarProperty Name="RecLastUpdatedDate" ColumnName="RecLastUpdatedDate" />
+                <ScalarProperty Name="RecCreatedDate" ColumnName="RecCreatedDate" />
+                <ScalarProperty Name="CategoryId" ColumnName="CategoryId" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="ProductId" ColumnName="ProductId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ProductVariations">
+            <EntityTypeMapping TypeName="TMD.Models.DomainModels.ProductVariation">
+              <MappingFragment StoreEntitySet="ProductVariation">
+                <ScalarProperty Name="ProductVariantDescription" ColumnName="ProductVariantDescription" />
+                <ScalarProperty Name="ShelfId" ColumnName="ShelfId" />
+                <ScalarProperty Name="RecLastUpdatedBy" ColumnName="RecLastUpdatedBy" />
+                <ScalarProperty Name="RecCreatedBy" ColumnName="RecCreatedBy" />
+                <ScalarProperty Name="RecLastUpdatedDate" ColumnName="RecLastUpdatedDate" />
+                <ScalarProperty Name="RecCreatedDate" ColumnName="RecCreatedDate" />
+                <ScalarProperty Name="MinimumStockLimit" ColumnName="MinimumStockLimit" />
+                <ScalarProperty Name="Saleprice" ColumnName="Saleprice" />
+                <ScalarProperty Name="Purchaseprice" ColumnName="Purchaseprice" />
+                <ScalarProperty Name="Barcode" ColumnName="Barcode" />
+                <ScalarProperty Name="UnitId" ColumnName="UnitId" />
+                <ScalarProperty Name="ProductId" ColumnName="ProductId" />
+                <ScalarProperty Name="ProductVariationId" ColumnName="ProductVariationId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PurchaseBills">
+            <EntityTypeMapping TypeName="TMD.Models.DomainModels.PurchaseBill">
+              <MappingFragment StoreEntitySet="PurchaseBill">
+                <ScalarProperty Name="RecLastUpdatedBy" ColumnName="RecLastUpdatedBy" />
+                <ScalarProperty Name="RecCreatedBy" ColumnName="RecCreatedBy" />
+                <ScalarProperty Name="RecLastUpdatedDate" ColumnName="RecLastUpdatedDate" />
+                <ScalarProperty Name="RecCreatedDate" ColumnName="RecCreatedDate" />
+                <ScalarProperty Name="PurchaseDate" ColumnName="PurchaseDate" />
+                <ScalarProperty Name="PaidAmount" ColumnName="PaidAmount" />
+                <ScalarProperty Name="TotalDiscount" ColumnName="TotalDiscount" />
+                <ScalarProperty Name="VendorInvoiceNo" ColumnName="VendorInvoiceNo" />
+                <ScalarProperty Name="VendorId" ColumnName="VendorId" />
+                <ScalarProperty Name="PurchaseBillId" ColumnName="PurchaseBillId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PurchaseBillItems">
+            <EntityTypeMapping TypeName="TMD.Models.DomainModels.PurchaseBillItem">
+              <MappingFragment StoreEntitySet="PurchaseBillItems">
+                <ScalarProperty Name="PurchaseBillId" ColumnName="PurchaseBillId" />
+                <ScalarProperty Name="SalePrice" ColumnName="SalePrice" />
+                <ScalarProperty Name="PurchasePrice" ColumnName="PurchasePrice" />
+                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+                <ScalarProperty Name="ProductVariationId" ColumnName="ProductVariationId" />
+                <ScalarProperty Name="ItemId" ColumnName="ItemId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ReturnedOrderItems">
+            <EntityTypeMapping TypeName="TMD.Models.DomainModels.ReturnedOrderItem">
+              <MappingFragment StoreEntitySet="ReturnedOrderItems">
+                <ScalarProperty Name="Price" ColumnName="Price" />
+                <ScalarProperty Name="ReceivedDate" ColumnName="ReceivedDate" />
+                <ScalarProperty Name="ReceivedBy" ColumnName="ReceivedBy" />
+                <ScalarProperty Name="ReturnedQty" ColumnName="ReturnedQty" />
+                <ScalarProperty Name="ProductVariationId" ColumnName="ProductVariationId" />
+                <ScalarProperty Name="OrderId" ColumnName="OrderId" />
+                <ScalarProperty Name="ReturnId" ColumnName="ReturnId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Shelves">
+            <EntityTypeMapping TypeName="TMD.Models.DomainModels.Shelf">
+              <MappingFragment StoreEntitySet="Shelf">
+                <ScalarProperty Name="RecLastUpdatedBy" ColumnName="RecLastUpdatedBy" />
+                <ScalarProperty Name="RecCreatedBy" ColumnName="RecCreatedBy" />
+                <ScalarProperty Name="RecLastUpdatedDate" ColumnName="RecLastUpdatedDate" />
+                <ScalarProperty Name="RecCreatedDate" ColumnName="RecCreatedDate" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="ShelfId" ColumnName="ShelfId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Suppliers">
+            <EntityTypeMapping TypeName="TMD.Models.DomainModels.Supplier">
+              <MappingFragment StoreEntitySet="Supplier">
+                <ScalarProperty Name="RecLastUpdatedBy" ColumnName="RecLastUpdatedBy" />
+                <ScalarProperty Name="RecCreatedBy" ColumnName="RecCreatedBy" />
+                <ScalarProperty Name="RecLastUpdatedDate" ColumnName="RecLastUpdatedDate" />
+                <ScalarProperty Name="RecCreatedDate" ColumnName="RecCreatedDate" />
+                <ScalarProperty Name="ActiveFlag" ColumnName="ActiveFlag" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="ContactNo" ColumnName="ContactNo" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="SupplierId" ColumnName="SupplierId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SupplierBankAccounts">
+            <EntityTypeMapping TypeName="TMD.Models.DomainModels.SupplierBankAccount">
+              <MappingFragment StoreEntitySet="SupplierBankAccount">
+                <ScalarProperty Name="RecLastUpdatedBy" ColumnName="RecLastUpdatedBy" />
+                <ScalarProperty Name="RecCreatedBy" ColumnName="RecCreatedBy" />
+                <ScalarProperty Name="RecLastUpdatedDate" ColumnName="RecLastUpdatedDate" />
+                <ScalarProperty Name="RecCreatedDate" ColumnName="RecCreatedDate" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="AccountNo" ColumnName="AccountNo" />
+                <ScalarProperty Name="AccountTitle" ColumnName="AccountTitle" />
+                <ScalarProperty Name="SupplierId" ColumnName="SupplierId" />
+                <ScalarProperty Name="SupplierBankAccountId" ColumnName="SupplierBankAccountId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SupplierPaymentHistories">
+            <EntityTypeMapping TypeName="TMD.Models.DomainModels.SupplierPaymentHistory">
+              <MappingFragment StoreEntitySet="SupplierPaymentHistory">
+                <ScalarProperty Name="PurchaseBillId" ColumnName="PurchaseBillId" />
+                <ScalarProperty Name="RecLastUpdatedBy" ColumnName="RecLastUpdatedBy" />
+                <ScalarProperty Name="RecCreatedBy" ColumnName="RecCreatedBy" />
+                <ScalarProperty Name="RecLastUpdatedDate" ColumnName="RecLastUpdatedDate" />
+                <ScalarProperty Name="RecCreatedDate" ColumnName="RecCreatedDate" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Amount" ColumnName="Amount" />
+                <ScalarProperty Name="PaymentMethodId" ColumnName="PaymentMethodId" />
+                <ScalarProperty Name="SupplierBankAccountId" ColumnName="SupplierBankAccountId" />
+                <ScalarProperty Name="SupplierId" ColumnName="SupplierId" />
+                <ScalarProperty Name="SupplierPaymentHistoryId" ColumnName="SupplierPaymentHistoryId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Units">
+            <EntityTypeMapping TypeName="TMD.Models.DomainModels.Unit">
+              <MappingFragment StoreEntitySet="Unit">
+                <ScalarProperty Name="RecLastUpdatedBy" ColumnName="RecLastUpdatedBy" />
+                <ScalarProperty Name="RecCreatedBy" ColumnName="RecCreatedBy" />
+                <ScalarProperty Name="RecLastUpdatedDate" ColumnName="RecLastUpdatedDate" />
+                <ScalarProperty Name="RecCreatedDate" ColumnName="RecCreatedDate" />
+                <ScalarProperty Name="UnitValue" ColumnName="UnitValue" />
+                <ScalarProperty Name="UnitTitle" ColumnName="UnitTitle" />
+                <ScalarProperty Name="UnitId" ColumnName="UnitId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="WebSiteSliders">
+            <EntityTypeMapping TypeName="TMD.Models.DomainModels.WebSiteSlider">
+              <MappingFragment StoreEntitySet="WebSiteSlider">
+                <ScalarProperty Name="RecLastUpdatedBy" ColumnName="RecLastUpdatedBy" />
+                <ScalarProperty Name="RecCreatedBy" ColumnName="RecCreatedBy" />
+                <ScalarProperty Name="RecLastUpdatedDate" ColumnName="RecLastUpdatedDate" />
+                <ScalarProperty Name="RecCreatedDate" ColumnName="RecCreatedDate" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="ImageType" ColumnName="ImageType" />
+                <ScalarProperty Name="ImageData" ColumnName="ImageData" />
+                <ScalarProperty Name="SubTitle" ColumnName="SubTitle" />
+                <ScalarProperty Name="MainTitle" ColumnName="MainTitle" />
+                <ScalarProperty Name="SlideId" ColumnName="SlideId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams>
+      <Diagram DiagramId="6c84cfef5aef40aa8729388622e77122" Name="Diagram1" ZoomLevel="71">
+        <EntityTypeShape EntityType="TMD.Models.DomainModels.AspNetRole" Width="1.5" PointX="0.5" PointY="1.625" />
+        <EntityTypeShape EntityType="TMD.Models.DomainModels.AspNetUserClaim" Width="1.5" PointX="2.75" PointY="4" />
+        <EntityTypeShape EntityType="TMD.Models.DomainModels.AspNetUserLogin" Width="1.5" PointX="2.875" PointY="1.5" />
+        <EntityTypeShape EntityType="TMD.Models.DomainModels.AspNetUser" Width="1.5" PointX="0.5" PointY="3.75" />
+        <AssociationConnector Association="TMD.Models.DomainModels.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" />
+        <AssociationConnector Association="TMD.Models.DomainModels.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" />
+        <AssociationConnector Association="TMD.Models.DomainModels.AspNetUserRoles" />
+        <EntityTypeShape EntityType="TMD.Models.DomainModels.Brand" Width="1.5" PointX="5.75" PointY="8.5" />
+        <EntityTypeShape EntityType="TMD.Models.DomainModels.Category" Width="1.5" PointX="14.75" PointY="12.5" />
+        <EntityTypeShape EntityType="TMD.Models.DomainModels.CategoryLog" Width="1.5" PointX="17" PointY="12.375" />
+        <EntityTypeShape EntityType="TMD.Models.DomainModels.Configuration" Width="1.5" PointX="0.75" PointY="17.25" />
+        <EntityTypeShape EntityType="TMD.Models.DomainModels.Customer" Width="1.5" PointX="13.25" PointY="32.625" />
+        <EntityTypeShape EntityType="TMD.Models.DomainModels.CustomerOrder" Width="1.5" PointX="15.5" PointY="0.75" />
+        <EntityTypeShape EntityType="TMD.Models.DomainModels.ExpenseCategory" Width="1.5" PointX="14" PointY="25.5" />
+        <EntityTypeShape EntityType="TMD.Models.DomainModels.Expense" Width="1.5" PointX="16.25" PointY="16.125" />
+        <EntityTypeShape EntityType="TMD.Models.DomainModels.Log" Width="1.5" PointX="2.75" PointY="17.25" />
+        <EntityTypeShape EntityType="TMD.Models.DomainModels.Note" Width="1.5" PointX="3" PointY="12.5" />
+        <EntityTypeShape EntityType="TMD.Models.DomainModels.NotesCategory" Width="1.5" PointX="0.75" PointY="12.75" />
+        <EntityTypeShape EntityType="TMD.Models.DomainModels.OrderItem" Width="1.5" PointX="15.5" PointY="4.375" />
+        <EntityTypeShape EntityType="TMD.Models.DomainModels.Order" Width="1.5" PointX="13.25" PointY="3.125" />
+        <EntityTypeShape EntityType="TMD.Models.DomainModels.PaymentMethod" Width="1.5" PointX="13.25" PointY="28.875" />
+        <EntityTypeShape EntityType="TMD.Models.DomainModels.ProductCategory" Width="1.5" PointX="5.75" PointY="4" />
+        <EntityTypeShape EntityType="TMD.Models.DomainModels.ProductConfiguration" Width="1.5" PointX="4.75" PointY="17.25" />
+        <EntityTypeShape EntityType="TMD.Models.DomainModels.ProductImage" Width="1.5" PointX="12.5" PointY="12" />
+        <EntityTypeShape EntityType="TMD.Models.DomainModels.Product" Width="1.5" PointX="8" PointY="7.875" />
+        <EntityTypeShape EntityType="TMD.Models.DomainModels.ProductVariation" Width="1.5" PointX="10.25" PointY="7.25" />
+        <EntityTypeShape EntityType="TMD.Models.DomainModels.PurchaseBill" Width="1.5" PointX="13.25" PointY="15.875" />
+        <EntityTypeShape EntityType="TMD.Models.DomainModels.PurchaseBillItem" Width="1.5" PointX="15.5" PointY="8.5" />
+        <EntityTypeShape EntityType="TMD.Models.DomainModels.ReturnedOrderItem" Width="1.5" PointX="12.5" PointY="7.25" />
+        <EntityTypeShape EntityType="TMD.Models.DomainModels.Shelf" Width="1.5" PointX="8" PointY="3.75" />
+        <EntityTypeShape EntityType="TMD.Models.DomainModels.Supplier" Width="1.5" PointX="11" PointY="15.875" />
+        <EntityTypeShape EntityType="TMD.Models.DomainModels.SupplierBankAccount" Width="1.5" PointX="13.25" PointY="21.125" />
+        <EntityTypeShape EntityType="TMD.Models.DomainModels.SupplierPaymentHistory" Width="1.5" PointX="15.5" PointY="20.25" />
+        <EntityTypeShape EntityType="TMD.Models.DomainModels.Unit" Width="1.5" PointX="8" PointY="13.125" />
+        <EntityTypeShape EntityType="TMD.Models.DomainModels.WebSiteSlider" Width="1.5" PointX="6.75" PointY="17.25" />
+        <AssociationConnector Association="TMD.Models.DomainModels.FK_Orders_AspNetUsers" />
+        <AssociationConnector Association="TMD.Models.DomainModels.FK_PurchaseBill_CreatedBy" />
+        <AssociationConnector Association="TMD.Models.DomainModels.FK_ReturnedItems_ReceivedBy" />
+        <AssociationConnector Association="TMD.Models.DomainModels.FK_Products_Brand" />
+        <AssociationConnector Association="TMD.Models.DomainModels.FK_CategoryLog_Category" />
+        <AssociationConnector Association="TMD.Models.DomainModels.FK_CustomerOrder_Customer" />
+        <AssociationConnector Association="TMD.Models.DomainModels.FK_CustomerOrder_Orders" />
+        <AssociationConnector Association="TMD.Models.DomainModels.FK_Expenses_ExpenseCategory" />
+        <AssociationConnector Association="TMD.Models.DomainModels.FK_Expenses_Vendors" />
+        <AssociationConnector Association="TMD.Models.DomainModels.FK_Notes_NotesCategory" />
+        <AssociationConnector Association="TMD.Models.DomainModels.FK_OrderItems_Orders" />
+        <AssociationConnector Association="TMD.Models.DomainModels.FK_OrderItems_ProductVariation" />
+        <AssociationConnector Association="TMD.Models.DomainModels.FK_ReturnedItems_Orders" />
+        <AssociationConnector Association="TMD.Models.DomainModels.FK_SupplierPaymentHistory_PaymentMethod" />
+        <AssociationConnector Association="TMD.Models.DomainModels.FK_ProductCategory_ProductCategory" />
+        <AssociationConnector Association="TMD.Models.DomainModels.FK_Products_ProductCategory" />
+        <AssociationConnector Association="TMD.Models.DomainModels.FK_ProductImages_ProductVariation" />
+        <AssociationConnector Association="TMD.Models.DomainModels.FK_ProductVariation_Products" />
+        <AssociationConnector Association="TMD.Models.DomainModels.FK_InventoryItems_ProductVariation" />
+        <AssociationConnector Association="TMD.Models.DomainModels.FK_ProductVariation_Shelf" />
+        <AssociationConnector Association="TMD.Models.DomainModels.FK_ProductVariation_Unit" />
+        <AssociationConnector Association="TMD.Models.DomainModels.FK_ReturnedItems_ProductVariation" />
+        <AssociationConnector Association="TMD.Models.DomainModels.FK_PurchaseBill_Supplier" />
+        <AssociationConnector Association="TMD.Models.DomainModels.FK_PurchaseBillItems_PurchaseBill" />
+        <AssociationConnector Association="TMD.Models.DomainModels.FK_SupplierPaymentHistory_PurchaseBill" />
+        <AssociationConnector Association="TMD.Models.DomainModels.FK_SupplierBankAccount_Supplier" />
+        <AssociationConnector Association="TMD.Models.DomainModels.FK_SupplierPaymentHistory_Supplier" />
+        <AssociationConnector Association="TMD.Models.DomainModels.FK_SupplierPaymentHistory_SupplierBankAccount" />
+        </Diagram>
+    </Diagrams>
+  </Designer>
+</edmx:Edmx>

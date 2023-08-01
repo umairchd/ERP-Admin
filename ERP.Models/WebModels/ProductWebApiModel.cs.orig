@@ -1,0 +1,18 @@
+﻿namespace TMD.Models.WebModels
+{
+    public class ProductWebApiModel
+    {
+        public long ProductId { get; set; }
+        public string Name { get; set; }
+        public string ImageUrl { get; set; }
+        public decimal SalePrice { get; set; }
+        public string Description { get; set; }
+        public int Quantity { get; set; }
+<<<<<<< HEAD
+        public int Discount { get; set; }
+=======
+        public string Barcode { get; set; }
+>>>>>>> 8b23020ac5618f199ea2505bba198d73c64da390
+
+    }
+}

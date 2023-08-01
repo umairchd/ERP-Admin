@@ -1,0 +1,457 @@
+﻿@using System.Configuration
+@model ERP.Models.WebViewModels.PurchaseBillViewModel
+@{
+    ViewBag.Title = "Purchase Bill";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    Session["MenuKey"] = 3;
+    Session["SubMenuKey"] = 1;
+}
+<div class="portlet light bg-inverse formBodyRemoveSideSpace">
+    <div class="portlet-title">
+        <div class="caption">
+            <i class="icon-drawer font-red-sunglo"></i>
+            <span class="caption-subject font-red-sunglo bold uppercase">Stock</span>
+            <span class="caption-helper">@ViewBag.Title</span>
+        </div>
+        <div class="actions">
+            <button class="btn default blue-stripe toBeHidden submitForm" id="" type="submit" form="PurchaseBillForm" name="saveCreate" onclick="return (ValidateFields(event) && ValidateBill() && CheckPayment(this));">
+                <i class="fa fa-plus-square-o"></i>
+                <span class="hidden-480">
+                    Save & New
+                </span>
+            </button>
+            <button class="btn default green-stripe toBeHidden submitForm" id="" type="submit" form="PurchaseBillForm" name="save" onclick="return (ValidateFields(event) && ValidateBill() && CheckPayment(this));">
+                <i class="fa fa-save"></i>
+                <span class="hidden-480">
+                    Save & Close
+                </span>
+            </button>
+            <button class="btn default red-stripe toBeHidden" id="btnReset" type="reset" form="PurchaseBillForm">
+                <i class="fa fa-undo"></i>
+                <span class="hidden-480">
+                    Undo All
+                </span>
+            </button>
+            <a href="~/Purchase/New" class="btn default green-stripe toBeShown">
+                <i class="fa fa-plus"></i>
+                <span class="hidden-480">
+                    New Bill
+                </span>
+            </a>
+            <a href="~/Purchase/History" class="btn default yellow-stripe">
+                <i class="fa fa-list"></i>
+                <span class="hidden-480">
+                    All Bills
+                </span>
+            </a>
+        </div>
+    </div>
+    <div class="portlet-body form">
+        @using (Html.BeginForm("New", "Purchase", FormMethod.Post, new { @id = "PurchaseBillForm", @class = "form-horizontal", role = "form", enctype = "multipart/form-data" }))
+        {
+            <div class="form-body">
+                <h3 class="form-section">Basic Info</h3>
+                @Html.AntiForgeryToken()
+                @Html.HiddenFor(m => m.PurchaseBill.PurchaseBillId)
+                @Html.HiddenFor(m => m.PurchaseBill.RecCreatedBy)
+                @Html.HiddenFor(m => m.PurchaseBill.RecCreatedDate)
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.PurchaseBill.PurchaseDate, new { @class = "col-md-4 control-label requiredLabel" })
+                            <div class="col-md-8">
+                                @Html.TextBoxFor(m => m.PurchaseBill.PurchaseDate, "{0:D}", new { @class = "form-control mandatory datepickerGregorian cursorHand toBeDisabled", @readonly = true })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.PurchaseBill.VendorId, new { @class = "col-md-4 control-label requiredLabel" })
+                            <div class="col-md-8">
+                                <div class="input-group">
+                                    @Html.DropDownListFor(model => model.PurchaseBill.VendorId, new SelectList(Model.Vendors, "VendorId", "Name"), "Select Supplier", new { @class = "form-control mandatory  select2me toBeDisabled", id="VendorId" })
+                                    <span class="input-group-btn">
+                                        <a href="~/Vendor/Create" class="btn default blue-stripe" title="Add New Supplier">
+                                            <i class="fa fa-plus"></i>
+                                        </a>
+                                    </span>
+                                </div>
+                                @Html.ValidationMessageFor(model => model.PurchaseBill.VendorId)
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.PurchaseBill.VendorInvoiceNo, new { @class = "col-md-4 control-label" })
+                            <div class="col-md-8">
+                                @Html.TextBoxFor(m => m.PurchaseBill.VendorInvoiceNo, new { @class = "form-control toBeDisabled" })
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <h3 class="form-section">
+                    Particular(s)
+                </h3>
+                <div id="PurchaseBillItems" class="toBeHidden">
+                    <div class="row">
+                        <input type="hidden" id="itemRowIndex" value="" />
+                        <input type="hidden" id="ProductVariationId" value="" />
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                @Html.Label("Barcode", new { @class = "col-md-4 control-label requiredLabel" })
+                                <div class="col-md-8">
+                                    @Html.TextBox("ItemBarcode", null, new { @id = "Barcode", @class = "form-control mandatoryModal searchBarcode NumberValue", @placeholder = "Barcode or Item Code", @autofocus = "autofocus" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                @Html.Label("Quantity", new { @class = "col-md-4 control-label requiredLabel" })
+                                <div class="col-md-8">
+                                    @Html.TextBox("Quantity", null, new { @id = "Quantity", @class = "form-control mandatoryModal NumberValue", @placeholder = "Purchased Quantity" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                @Html.Label("Current Stock", new { @class = "col-md-4 control-label" })
+                                <div class="col-md-8">
+                                    @Html.TextBox("CurrentStock", null, new { @id = "CurrentStock", @readonly = true, @class = "form-control", @placeholder ="Available Qty",@tabindex=-1 })
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                @Html.Label("Product Name", new { @class = "col-md-4 control-label" })
+                                <div class="col-md-8">
+                                    @Html.TextBox("ProductName", null, new { @id = "ProductName", @readonly = true, @class = "form-control", @placeholder = "Product Name", @tabindex = -1 })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                @Html.Label("Brand", new { @class = "col-md-4 control-label" })
+                                <div class="col-md-8">
+                                    @Html.TextBox("Brand", null, new { @id = "Brand", @readonly = true, @class = "form-control", @placeholder = "Brand Name", @tabindex = -1 })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                @Html.Label("Unit", new { @class = "col-md-4 control-label" })
+                                <div class="col-md-8">
+                                    @Html.TextBox("Unit", null, new { @id = "ItemUnit", @readonly = true, @class = "form-control", @placeholder = "Item Unit", @tabindex = -1 })
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                @Html.Label("Purchase Price", new { @class = "col-md-4 control-label requiredLabel" })
+                                <div class="col-md-8">
+                                    @Html.TextBox("PurchasePrice", null, new { @id = "PurchasePrice", @class = "form-control mandatoryModal price DecimalValue", @placeholder = "Purchase Price" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                @Html.Label("Sale Price", new { @class = "col-md-4 control-label requiredLabel" })
+                                <div class="col-md-8">
+                                    @Html.TextBox("SalePrice", null, new { @id = "SalePrice", @class = string.Format("form-control mandatoryModal price DecimalValue{0}", "ARG0"), @placeholder = "Sale Price" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                @Html.Label("Profit", new { @class = "col-md-4 control-label" })
+                                <div class="col-md-4" style="margin-right: -6%;">
+                                    @Html.TextBox("ProfitAmount", null, new { @id = "ProfitAmount", @readonly = true, @class = "form-control", @placeholder = "Amount", @tabindex = -1 })
+                                </div>
+                                <div class="col-md-3" style="margin-right: -6%;">
+                                    @Html.TextBox("ProfitPercent", null, new { @id = "ProfitPercent", @readonly = true, @class = "form-control", @placeholder = "%", @tabindex = -1 })
+                                </div>
+                                <div class="col-md-1">
+                                    <button type="button" class="btn green-meadow prominent" id="btnAddParticular" title="Add Particular">
+                                        <i class="fa fa-plus-square-o"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                </div>
+                
+                <a class="btn btn-outline dark" data-target="#confirmationDialog" data-toggle="modal" style="display: none" id="modalShow"></a>
+                <div id="confirmationDialog" class="modal fade" tabindex="-1" data-backdrop="static" data-keyboard="false" style="top:30%;">
+                    <div class="modal-body">
+                        <p> Purchase is being saved without payment, Do you wish to continue without payment? </p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" data-dismiss="modal" class="btn btn-outline dark confirmation" id="continueBtn">Continue without payment</button>
+                        <button type="button" data-dismiss="modal" class="btn green confirmation" id="stopBtn">Enter Payment</button>
+                    </div>
+                </div>
+
+                <div class="portlet box">
+                    <div class="portlet-body flip-scroll">
+                        <table class="table table-bordered table-striped table-condensed flip-content">
+                            <thead class="flip-content">
+                                <tr>
+                                    <th width="10%">
+                                        Item Code
+                                    </th>
+                                    <th width="15%">
+                                        Barcode
+                                    </th>
+                                    <th width="20%">
+                                        Name
+                                    </th>
+                                    <th width="10%">
+                                        Unit
+                                    </th>
+                                    <th width="10%">
+                                        Quantity
+                                    </th>
+                                    <th width="12%">
+                                        Purchase Price
+                                    </th>
+                                    <th width="12%">
+                                        Sale Price
+                                    </th>
+                                    <th width="16%">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody id="PurchaseBillItemsTableBody">
+                                @for (int i = 0; i < Model.InventoryItems.Count; i++)
+                                {
+                                    <tr data-id="@i">
+                                        <td style='display:none'>
+                                            <input name='InventoryItems.Index' type='hidden' value='@i' />
+                                            @Html.HiddenFor(x=>x.PurchaseBill.PurchaseBillId)
+                                            @Html.HiddenFor(x=>x.PurchaseBill.PurchaseDate)
+                                            @Html.HiddenFor(x=>x.PurchaseBill.RecCreatedBy)
+                                            @Html.HiddenFor(x=>x.PurchaseBill.RecCreatedDate)
+                                        </td>
+                                        <td>@Model.InventoryItems[i].ProductVariationId</td>
+                                        <td>@Model.InventoryItems[i].Barcode</td>
+                                        <td>@Model.InventoryItems[i].ProductName</td>
+                                        <td>@Model.InventoryItems[i].UnitTitle</td>
+                                        <td>@Model.InventoryItems[i].Quantity</td>
+                                        <td>@Model.InventoryItems[i].PurchasePrice</td>
+                                        <td>@Model.InventoryItems[i].SalePrice</td>
+                                        <td>
+                                            @*<a href="javascript:;" class="btn default btn-xs blue editRow" title="Edit"><i class="fa fa-pencil"></i></a>
+                                            <a href="javascript:;" class="btn default btn-xs red deleteRow" title="Delete"><i class="fa fa-trash-o"></i></a>*@
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+
+                        </table>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            @Html.Label("Discount", new { @class = "col-md-4 control-label" })
+                            <div class="col-md-4" @*style="padding-right: 0;"*@>
+                                @Html.TextBoxFor(x => x.PurchaseBill.TotalDiscount, new { @id = "DiscountAmount", @class = "form-control billDiscount toBeDisabled DecimalValue", @placeholder = "Amount" })
+                            </div>
+                            <div class="col-md-4" @*style="padding-left: 0;"*@>
+                                <div class="input-group bootstrap-touchspin">
+                                    <span class="input-group-addon bootstrap-touchspin-prefix DecimalValue" style="display: none;"></span>
+                                    <input id="DiscountPercent" type="text" class="form-control billDiscount toBeDisabled" title="Percentage" style="display: block;">
+                                    <span class="input-group-addon bootstrap-touchspin-postfix ">%</span>
+                                </div>
+                            </div>
+                            
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            @Html.Label("Sub Total", new { @class = "col-md-4 control-label" })
+                            <div class="col-md-8">
+                                @*@Html.TextBox("SubTotal", null, new { @id = "SubTotal", @class = "form-control", @readonly = true, @placeholder = "Sub Total" })*@
+                                @Html.TextBoxFor(x => x.SubTotal, new { @id = "SubTotal", @class = "form-control", @readonly = true, @placeholder = "Sub Total", tabindex = "-1" })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            @Html.Label("Gross Total", new { @class = "col-md-4 control-label" })
+                            <div class="col-md-8">
+                                @*@Html.TextBox("GrossTotal", null, new { @id = "GrossTotal", @class = "form-control", @readonly = true, @placeholder = "Gross Total" })*@
+                                @Html.TextBoxFor(x => x.SubTotal, new { @id = "GrossTotal", @class = "form-control", @readonly = true, @placeholder = "Gross Total", tabindex = "-1" })
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                
+                <h3 class="form-section">Payment Detail(s)</h3>
+                <div class="row">
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            @Html.Label("Payment By", new { @class = "col-md-5 control-label requiredLabel" })
+                            <div class="col-md-7">
+                                @Html.DropDownListFor(m => m.SupplierPaymentHistory.PaymentMethodId, new SelectList(Model.PaymentMethods, "PaymentMethodId", "Title", Model.SupplierPaymentHistory.PaymentMethodId), new { @class = "form-control toBeDisabled  select2me mandatory", @id = "PaymentMethodId" })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            @Html.Label("Bank A/c", new { @class = "col-md-5 control-label", id="bankAccount" })
+                            <div class="col-md-7">
+                                @Html.DropDownListFor(m => m.SupplierPaymentHistory.SupplierBankAccountId, new SelectList(Model.SupplierAccountsDdl, "SupplierBankAccountId", "AccountTitle", Model.SupplierPaymentHistory.SupplierBankAccountId), "Select One", new { @class = "form-control toBeDisabled", @id = "SupplierBankAccountId" })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-2 ">
+                        <div class="form-group">
+                            @Html.Label("Amount", new { @class = "col-md-4 control-label" })
+                            <div class="col-md-8">
+                                @Html.TextBoxFor(x => x.SupplierPaymentHistory.Amount, new { @id = "PaidAmount", @class = "form-control toBeDisabled DecimalValue", @placeholder = "Amount" })
+                                @*@Html.ValidationMessageFor(x => x.SupplierPaymentHistory.Amount)*@
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            @Html.Label("Description", new { @class = "col-md-4 control-label" })
+                            <div class="col-md-8">
+                                @Html.TextAreaFor(x => x.SupplierPaymentHistory.Description, new { @id = "Description", @class = "form-control toBeDisabled", @placeholder = "Payment Description" })
+                                
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        }
+    </div>
+</div>
+<script src="~/Scripts/InventoryScripts.js"></script>
+<script>
+    jQuery(document).on('keydown', '.searchBarcode', function (ev) {
+        if (ev.which === 13 || ev.which === 9) {
+            LoadProductStockByCode(this);
+            // Avoid form submit
+            if (ev.which === 9) {
+                return true;
+            }
+            return false;
+        }
+    });
+    jQuery(document).on('keydown', '.billDiscount', function (ev) {
+        
+        if (ev.which === 13 || ev.which === 9) {
+            CalculateDiscount(this);
+            // Avoid form submit
+            if (ev.which === 9) {
+                return true;
+            }
+            ev.preventDefault();
+            return false;
+        }
+    });
+    //jQuery('.searchBarcode').on('change', function (ev) {
+    //    LoadProductStockByCode(document.getElementById('Barcode'));
+    //    // Avoid form submit
+    //    return false;
+    //});
+    function ValidateBill() {
+        var rowsLength = $("#PurchaseBillItemsTableBody").children("tr").length;
+        if (rowsLength > 0) {
+            return true;
+        } else {
+            toastr.warning("There must be atleast one particular in the bill.");
+            return false;
+        }
+    }
+    $(document).ready(function () {
+       if ('@Model.PurchaseBill.PurchaseBillId' > 0) {
+           $(".toBeHidden").hide();
+           $(".toBeDisabled").prop('disabled', true);
+           $(".toBeShown").show();
+           CalculateDiscount("#DiscountAmount");
+       } else {
+           $(".toBeShown").hide();
+       }
+        var vendorId = $('#VendorId').val();
+        var isvendorIdChanged = true;
+        
+        var defaultPaymentMethod = '@ConfigurationManager.AppSettings["DefaultPaymentMethod"]';
+
+        $('#VendorId').on('change', function() {
+            isvendorIdChanged = true;
+            $("#PaymentMethodId").select2('val', defaultPaymentMethod);
+            $("#SupplierBankAccountId").empty();
+            $("#SupplierBankAccountId").select2('val', '');
+        });
+
+        $("#PaymentMethodId").on('change', function () {
+            var methodId = $("#PaymentMethodId").val();
+
+            if (vendorId != "" && defaultPaymentMethod != methodId && isvendorIdChanged) {
+                //$.blockUI({ message: '<h3><img src="../../Images/loading.gif" height=55px; width=55px; /> Fetching Product...</h3>' });
+                var $bankAccounts = $("#SupplierBankAccountId").select2();
+                var $request = $.ajax({
+                    url: "/Api/BankAccounts",
+                    type: "GET",
+                    data: { supplierId: $('#VendorId').val() },
+                    dataType: "json",
+                });
+                $bankAccounts.select2('data', null);
+
+                $request.then(function (data) {
+                    for (var d = 0; d < data.length; d++) {
+                        var item = data[d];
+                        // Create the DOM option that is pre-selected by default
+                        var option = new Option(item.AccountTitle, item.SupplierBankAccountId, true, true);
+
+                        // Append it to the select
+                        $bankAccounts.append(option);
+                    }
+                    isvendorIdChanged = false;
+                    // Update the selected options that are displayed
+                    
+                    $bankAccounts.trigger('change');
+                    
+                    //$.unblockUI();
+                });
+                
+                
+            }
+        });
+
+
+    });
+    $(".price").on("change", function() {
+        ShowProfit();
+    });
+
+    var controlClick;
+    function CheckPayment(control) {
+        var amount = $('#PaidAmount').val();
+        controlClick = $(control);
+        if (amount == 0 || amount == "") {
+            $("#modalShow").click();
+            return false;
+        }
+        return true;
+    }
+
+    $('.confirmation').on('click', function () {
+        switch (this.attributes["id"].nodeValue) {
+        case "continueBtn":
+            $("#PurchaseBillForm").submit();
+                break;
+            case "stopBtn":
+                $('#PaidAmount').focus();
+            break;
+        }
+    })
+</script>
